@@ -728,7 +728,9 @@
             }
             
             if (index === 3) {
-                createEcosystem('ecosystem', ecosystemData);
+                setTimeout(() => {
+                    createEcosystem('ecosystem', ecosystemData);
+                }, 50);
             }
 
             if (index === 10) {
