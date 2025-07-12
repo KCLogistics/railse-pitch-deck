@@ -350,7 +350,6 @@
     </style>
 </head>
 <body>
-    <canvas id="bg-canvas"></canvas>
     <div class="slide-container">
         <!-- Slides will be loaded here -->
     </div>
@@ -583,10 +582,11 @@
         }
 
         function initThreeJS() {
-            if (threeJsInitialized) return;
-            threeJsInitialized = true;
-
             const bgCanvas = document.getElementById('bg-canvas');
+            if (!bgCanvas) return;
+
+            threeJsInitialized = true;
+            
             scene = new THREE.Scene();
             camera = new THREE.PerspectiveCamera(75, bgCanvas.clientWidth / bgCanvas.clientHeight, 0.1, 1000);
             camera.position.z = 300;
@@ -718,16 +718,13 @@
             prevButton.disabled = index === 0;
             nextButton.disabled = index === totalSlides - 1;
 
-            const bgCanvas = document.getElementById('bg-canvas');
             if (index === 0) {
-                if (!threeJsInitialized) {
-                    initThreeJS();
-                }
-                bgCanvas.style.display = 'block';
+                initThreeJS();
                 startAnimation();
             } else {
-                bgCanvas.style.display = 'none';
                 stopAnimation();
+                threeJsInitialized = false;
+                scene = null;
             }
             
             if (index === 3) {
