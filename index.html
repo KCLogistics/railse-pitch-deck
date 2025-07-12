@@ -490,14 +490,25 @@
 
                 const dot = document.createElementNS("http://www.w3.org/2000/svg", "circle");
                 dot.setAttribute('r', '1.5');
+                dot.setAttribute('visibility', 'hidden');
                 
                 const dotColor = win.color === 'green' ? '#22C55E' : '#3B82F6';
                 dot.setAttribute('fill', dotColor);
 
                 const animateMotion = document.createElementNS("http://www.w3.org/2000/svg", "animateMotion");
-                const duration = (Math.random() * 2.1) + 2.1;
-                animateMotion.setAttribute('dur', `${duration}s`); 
+                const duration = 2.5;
+                const begin = Math.random() * duration;
+                animateMotion.setAttribute('dur', `${duration}s`);
+                animateMotion.setAttribute('begin', `${begin}s`);
                 animateMotion.setAttribute('repeatCount', 'indefinite');
+                
+                const animateVisibility = document.createElementNS("http://www.w3.org/2000/svg", "animate");
+                animateVisibility.setAttribute('attributeName', 'visibility');
+                animateVisibility.setAttribute('from', 'hidden');
+                animateVisibility.setAttribute('to', 'visible');
+                animateVisibility.setAttribute('dur', '0.1s');
+                animateVisibility.setAttribute('begin', `${begin}s`);
+                animateVisibility.setAttribute('fill', 'freeze');
                 
                 animateMotion.addEventListener('repeatEvent', () => {
                     const tagToLightUp = document.getElementById(`win-tag-${index}`);
@@ -515,6 +526,7 @@
                 
                 animateMotion.appendChild(mpath);
                 dot.appendChild(animateMotion);
+                dot.appendChild(animateVisibility);
                 svg.appendChild(dot);
             });
         }
