@@ -649,9 +649,8 @@
         }
 
         function renderProofChart() {
-            if (chartRendered) return;
-
             const ctx = document.getElementById('accelerationChart').getContext('2d');
+            if (!ctx) return;
             new Chart(ctx, {
                 type: 'bar',
                 data: {
