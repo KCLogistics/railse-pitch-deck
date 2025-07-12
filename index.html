@@ -432,7 +432,7 @@
             
             const capsuleStartX_px = (startX_percent / 100) * containerRect.width - leftCapsulePadding;
             const capsuleWidth_px = ((endX_percent - startX_percent) / 100) * containerRect.width + leftCapsulePadding + rightCapsulePadding;
-            const capsuleY_px = (containerRect.height / 2) - (capsuleHeight / 2);
+            const capsuleY_px = (containerRect.height / 2) - (capsuleHeight / 2) + 20;
 
             pipelineCapsule.setAttribute('x', capsuleStartX_px);
             pipelineCapsule.setAttribute('y', capsuleY_px);
