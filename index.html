@@ -728,10 +728,7 @@
             }
             
             if (index === 3) {
-                if(!ecosystemRendered) {
-                    createEcosystem('ecosystem', ecosystemData);
-                    ecosystemRendered = true; // Ensure it only renders once per page load unless resized
-                }
+                createEcosystem('ecosystem', ecosystemData);
             }
 
             if (index === 10) {
