@@ -350,7 +350,7 @@
     </style>
 </head>
 <body>
-    
+    <canvas id="bg-canvas"></canvas>
     <div class="slide-container">
         <!-- Slides will be loaded here -->
     </div>
@@ -718,9 +718,16 @@
             prevButton.disabled = index === 0;
             nextButton.disabled = index === totalSlides - 1;
 
+            const bgCanvas = document.getElementById('bg-canvas');
             if (index === 0) {
-                initThreeJS();
-                startAnimation(); // Start the animation loop
+                if (!threeJsInitialized) {
+                    initThreeJS();
+                }
+                bgCanvas.style.display = 'block';
+                startAnimation();
+            } else {
+                bgCanvas.style.display = 'none';
+                stopAnimation();
             }
             
             if (index === 3) {
