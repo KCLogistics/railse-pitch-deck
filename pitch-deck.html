@@ -1,0 +1,1325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Railse Pitch Deck Preview</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- three.js for the background animation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- Google Fonts: Inter & General Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://api.fontshare.com/v2/css?f[]=general-sans@600,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Chart.js for the graph -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* Custom styles to apply the Inter font */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #e9ecef; /* Light grey background to frame the slide */
+            color: #212529;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            flex-direction: column; /* To stack slide and nav */
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        #bg-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        /* SLIDE CONTAINER */
+        .slide-container {
+            width: 1024px;
+            height: 768px;
+            position: relative;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            border-radius: 8px;
+            overflow: hidden; /* Hide slides that are not active */
+            z-index: 1; /* Ensure slide container is above the canvas */
+        }
+        
+        .slide {
+            background-color: #ffffff;
+            width: 100%;
+            height: 100%;
+            padding: 40px 60px;
+            display: none; /* Hide all slides by default */
+            flex-direction: column;
+            justify-content: flex-start; /* Align content to the top */
+            position: absolute;
+            box-sizing: border-box;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .slide.active {
+            display: flex; /* Show the active slide */
+            opacity: 1;
+            z-index: 1;
+        }
+        
+        .slide-header {
+            text-align: left;
+            margin-bottom: 20px;
+            flex-shrink: 0;
+        }
+
+        .slide-header h1 {
+            font-size: 48px;
+            font-weight: 700;
+            color: #1a2a6c; /* Deep Blue */
+            margin: 0 0 10px 0;
+        }
+
+        .slide-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Vertically center content */
+            position: relative;
+            z-index: 1;
+        }
+        
+        .slide-content h2 {
+             text-align: center; 
+             font-weight: 600; 
+             font-size: 32px;
+             margin-top: 0;
+             margin-bottom: 20px;
+             color: #343a40;
+        }
+        
+        .slide-content p.subtitle {
+            text-align: center; 
+            font-size: 18px; 
+            max-width: 80%; 
+            margin: 0 auto 30px auto;
+            color: #495057;
+        }
+
+        /* NAVIGATION */
+        .navigation {
+            width: 1024px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            z-index: 1; /* Ensure navigation is above the canvas */
+        }
+
+        .nav-button {
+            background-color: #fff;
+            color: #1a2a6c;
+            border: 1px solid #dee2e6;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.2s ease;
+        }
+        
+        .nav-button:hover {
+            background-color: #1a2a6c;
+            color: #fff;
+        }
+
+        .nav-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        #slide-counter {
+            font-weight: 600;
+            color: #495057;
+        }
+
+        /* --- New Title Slide Styles --- */
+        .title-slide {
+             background-color: #F8F9FA;
+        }
+        .title-slide .slide-content {
+            text-align: center;
+            justify-content: center;
+        }
+        .font-general-sans { font-family: 'General Sans', sans-serif; }
+        .text-charcoal { color: #1F1F1F; }
+        .text-brand-blue { color: #242E6B; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
+            opacity: 0;
+        }
+        .delay-1 { animation-delay: 0.4s; }
+        .delay-2 { animation-delay: 0.6s; }
+        
+        /* Team Slide */
+        .team-grid {
+            display: flex;
+            justify-content: space-around;
+            gap: 40px;
+            text-align: center;
+            width: 100%;
+        }
+        .team-member {
+            flex: 1;
+        }
+        .team-member img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 20px auto;
+            border: 4px solid #007bff;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .team-member h3 {
+            margin: 0;
+            font-size: 22px;
+            color: #1a2a6c;
+        }
+        .team-member .role {
+            color: #007bff;
+            font-weight: 600;
+        }
+        .team-member .experience {
+            font-size: 14px;
+            color: #6c757d;
+            margin-top: 10px;
+        }
+        .team-member-lived-it {
+             text-align: center; 
+             font-size: 18px; 
+             margin-top: 40px; 
+             font-style: italic;
+             color: #495057;
+        }
+
+        /* Ask Slide */
+        .ask-container {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+            width: 100%;
+        }
+        .ask-amount {
+            flex: 1;
+            text-align: center;
+        }
+        .ask-amount .amount-box {
+            font-size: 60px;
+            color: #1a2a6c;
+            margin: 0;
+            border: 4px solid #28a745;
+            padding: 20px;
+            border-radius: 8px;
+            font-weight: 700;
+        }
+        .use-of-funds {
+            flex: 1.5;
+        }
+        .use-of-funds h3 {
+            font-size: 24px;
+            color: #1a2a6c;
+            margin-top: 0;
+        }
+        .use-of-funds ul {
+            list-style-type: none;
+            padding: 0;
+            font-size: 16px;
+        }
+        .use-of-funds li {
+            padding: 10px 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+        .use-of-funds li strong {
+            color: #007bff;
+            display: inline-block;
+            width: 45px;
+        }
+
+        /* Vision Slide */
+        .vision-slide .slide-content {
+            text-align: center;
+            justify-content: center;
+        }
+        .vision-slide h1 {
+            font-size: 52px;
+        }
+        .vision-slide .statement {
+            font-size: 22px;
+            line-height: 1.6;
+            color: #495057;
+            max-width: 80%;
+            margin: 30px auto;
+        }
+        .vision-slide .final-cta {
+            font-size: 28px;
+            font-weight: bold;
+            color: #1a2a6c;
+            margin-top: 40px;
+        }
+        .vision-slide .contact-info {
+            margin-top: 10px;
+            font-size: 18px;
+            color: #6c757d;
+        }
+
+        /* New slide specific styles */
+        .pillar-icon-wrapper {
+            background-color: #eef2ff; /* A light blue/indigo background */
+        }
+        .timeline-line {
+            position: absolute;
+            left: 1.25rem; /* Aligns with the center of the number circle */
+            top: 1.25rem;
+            bottom: 1.25rem;
+            width: 2px;
+            background-color: #dbeafe; /* A light blue */
+            z-index: 0;
+        }
+
+        /* --- STYLES FOR ECOSYSTEM DIAGRAM --- */
+        .ecosystem-container {
+            position: relative;
+            width: 100%; 
+            height: 350px; /* Restored height */
+        }
+        .ecosystem-node {
+            position: absolute;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 10;
+        }
+        .ecosystem-connector {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 5;
+            pointer-events: none;
+        }
+
+        @keyframes light-up-blue {
+            0% { background-color: #DBEAFE; }
+            50% { background-color: #BFDBFE; }
+            100% { background-color: #DBEAFE; }
+        }
+
+        @keyframes light-up-green {
+            0% { background-color: #D1FAE5; }
+            50% { background-color: #BBF7D0; }
+            100% { background-color: #D1FAE5; }
+        }
+        
+        .light-up-blue-animate {
+            animation: light-up-blue 0.6s ease-in-out;
+        }
+
+        .light-up-green-animate {
+            animation: light-up-green 0.6s ease-in-out;
+        }
+        
+        .animated-line {
+            stroke-dasharray: 5 5;
+            animation: marching-ants 0.5s linear infinite;
+        }
+        
+        @keyframes marching-ants {
+            to {
+                stroke-dashoffset: -10;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="slide-container">
+        <!-- Slide 1: Title -->
+        <div class="slide active title-slide">
+             <canvas id="bg-canvas"></canvas>
+             <div class="slide-content">
+                 <div class="text-center">
+                     <div class="flex justify-center items-center gap-x-5 mb-5 fade-in">
+                         <img src="https://i.postimg.cc/ZnG9PsyF/railse-logo.png" alt="Railse Logo" class="h-14 md:h-16 w-auto" onerror="this.style.display='none'">
+                         <h1 class="text-6xl md:text-7xl font-semibold text-charcoal font-general-sans">
+                             Railse
+                         </h1>
+                     </div>
+                     <div class="mt-8">
+                         <p class="text-xl md:text-2xl text-charcoal leading-relaxed fade-in delay-1">
+                             Building super-fast logistics on LLMs.
+                         </p>
+                         <p class="mt-3 text-lg md:text-xl text-brand-blue font-medium fade-in delay-2">
+                             We're not just moving goods; we're connecting an entire economy.
+                         </p>
+                     </div>
+                 </div>
+             </div>
+        </div>
+
+        <!-- Slide 2: The Problem -->
+        <div class="slide p-8 md:p-12">
+            <div class="mb-8">
+                <span class="inline-block bg-blue-100 text-blue-800 text-xs font-semibold px-3 py-1.5 rounded-full uppercase tracking-wider">
+                    The Problem
+                </span>
+            </div>
+            <header class="slide-header text-center mb-8 md:mb-12">
+                <h1 class="main-headline text-3xl md:text-4xl lg:text-5xl font-extrabold text-gray-800 tracking-tight leading-tight">
+                    A Broken Market for Both Sides of the Shipment.
+                </h1>
+                <p class="key-insight-statistic mt-4 text-base md:text-lg lg:text-xl text-gray-600 max-w-4xl mx-auto">
+                    <strong class="text-blue-600 font-bold">75% of transport providers</strong> are small operators with fewer than 5 vehicles.
+                </p>
+            </header>
+            <div class="columns-wrapper grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-6 items-start">
+                <div class="problem-column bg-gray-100/60 p-6 rounded-lg border border-gray-200 h-full flex flex-col">
+                    <h2 class="column-headline text-xl md:text-2xl font-bold text-gray-800 mb-2">For India's 60 Million MSMEs</h2>
+                    <p class="sub-headline text-gray-600 mb-4">The search for a reliable transporter is a 3-month, 10-enquiry nightmare.</p>
+                    <ul class="pain-points-list space-y-3 text-gray-700 flex-grow">
+                        <li class="flex items-start">
+                            <svg class="w-6 h-6 mr-3 text-blue-500 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16l3.5-2 3.5 2 3.5-2 3.5 2z"></path></svg>
+                            <span>Opaque Pricing</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-6 h-6 mr-3 text-blue-500 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            <span>Frequent Delays</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-6 h-6 mr-3 text-blue-500 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                            <span>No Digital Tracking</span>
+                        </li>
+                         <li class="flex items-start">
+                            <svg class="w-6 h-6 mr-3 text-blue-500 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a2 2 0 01-2-2V10a2 2 0 012-2h8z"></path></svg>
+                            <span>Endless Coordination</span>
+                        </li>
+                    </ul>
+                    <p class="impact-statement shipper-impact mt-6 pt-4 border-t border-gray-300 font-semibold text-gray-900">
+                        They are forced to stick with mediocrity, losing time and money daily.
+                    </p>
+                </div>
+                <div class="problem-column bg-gray-100/60 p-6 rounded-lg border border-gray-200 h-full flex flex-col">
+                    <h2 class="column-headline text-xl md:text-2xl font-bold text-gray-800 mb-2">For India's Local Transport Providers</h2>
+                     <p class="sub-headline text-gray-600 mb-4">These expert operators are geographically trapped.</p>
+                    <ul class="pain-points-list space-y-3 text-gray-700 flex-grow">
+                        <li class="flex items-start">
+                            <svg class="w-6 h-6 mr-3 text-blue-500 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"></path></svg>
+                            <span>Deep expertise on only 1-2 routes</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-6 h-6 mr-3 text-blue-500 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"></path></svg>
+                            <span>Inability to serve customers PAN-India</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-6 h-6 mr-3 text-blue-500 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M12 6V4m0 16v-2M8 8l2-2 2 2 2-2 2 2M12 12h.01M16 12h.01M8 12h.01M12 16h.01"></path></svg>
+                            <span>Limited Access to Technology</span>
+                        </li>
+                    </ul>
+                    <p class="impact-statement operator-impact mt-6 pt-4 border-t border-gray-300 font-semibold text-gray-900">
+                        Forced to say 'no' to growth, losing countless business opportunities.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: The Solution -->
+        <div class="slide p-8 md:p-12">
+            <div class="mb-8">
+                <span class="inline-block bg-blue-100 text-blue-800 text-xs font-semibold px-3 py-1.5 rounded-full uppercase tracking-wider">
+                    The Solution
+                </span>
+            </div>
+            <header class="slide-header text-center mb-8 md:mb-12">
+                <h1 class="main-headline text-3xl md:text-4xl lg:text-5xl font-extrabold text-gray-900 tracking-tight leading-tight">
+                    The AI Engine for Autonomous Logistics.
+                </h1>
+                <p class="intro-paragraph mt-4 text-base md:text-lg text-gray-600 max-w-4xl mx-auto">
+                    We automate complex shipping decisions to create a frictionless market, delivering unparalleled reliability for shippers and exponential growth for transporters.
+                </p>
+            </header>
+            <div class="columns-wrapper grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                <div class="solution-column">
+                    <h2 class="column-headline text-xl font-bold text-gray-800 mb-6 text-center">For the MSME: <br> From Chaos to Control</h2>
+                    <ul class="benefits-list space-y-4">
+                        <li class="benefit-item bg-gray-50/70 py-2 px-4 rounded-lg">
+                            <div class="mb-2">
+                               <span class="benefit-label inline-block bg-indigo-100 text-indigo-800 text-xs font-semibold px-2.5 py-1 rounded-md">Delivery Speed</span>
+                            </div>
+                            <div class="benefit-transformation flex items-center justify-between">
+                                <span class="old-way text-gray-500 line-through text-sm">7-10 days</span>
+                                <span class="arrow-icon text-blue-500 font-bold text-xl mx-2">→</span>
+                                <span class="new-way text-blue-600 font-bold text-sm">1-2 Days PAN-India</span>
+                            </div>
+                        </li>
+                        <li class="benefit-item bg-gray-50/70 py-2 px-4 rounded-lg">
+                            <div class="mb-2">
+                               <span class="benefit-label inline-block bg-indigo-100 text-indigo-800 text-xs font-semibold px-2.5 py-1 rounded-md">Finding a Partner</span>
+                            </div>
+                            <div class="benefit-transformation flex items-center justify-between">
+                                <span class="old-way text-gray-500 line-through text-sm">3-Month Nightmare</span>
+                                <span class="arrow-icon text-blue-500 font-bold text-xl mx-2">→</span>
+                                <span class="new-way text-blue-600 font-bold text-sm">Instant AI Match</span>
+                            </div>
+                        </li>
+                        <li class="benefit-item bg-gray-50/70 py-2 px-4 rounded-lg">
+                            <div class="mb-2">
+                               <span class="benefit-label inline-block bg-indigo-100 text-indigo-800 text-xs font-semibold px-2.5 py-1 rounded-md">Pricing</span>
+                            </div>
+                            <div class="benefit-transformation flex items-center justify-between">
+                                <span class="old-way text-gray-500 line-through text-sm">Opaque Quotes</span>
+                                <span class="arrow-icon text-blue-500 font-bold text-xl mx-2">→</span>
+                                <span class="new-way text-blue-600 font-bold text-sm">Dynamic & Personalized</span>
+                            </div>
+                        </li>
+                        <li class="benefit-item bg-gray-50/70 py-2 px-4 rounded-lg">
+                            <div class="mb-2">
+                               <span class="benefit-label inline-block bg-indigo-100 text-indigo-800 text-xs font-semibold px-2.5 py-1 rounded-md">Coordination</span>
+                            </div>
+                            <div class="benefit-transformation flex items-center justify-between">
+                                <span class="old-way text-gray-500 line-through text-sm">Heavy Burden</span>
+                                <span class="arrow-icon text-blue-500 font-bold text-xl mx-2">→</span>
+                                <span class="new-way text-blue-600 font-bold text-sm">Autonomous Orchestration</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="solution-column">
+                    <h2 class="column-headline text-xl font-bold text-gray-800 mb-6 text-center">For the Transporter: <br> From Stagnation to Growth</h2>
+                    <ul class="benefits-list space-y-4">
+                        <li class="benefit-item bg-gray-50/70 py-2 px-4 rounded-lg">
+                            <div class="mb-2">
+                               <span class="benefit-label inline-block bg-indigo-100 text-indigo-800 text-xs font-semibold px-2.5 py-1 rounded-md">New Business</span>
+                            </div>
+                            <div class="benefit-transformation flex items-center justify-between">
+                                <span class="old-way text-gray-500 line-through text-sm">Turning Away Customers</span>
+                                <span class="arrow-icon text-blue-500 font-bold text-xl mx-2">→</span>
+                                <span class="new-way text-blue-600 font-bold text-sm">Serve Every Request</span>
+                            </div>
+                        </li>
+                        <li class="benefit-item bg-gray-50/70 py-2 px-4 rounded-lg">
+                            <div class="mb-2">
+                               <span class="benefit-label inline-block bg-indigo-100 text-indigo-800 text-xs font-semibold px-2.5 py-1 rounded-md">Operations</span>
+                            </div>
+                            <div class="benefit-transformation flex items-center justify-between">
+                                <span class="old-way text-gray-500 line-through text-sm">Manual & Paper Based</span>
+                                <span class="arrow-icon text-blue-500 font-bold text-xl mx-2">→</span>
+                                <span class="new-way text-blue-600 font-bold text-sm">1/10th the Time via App</span>
+                            </div>
+                        </li>
+                        <li class="benefit-item bg-gray-50/70 py-2 px-4 rounded-lg">
+                            <div class="mb-2">
+                               <span class="benefit-label inline-block bg-indigo-100 text-indigo-800 text-xs font-semibold px-2.5 py-1 rounded-md">Business Management</span>
+                            </div>
+                            <div class="benefit-transformation flex items-center justify-between">
+                                <span class="old-way text-gray-500 line-through whitespace-nowrap text-sm">Disconnected Tools</span>
+                                <span class="arrow-icon text-blue-500 font-bold text-xl mx-2">→</span>
+                                <span class="new-way text-blue-600 font-bold whitespace-nowrap text-sm">A Super App for Everything</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: The Intelligence Engine -->
+        <div class="slide p-8 md:p-12 grid grid-rows-[auto_1fr] gap-4">
+            <!-- Top Content Wrapper -->
+            <div>
+                <div class="mb-8">
+                    <span class="inline-block bg-blue-100 text-blue-800 text-xs font-semibold px-3 py-1.5 rounded-full uppercase tracking-wider">
+                        The Intelligence Engine
+                    </span>
+                </div>
+                <header class="slide-header text-center mb-4">
+                    <h1 class="main-headline text-3xl md:text-4xl lg:text-5xl font-extrabold text-gray-800 tracking-tight leading-tight">
+                        The Brains Behind Every Shipment.
+                    </h1>
+                    <p class="intro-paragraph mt-4 text-base md:text-lg text-gray-600 max-w-4xl mx-auto">
+                        Our advantage isn't an app; it's a proprietary AI engine that automates chaos. The system makes the key decisions, allowing us to scale with unparalleled efficiency.
+                    </p>
+                </header>
+                <div class="pillars-wrapper grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
+                    <div class="pillar bg-gray-100/60 px-4 py-6 rounded-lg text-center flex flex-col">
+                        <div class="pillar-icon-wrapper w-8 h-8 rounded-full mx-auto flex items-center justify-center mb-2">
+                            <svg class="w-4 h-4 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
+                            </svg>
+                        </div>
+                        <h2 class="pillar-title text-base font-bold text-gray-800">Customer Intelligence Engine</h2>
+                        <p class="pillar-description text-gray-600 mt-2 text-sm flex-grow">
+                            Analyzes every interaction to power our <strong>Customer Ranking</strong> and <strong>Quotation Generation</strong> algorithms, delivering perfectly personalized quotes and focusing sales on high-potential clients.
+                        </p>
+                    </div>
+                    <div class="pillar bg-gray-100/60 px-4 py-6 rounded-lg text-center flex flex-col">
+                        <div class="pillar-icon-wrapper w-8 h-8 rounded-full mx-auto flex items-center justify-center mb-2">
+                            <svg class="w-4 h-4 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" />
+                            </svg>
+                        </div>
+                        <h2 class="pillar-title text-base font-bold text-gray-800">Supply Orchestration Engine</h2>
+                        <p class="pillar-description text-gray-600 mt-2 text-sm flex-grow">
+                            Continuously ranks every transporter on performance. Our <strong>Vendor Ranking</strong> and <strong>Order Matching</strong> algorithms instantly select the optimal partner for any job.
+                        </p>
+                    </div>
+                    <div class="pillar bg-gray-100/60 px-4 py-6 rounded-lg text-center flex flex-col">
+                        <div class="pillar-icon-wrapper w-8 h-8 rounded-full mx-auto flex items-center justify-center mb-2">
+                             <svg class="w-4 h-4 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                  <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                             </svg>
+                        </div>
+                        <h2 class="pillar-title text-base font-bold text-gray-800">Autonomous Operations Engine</h2>
+                        <p class="pillar-description text-gray-600 mt-2 text-sm flex-grow">
+                            Automates all post-booking communication. Our <strong>Order Coordination</strong> algorithm is the key to scaling operations without scaling headcount.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- Bottom Content: Animated Diagram -->
+            <div id="ecosystem" class="ecosystem-container flex items-end pb-4"></div>
+        </div>
+        
+        <!-- Slide 5: The Moat -->
+        <div class="slide p-8 md:p-12">
+            <div class="mb-8">
+                <span class="inline-block bg-blue-100 text-blue-800 text-xs font-semibold px-3 py-1.5 rounded-full uppercase tracking-wider">
+                    The Moat
+                </span>
+            </div>
+            <header class="slide-header text-center mb-8 md:mb-12">
+                <h1 class="main-headline text-3xl md:text-4xl lg:text-5xl font-extrabold text-gray-800 tracking-tight leading-tight">
+                    Our Moat: A Symbiotic Ecosystem.
+                </h1>
+                <p class="intro-paragraph mt-4 text-base md:text-lg text-gray-600 max-w-4xl mx-auto">
+                    Our defensibility is built on three layers that reinforce each other, creating a system that is incredibly difficult to replicate.
+                </p>
+            </header>
+            <div class="pillars-wrapper grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="pillar bg-gray-100/60 p-6 rounded-lg text-center flex flex-col">
+                    <div class="pillar-icon-wrapper w-16 h-16 rounded-full mx-auto flex items-center justify-center mb-4">
+                        <svg class="w-8 h-8 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.286zm0 13.036h.008v.008H12v-.008z" />
+                        </svg>
+                    </div>
+                    <h2 class="pillar-title text-lg font-bold text-gray-800">The Empowered Network</h2>
+                    <p class="pillar-description text-gray-600 mt-2 text-sm flex-grow">
+                        We empower the top 10% of transporters with our technology. This creates <strong>deep loyalty</strong> and high switching costs, locking in the market's best supply network exclusively for us.
+                    </p>
+                </div>
+                <div class="pillar bg-gray-100/60 p-6 rounded-lg text-center flex flex-col">
+                    <div class="pillar-icon-wrapper w-16 h-16 rounded-full mx-auto flex items-center justify-center mb-4">
+                        <svg class="w-8 h-8 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                    </div>
+                    <h2 class="pillar-title text-lg font-bold text-gray-800">The Execution Playbook</h2>
+                    <p class="pillar-description text-gray-600 mt-2 text-sm flex-grow">
+                        Our unique model blends the trust of traditional relationships with modern tech efficiency—a <strong>hybrid DNA</strong> that pure-tech or legacy players cannot match.
+                    </p>
+                </div>
+                <div class="pillar bg-gray-100/60 p-6 rounded-lg text-center flex flex-col">
+                    <div class="pillar-icon-wrapper w-16 h-16 rounded-full mx-auto flex items-center justify-center mb-4">
+                         <svg class="w-8 h-8 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418" />
+                        </svg>
+                    </div>
+                    <h2 class="pillar-title text-lg font-bold text-gray-800">The Intelligence Engine</h2>
+                    <p class="pillar-description text-gray-600 mt-2 text-sm flex-grow">
+                        Our AI gets smarter with every shipment. This <strong>compounding data advantage</strong> makes our pricing and matching superior, creating a barrier impossible for new entrants to overcome.
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 6: The Market Opportunity (NEW VERSION) -->
+        <div class="slide p-8 md:p-12">
+            <!-- Modern Tag Style Title -->
+            <div class="mb-8">
+                <span class="inline-block bg-blue-100 text-blue-800 text-xs font-semibold px-3 py-1.5 rounded-full uppercase tracking-wider">
+                    The Market Opportunity
+                </span>
+            </div>
+    
+            <!-- Header section with main headline -->
+            <header class="slide-header text-center mb-8 md:mb-12">
+                <h1 class="main-headline text-3xl md:text-4xl lg:text-5xl font-extrabold text-gray-900 tracking-tight leading-tight">
+                    A Massive Market + The Right Catalyst
+                </h1>
+            </header>
+    
+            <!-- Main content area with a new symmetrical 2-column layout -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
+    
+                <!-- Column 1: The Market Size -->
+                <div class="market-size-column bg-gray-50/70 p-6 rounded-lg border border-gray-200 flex flex-col">
+                    <h2 class="text-xl font-bold text-gray-800 mb-6 text-center">The Market</h2>
+                    <div class="space-y-4 text-center flex-grow flex flex-col justify-center">
+                        <div>
+                            <p class="text-5xl font-extrabold text-blue-900">$350B</p>
+                            <p class="mt-1 text-gray-600">Total Indian Logistics Market (TAM)</p>
+                        </div>
+                        <div>
+                            <p class="text-4xl font-extrabold text-blue-800">$65B</p>
+                            <p class="mt-1 text-gray-600">PTL, Express & Rail Market (SAM)</p>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- Column 2: The Catalyst -->
+                <div class="catalyst-column bg-gray-50/70 p-6 rounded-lg border border-gray-200 flex flex-col">
+                    <h2 class="text-xl font-bold text-gray-800 mb-6 text-center">
+                        <span class="inline-block bg-green-100 text-green-800 text-xs font-semibold px-2.5 py-1 rounded-full align-middle mr-2">Why Now?</span><!--
+                     --><span class="align-middle">The AI Inflection Point</span>
+                    </h2>
+                    <div class="text-center flex-grow flex flex-col justify-center">
+                        <p class="text-gray-600">This century-old market is finally vulnerable. For the first time, AI gives us the power to automate the millions of complex decisions that create logistics chaos, unlocking immense value.</p>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- The Resulting Target Market (SOM) -->
+            <div class="som-block bg-blue-500 text-white p-6 rounded-lg text-center mt-8">
+                 <h3 class="text-sm font-semibold uppercase tracking-wider">Our Initial Target Market (SOM)</h3>
+                 <p class="text-5xl font-extrabold mt-2">$9 Billion</p>
+                 <p class="mt-2 text-blue-100 max-w-2xl mx-auto">The "Experience Seeking" MSMEs who will pay a premium for the reliability and speed that our AI delivers.</p>
+            </div>
+        </div>
+        
+        <!-- Slide 7: Business Model & Go-to-Market -->
+        <div class="slide p-8 md:p-12">
+            <div class="mb-8">
+                <span class="inline-block bg-blue-100 text-blue-800 text-xs font-semibold px-3 py-1.5 rounded-full uppercase tracking-wider">
+                    Business Model & Go-to-Market
+                </span>
+            </div>
+            <header class="slide-header text-center mb-8 md:mb-12">
+                <h1 class="main-headline text-3xl md:text-4xl lg:text-5xl font-extrabold text-gray-900 tracking-tight leading-tight">
+                    Our Playbook to Capture the $65B Market.
+                </h1>
+            </header>
+            <div class="columns-wrapper grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="revenue-engines-column bg-gray-50/70 p-6 rounded-lg border border-gray-200 flex flex-col">
+                    <h2 class="column-title text-xl font-bold text-gray-800 mb-6 text-center">Our Revenue Engines</h2>
+                    <div class="space-y-6 flex-grow flex flex-col justify-around">
+                        <div class="revenue-stream">
+                            <h4 class="stream-title font-semibold text-blue-600">Transporter Revenue</h4>
+                            <div class="mt-2 text-gray-700 space-y-2">
+                                <p class="stream-item"><strong>SaaS Subscription:</strong> ₹5-10K/month for our super app.</p>
+                                <p class="stream-item"><strong>Network Commission:</strong> 5-10% fee on network-fulfilled orders.</p>
+                            </div>
+                        </div>
+                        <div class="revenue-stream">
+                            <h4 class="stream-title font-semibold text-blue-600">Shipper Revenue</h4>
+                            <p class="stream-item mt-2 text-gray-700"><strong>The Intelligent Margin:</strong> AI-powered, value-based margin on every shipment.</p>
+                        </div>
+                        <div class="revenue-stream">
+                            <h4 class="stream-title font-semibold text-blue-600">Ecosystem Revenue (Future)</h4>
+                            <p class="stream-item mt-2 text-gray-700">Embedded Insurance & Fintech; Cross-selling essential products.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="market-attack-column bg-gray-50/70 p-6 rounded-lg border border-gray-200 flex flex-col">
+                    <h2 class="column-title text-xl font-bold text-gray-800 mb-6 text-center">Our 3-Phase Market Attack</h2>
+                    <div class="relative flex-grow">
+                        <div class="timeline-line hidden md:block"></div>
+                        <ul class="timeline space-y-6">
+                            <li class="timeline-phase flex items-start">
+                                <div class="phase-number flex-shrink-0 w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold z-10">1</div>
+                                <div class="phase-details ml-4">
+                                    <h4 class="phase-title font-bold text-gray-800">Experience Seekers</h4>
+                                    <p class="phase-description mt-1 text-gray-700">Establish a profitable foundation with premium, experience-first MSMEs.</p>
+                                </div>
+                            </li>
+                            <li class="timeline-phase flex items-start">
+                                <div class="phase-number flex-shrink-0 w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold z-10">2</div>
+                                <div class="phase-details ml-4">
+                                    <h4 class="phase-title font-bold text-gray-800">Value Seekers</h4>
+                                    <p class="phase-description mt-1 text-gray-700">Expand to the mid-market by profitably serving value-seeking MSMEs.</p>
+                                </div>
+                            </li>
+                            <li class="timeline-phase flex items-start">
+                                <div class="phase-number flex-shrink-0 w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold z-10">3</div>
+                                <div class="phase-details ml-4">
+                                    <h4 class="phase-title font-bold text-gray-800">Price-Conscious</h4>
+                                    <p class="phase-description mt-1 text-gray-700">Capture the mass market with high-margin embedded insurance & fintech.</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 8: The Team -->
+        <div class="slide p-8 md:p-12">
+            <div class="mb-8">
+                <span class="inline-block bg-blue-100 text-blue-800 text-xs font-semibold px-3 py-1.5 rounded-full uppercase tracking-wider">
+                    The Team
+                </span>
+            </div>
+            <div class="slide-content">
+                <h2>The Team Built for This Mission.</h2>
+                <p class="subtitle">We are founders from IIT Roorkee with deep, first-hand experience building and scaling technology and logistics at India's most iconic companies.</p>
+                <div class="team-grid">
+                    <div class="team-member">
+                        <img src="https://lh3.googleusercontent.com/d/1SwxQ4-Rjc3Y2FBeHrkqm2n0kyvFjqSEJ" alt="Bhupendra Singh Chauhan Headshot" crossorigin="anonymous" onerror="this.onerror=null;this.src='https://placehold.co/150x150/dee2e6/6c757d?text=Bhupendra';" />
+                        <h3>Bhupendra Singh Chauhan</h3>
+                        <p class="role">CEO</p>
+                        <p class="experience">IIT Roorkee '17. Ex-Jumbotail, Flipkart, Samsung, Microsoft.</p>
+                    </div>
+                    <div class="team-member">
+                        <img src="https://lh3.googleusercontent.com/d/1hFj656MlSt3HmoZxwWfzg9A91TzWvK3D" alt="Prashant Kumar Headshot" crossorigin="anonymous" onerror="this.onerror=null;this.src='https://placehold.co/150x150/dee2e6/6c757d?text=Prashant';" />
+                        <h3>Prashant Kumar</h3>
+                        <p class="role">CTO</p>
+                        <p class="experience">IIT Roorkee '18. Ex-Mensa, Jumbotail, Amazon, Samsung.</p>
+                    </div>
+                </div>
+                <p class="team-member-lived-it">We haven't just studied this problem; we've lived it.</p>
+            </div>
+        </div>
+        
+        <!-- Slide 9: The Ask -->
+        <div class="slide p-8 md:p-12">
+            <div class="mb-8">
+                <span class="inline-block bg-blue-100 text-blue-800 text-xs font-semibold px-3 py-1.5 rounded-full uppercase tracking-wider">
+                    The Ask
+                </span>
+            </div>
+            <div class="slide-content">
+                <p class="subtitle">To scale our proven, profitable model and become the dominant PTL platform in India.</p>
+                <div class="ask-container">
+                    <div class="ask-amount">
+                        <div class="amount-box">[Insert Amount]</div>
+                    </div>
+                    <div class="use-of-funds">
+                        <h3>Use of Funds (18 Months):</h3>
+                        <ul>
+                            <li><strong>30%</strong> - First/Last Mile Partnerships: Onboard 500+ new partners & establish presence in 15 new cities.</li>
+                            <li><strong>30%</strong> - Operations & Team: Triple our monthly revenue by hiring key sales and ops leaders.</li>
+                            <li><strong>20%</strong> - Tech & AI Development: Fully automate our quoting and vendor allocation engine.</li>
+                            <li><strong>20%</strong> - Vendor & Client Onboarding: Acquire 1,000 new paying MSMEs.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 10: The Vision -->
+        <div class="slide vision-slide">
+             <div class="slide-content">
+                 <h1>Channelizing the Real India.</h1>
+                 <p class="statement">95% of India's logistics is run by an army of local transporters. We are building the digital playbook that was never before possible: a single, intelligent network that unifies this fragmented power.</p>
+                 <p class="statement">We are creating a future where any business in India can ship its goods with the same trust and ease as sending an email.</p>
+                 <p class="final-cta">Railse. Join Us.</p>
+                 <p class="contact-info">[Contact Info]</p>
+             </div>
+        </div>
+
+        <!-- Slide 11: The Proof -->
+        <div class="slide p-8 md:p-12 proof-slide">
+            <div class="mb-8">
+                <span class="inline-block bg-blue-100 text-blue-800 text-xs font-semibold px-3 py-1.5 rounded-full uppercase tracking-wider">
+                    The Proof
+                </span>
+            </div>
+            <header class="slide-header text-center mb-4 md:mb-6">
+                <h1 class="main-headline text-3xl md:text-4xl lg:text-5xl font-extrabold text-gray-900 tracking-tight leading-tight">
+                    Profitable, Accelerating Growth.
+                </h1>
+                <p class="intro-paragraph mt-4 text-base md:text-lg text-gray-600 max-w-4xl mx-auto">
+                    This isn't just an idea. We built a capital-efficient engine that is already working and hitting an inflection point.
+                </p>
+            </header>
+            <div class="key-metrics-summary bg-gray-50/70 p-3 rounded-lg mb-4">
+                <div class="grid grid-cols-2 gap-8 text-center">
+                    <div>
+                        <p class="text-3xl font-extrabold text-green-600">34%</p>
+                        <p class="mt-1 text-xs text-gray-600">Average Gross Profit</p>
+                    </div>
+                    <div>
+                        <p class="text-3xl font-extrabold text-blue-600">107%</p>
+                        <p class="mt-1 text-xs text-gray-600">Growth in Monthly Orders (4 mos)</p>
+                    </div>
+                </div>
+            </div>
+            <div class="metrics-wrapper grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="h-96">
+                    <h3 class="text-lg font-bold text-gray-800 mb-4 text-center">Last 4-Month Growth Trajectory</h3>
+                    <div class="h-full pb-8">
+                        <canvas id="accelerationChart"></canvas>
+                    </div>
+                </div>
+                <div class="flex flex-col justify-center space-y-8">
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <h4 class="font-semibold text-gray-700">Revenue</h4>
+                            <div class="flex items-center space-x-32">
+                                <span class="bg-gray-200 text-gray-800 text-xs font-semibold px-3 py-1 rounded-full">last 4 month</span>
+                                <span class="bg-gray-200 text-gray-800 text-xs font-semibold px-3 py-1 rounded-full">11 month</span>
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <div class="flex items-center">
+                                <div class="w-full bg-blue-500 h-2.5 rounded-full" style="width: 47.5%;"></div>
+                                <span class="ml-3 font-semibold text-blue-600 text-lg whitespace-nowrap">₹ 12.6L</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-full bg-gray-200 h-2.5 rounded-full"></div>
+                                <span class="ml-3 font-semibold text-gray-500 text-lg whitespace-nowrap">₹ 26.5L</span>
+                            </div>
+                        </div>
+                    </div>
+                     <div>
+                        <h4 class="font-semibold text-gray-700 mb-3">Gross profit</h4>
+                        <div class="space-y-2">
+                            <div class="flex items-center">
+                                <div class="w-full bg-green-500 h-2.5 rounded-full" style="width: 51.7%;"></div>
+                                <span class="ml-3 font-semibold text-green-600 text-lg whitespace-nowrap">₹ 4.6L</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-full bg-gray-200 h-2.5 rounded-full"></div>
+                                <span class="ml-3 font-semibold text-gray-500 text-lg whitespace-nowrap">₹ 8.9L</span>
+                            </div>
+                        </div>
+                    </div>
+                     <div>
+                        <h4 class="font-semibold text-gray-700 mb-3">Orders</h4>
+                          <div class="space-y-2">
+                            <div class="flex items-center">
+                                <div class="w-full bg-indigo-500 h-2.5 rounded-full" style="width: 55.7%;"></div>
+                                <span class="ml-3 font-semibold text-indigo-600 text-lg whitespace-nowrap">273</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-full bg-gray-200 h-2.5 rounded-full"></div>
+                                <span class="ml-3 font-semibold text-gray-500 text-lg whitespace-nowrap">490</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="navigation">
+        <button id="prev" class="nav-button">Previous</button>
+        <div id="slide-counter">1 / 11</div>
+        <button id="next" class="nav-button">Next</button>
+    </div>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const prevButton = document.getElementById('prev');
+        const nextButton = document.getElementById('next');
+        const slideCounter = document.getElementById('slide-counter');
+        
+        let currentSlide = 0;
+        const totalSlides = slides.length;
+        let chartRendered = false; 
+        let ecosystemRendered = false;
+        
+        // --- Animation variables ---
+        let threeJsInitialized = false;
+        let animationFrameId;
+        let scene, camera, renderer, particles, lines;
+        const particleCount = 150;
+        const connectionDistance = 120;
+        const sparkThreshold = 5;
+        const defaultParticleColor = new THREE.Color(0x9CA3AF);
+        const sparkColor = new THREE.Color(0xFFFF00);
+
+        // --- ECOSYSTEM DATA ---
+        const ecosystemData = {
+            track: [
+                { id: 'track1', text: "Dynamic & Personalized Pricing", position: { x: 20, y: 50 } },
+                { id: 'track2', text: "Instant AI Matching", position: { x: 50, y: 50 } },
+                { id: 'track3', text: "Autonomous Orchestration", position: { x: 80, y: 50 } }
+            ],
+            wins: [
+                { text: "Only the Best Partners", color: "blue", position: { x: 10, y: 65 } },
+                { text: "Local Expert. National Reach.", color: "green", position: { x: 22, y: 80 } },
+                { text: "Good Work, More Business", color: "green", position: { x: 33, y: 72 } },
+                { text: "Your Enterprise Toolkit", color: "green", position: { x: 45, y: 82 } },
+                { text: "Reputation is Revenue", color: "green", position: { x: 58, y: 75 } },
+                { text: "Focus on Your Business", color: "green", position: { x: 70, y: 82 } },
+                { text: "No More random Follow-ups", color: "green", position: { x: 77, y: 72 } },
+                { text: "More Time to Grow", color: "green", position: { x: 90, y: 80 } },
+                { text: "Reliability, Guaranteed", color: "blue", position: { x: 96, y: 64 } },
+                { text: "Stop Searching. Start Shipping.", color: "blue", position: { x: 12, y: 32 } },
+                { text: "Grow Beyond Your City", color: "green", position: { x: 25, y: 20 } },
+                { text: "A Pre-Vetted Network", color: "blue", position: { x: 38, y: 25 } },
+                { text: "Logistics, Managed for You", color: "blue", position: { x: 45, y: 10 } },
+                { text: "Always on Support", color: "blue", position: { x: 55, y: 22 } },
+                { text: "Pro Pricing for All", color: "blue", position: { x: 63, y: 30 } },
+                { text: "Trusted Partners, Instantly", color: "blue", position: { x: 70, y: 15 } },
+                { text: "Fair Price, Instantly", color: "blue", position: { x: 93, y: 35 } },
+                { text: "No More Bargaining", color: "blue", position: { x: 85, y: 22 } },
+            ]
+        };
+
+        // --- ECOSYSTEM RENDER FUNCTION ---
+        function createEcosystem(containerId, data) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            const containerRect = container.getBoundingClientRect();
+            container.innerHTML = '';
+
+            const { track, wins } = data;
+
+            const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+            svg.setAttribute('class', 'ecosystem-connector');
+            
+            container.appendChild(svg);
+            
+            const capsuleHeight = 50;
+            const pipelineCapsule = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+            const leftCapsulePadding = 125; 
+            const rightCapsulePadding = 108;
+            const startX_percent = track[0].position.x;
+            const endX_percent = track[track.length - 1].position.x;
+            
+            const capsuleStartX_px = (startX_percent / 100) * containerRect.width - leftCapsulePadding;
+            const capsuleWidth_px = ((endX_percent - startX_percent) / 100) * containerRect.width + leftCapsulePadding + rightCapsulePadding;
+            const capsuleY_px = (containerRect.height / 2) - (capsuleHeight / 2);
+
+            pipelineCapsule.setAttribute('x', capsuleStartX_px);
+            pipelineCapsule.setAttribute('y', capsuleY_px);
+            pipelineCapsule.setAttribute('width', capsuleWidth_px);
+            pipelineCapsule.setAttribute('height', capsuleHeight);
+            pipelineCapsule.setAttribute('rx', capsuleHeight / 2);
+            pipelineCapsule.setAttribute('ry', capsuleHeight / 2);
+            pipelineCapsule.setAttribute('fill', '#EFF6FF');
+            svg.appendChild(pipelineCapsule);
+
+            track.forEach(node => {
+                const trackTag = document.createElement('span');
+                trackTag.id = node.id;
+                trackTag.className = `ecosystem-node whitespace-nowrap inline-block bg-indigo-100 text-indigo-800 text-xs font-semibold px-4 py-2 rounded-full`;
+                trackTag.textContent = node.text;
+                trackTag.style.left = `${node.position.x}%`;
+                trackTag.style.top = `${node.position.y}%`;
+                container.appendChild(trackTag);
+            });
+            
+            wins.forEach((win, index) => {
+                const colorClass = win.color === 'green' ? 'bg-green-100 text-green-800' : 'bg-blue-100 text-blue-800';
+                const winTag = document.createElement('span');
+                winTag.id = `win-tag-${index}`;
+                winTag.className = `ecosystem-node whitespace-nowrap ${colorClass} text-[10px] font-medium px-1 py-0.5 rounded-full`;
+                winTag.textContent = win.text;
+                winTag.style.left = `${win.position.x}%`;
+                winTag.style.top = `${win.position.y}%`;
+                container.appendChild(winTag);
+
+                const winPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
+                const pathId = `win-path-${index}`;
+                winPath.setAttribute('id', pathId);
+                winPath.setAttribute('class', 'animated-line');
+
+                const pipelineStartXPercent = track[0].position.x;
+                const pipelineEndXPercent = track[track.length - 1].position.x;
+                
+                const closestX_percent = Math.max(pipelineStartXPercent, Math.min(win.position.x, pipelineEndXPercent));
+
+                const startX_px = (win.position.x / 100) * containerRect.width;
+                const startY_px = (win.position.y / 100) * containerRect.height;
+                const endX_px = (closestX_percent / 100) * containerRect.width;
+                const endY_px = containerRect.height / 2;
+                
+                const d = `M ${endX_px} ${endY_px} L ${startX_px} ${startY_px}`;
+                winPath.setAttribute('d', d);
+                
+                winPath.setAttribute('stroke', '#CBD5E1');
+                winPath.setAttribute('stroke-width', '1.5');
+                winPath.setAttribute('fill', 'none');
+                
+                svg.insertBefore(winPath, pipelineCapsule);
+
+                const dot = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+                dot.setAttribute('r', '1.5');
+                
+                const dotColor = win.color === 'green' ? '#22C55E' : '#3B82F6';
+                dot.setAttribute('fill', dotColor);
+
+                const animateMotion = document.createElementNS("http://www.w3.org/2000/svg", "animateMotion");
+                const duration = (Math.random() * 2.1) + 2.1;
+                animateMotion.setAttribute('dur', `${duration}s`); 
+                animateMotion.setAttribute('repeatCount', 'indefinite');
+                
+                animateMotion.addEventListener('repeatEvent', () => {
+                    const tagToLightUp = document.getElementById(`win-tag-${index}`);
+                    const animationClass = win.color === 'green' ? 'light-up-green-animate' : 'light-up-blue-animate';
+                    
+                    tagToLightUp.classList.add(animationClass);
+                    
+                    setTimeout(() => {
+                        tagToLightUp.classList.remove(animationClass);
+                    }, 600);
+                });
+
+                const mpath = document.createElementNS("http://www.w3.org/2000/svg", "mpath");
+                mpath.setAttributeNS("http://www.w3.org/1999/xlink", "href", `#${pathId}`);
+                
+                animateMotion.appendChild(mpath);
+                dot.appendChild(animateMotion);
+                svg.appendChild(dot);
+            });
+        }
+
+        // --- Animation Loop ---
+        function animateLoop() {
+            animationFrameId = requestAnimationFrame(animateLoop);
+
+            const positions = particles.geometry.attributes.position.array;
+            const colors = particles.geometry.attributes.color.array;
+            const velocities = particles.geometry.velocities;
+
+            for (let i = 0; i < particleCount; i++) {
+                positions[i * 3] += velocities[i].x;
+                positions[i * 3 + 1] += velocities[i].y;
+
+                if (positions[i * 3 + 1] < -384 || positions[i * 3 + 1] > 384) velocities[i].y = -velocities[i].y;
+                if (positions[i * 3] < -512 || positions[i * 3] > 512) velocities[i].x = -velocities[i].x;
+            }
+            particles.geometry.attributes.position.needsUpdate = true;
+
+            const linePositions = [];
+            const connectionCounts = new Array(particleCount).fill(0);
+
+            for (let i = 0; i < particleCount; i++) {
+                for (let j = i + 1; j < particleCount; j++) {
+                    const dx = positions[i * 3] - positions[j * 3];
+                    const dy = positions[i * 3 + 1] - positions[j * 3 + 1];
+                    const dz = positions[i * 3 + 2] - positions[j * 3 + 2];
+                    const distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
+
+                    if (distance < connectionDistance) {
+                        linePositions.push(positions[i * 3], positions[i * 3 + 1], positions[i * 3 + 2]);
+                        linePositions.push(positions[j * 3], positions[j * 3 + 1], positions[j * 3 + 2]);
+                        connectionCounts[i]++;
+                        connectionCounts[j]++;
+                    }
+                }
+            }
+            lines.geometry.setAttribute('position', new THREE.Float32BufferAttribute(linePositions, 3));
+            lines.geometry.attributes.position.needsUpdate = true;
+
+            for (let i = 0; i < particleCount; i++) {
+                if (connectionCounts[i] > sparkThreshold) {
+                    sparkColor.toArray(colors, i * 3);
+                } else {
+                    defaultParticleColor.toArray(colors, i * 3);
+                }
+            }
+            particles.geometry.attributes.color.needsUpdate = true;
+            renderer.render(scene, camera);
+        }
+
+        function startAnimation() {
+            if (!animationFrameId) {
+                animateLoop();
+            }
+        }
+
+        function stopAnimation() {
+            if (animationFrameId) {
+                cancelAnimationFrame(animationFrameId);
+                animationFrameId = null;
+            }
+        }
+
+        function initThreeJS() {
+            if (threeJsInitialized) return;
+            threeJsInitialized = true;
+
+            const bgCanvas = document.getElementById('bg-canvas');
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(75, bgCanvas.clientWidth / bgCanvas.clientHeight, 0.1, 1000);
+            camera.position.z = 300;
+
+            renderer = new THREE.WebGLRenderer({ canvas: bgCanvas, alpha: true });
+            renderer.setSize(bgCanvas.clientWidth, bgCanvas.clientHeight);
+            renderer.setClearColor(0x000000, 0); 
+
+            const particleGeometry = new THREE.BufferGeometry();
+            const positions = new Float32Array(particleCount * 3);
+            const colors = new Float32Array(particleCount * 3);
+            const velocities = [];
+
+            for (let i = 0; i < particleCount; i++) {
+                const i3 = i * 3;
+                positions[i3] = (Math.random() - 0.5) * bgCanvas.clientWidth;
+                positions[i3 + 1] = (Math.random() - 0.5) * bgCanvas.clientHeight;
+                positions[i3 + 2] = (Math.random() - 0.5) * 300;
+                
+                defaultParticleColor.toArray(colors, i3);
+
+                velocities.push({
+                    x: (Math.random() - 0.5) * 0.2,
+                    y: (Math.random() - 0.5) * 0.2,
+                    z: (Math.random() - 0.5) * 0.2
+                });
+            }
+            particleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            particleGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+            particleGeometry.velocities = velocities;
+
+            const particleMaterial = new THREE.PointsMaterial({
+                vertexColors: true, 
+                size: 2.5,
+                transparent: true,
+                opacity: 1
+            });
+            particles = new THREE.Points(particleGeometry, particleMaterial);
+            scene.add(particles);
+
+            const lineGeometry = new THREE.BufferGeometry();
+            const lineMaterial = new THREE.LineBasicMaterial({
+                color: 0xD1D5DB,
+                transparent: true,
+                opacity: 0.8
+            });
+            lines = new THREE.LineSegments(lineGeometry, lineMaterial);
+            scene.add(lines);
+        }
+
+        function renderProofChart() {
+            if (chartRendered) return;
+
+            const ctx = document.getElementById('accelerationChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['March', 'April', 'May', 'June'],
+                    datasets: [
+                        {
+                            label: 'Revenue',
+                            data: [312758, 273509, 317935, 354907],
+                            backgroundColor: 'rgba(59, 130, 246, 1)',
+                            borderColor: 'rgba(59, 130, 246, 1)',
+                            borderWidth: 1,
+                            yAxisID: 'y-axis-revenue',
+                            barThickness: 10, 
+                        },
+                        {
+                            label: 'Gross Profit',
+                            data: [94242, 110496, 126739, 126670],
+                            backgroundColor: 'rgba(34, 197, 94, 1)',
+                            borderColor: 'rgba(22, 163, 74, 1)',
+                            borderWidth: 1,
+                            yAxisID: 'y-axis-revenue',
+                            barThickness: 10, 
+                        },
+                        {
+                            label: 'Orders',
+                            data: [45, 70, 65, 93],
+                            type: 'line',
+                            borderColor: 'rgba(99, 102, 241, 1)',
+                            backgroundColor: 'rgba(99, 102, 241, 1)',
+                            tension: 0.1,
+                            yAxisID: 'y-axis-count',
+                            borderWidth: 3,
+                            pointRadius: 4,
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: { grouped: false },
+                        'y-axis-revenue': {
+                            type: 'linear',
+                            position: 'left',
+                            title: { display: true, text: 'Amount (₹)' },
+                            ticks: { callback: function(value) { return '₹' + (value / 1000) + 'K'; } }
+                        },
+                        'y-axis-count': {
+                            type: 'linear',
+                            position: 'right',
+                            title: { display: true, text: 'Count' },
+                            grid: { drawOnChartArea: false },
+                        }
+                    },
+                    plugins: {
+                        tooltip: { mode: 'index', intersect: false },
+                        legend: { position: 'bottom', labels: { boxWidth: 20, boxHeight: 6 } }
+                    }
+                }
+            });
+            chartRendered = true;
+        }
+
+        function showSlide(index) {
+            stopAnimation(); // Always stop animation when changing slides
+
+            slides.forEach(slide => slide.classList.remove('active'));
+            slides[index].classList.add('active');
+            
+            slideCounter.textContent = `${index + 1} / ${totalSlides}`;
+            prevButton.disabled = index === 0;
+            nextButton.disabled = index === totalSlides - 1;
+
+            if (index === 0) {
+                initThreeJS();
+                startAnimation(); // Start the animation loop
+            }
+            
+            if (index === 3) {
+                if(!ecosystemRendered) {
+                    createEcosystem('ecosystem', ecosystemData);
+                    ecosystemRendered = true; // Ensure it only renders once per page load unless resized
+                }
+            }
+
+            if (index === 10) {
+                renderProofChart();
+            }
+        }
+
+        nextButton.addEventListener('click', () => {
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+                showSlide(currentSlide);
+            }
+        });
+
+        prevButton.addEventListener('click', () => {
+            if (currentSlide > 0) {
+                currentSlide--;
+                showSlide(currentSlide);
+            }
+        });
+        
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'ArrowRight') nextButton.click();
+            else if (event.key === 'ArrowLeft') prevButton.click();
+        });
+
+        window.addEventListener('resize', () => {
+            if (currentSlide === 3) {
+                 createEcosystem('ecosystem', ecosystemData);
+            }
+        });
+
+        // Initial setup
+        showSlide(currentSlide);
+    </script>
+</body>
+</html>
