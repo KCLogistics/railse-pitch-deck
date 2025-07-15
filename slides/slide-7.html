@@ -1,4 +1,5 @@
-<div class="slide p-8 md:p-12">
+<div class="slide p-8 md:p-12 h-full">
+    <!-- Top Header Section -->
     <div class="mb-8">
         <span class="inline-block bg-blue-100 text-blue-800 text-xs font-semibold px-3 py-1.5 rounded-full uppercase tracking-wider">
             Business Model & Go-to-Market
@@ -9,27 +10,65 @@
             Our Playbook to Capture the $65B Market.
         </h1>
     </header>
+
+    <!-- Main Content Columns -->
     <div class="columns-wrapper grid grid-cols-1 md:grid-cols-2 gap-8">
+        
+        <!-- Left Column: Revenue Engines (Updated Code) -->
         <div class="revenue-engines-column bg-gray-50/70 p-6 rounded-lg border border-gray-200 flex flex-col">
             <h2 class="column-title text-xl font-bold text-gray-800 mb-6 text-center">Our Revenue Engines</h2>
-            <div class="space-y-6 flex-grow flex flex-col justify-around">
-                <div class="revenue-stream">
-                    <h4 class="stream-title font-semibold text-blue-600">Transporter Revenue</h4>
-                    <div class="mt-2 text-gray-700 space-y-2 text-sm">
-                        <p class="stream-item"><strong>SaaS Subscription:</strong> ₹5-10K/month for our super app.</p>
-                        <p class="stream-item"><strong>Network Commission:</strong> 5-10% fee on network-fulfilled orders.</p>
+            <div class="space-y-8 flex-grow flex flex-col">
+
+                <!-- Revenue Stream 1: Transporter -->
+                <div class="revenue-stream flex items-start">
+                    <div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center z-10">
+                        <!-- Icon 1: Truck -->
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.125-.504 1.125-1.125V14.25m-17.25 4.5v-1.875a3.375 3.375 0 003.375-3.375h1.5a1.125 1.125 0 011.125 1.125v1.5a3.375 3.375 0 003.375 3.375h1.5a1.125 1.125 0 011.125 1.125v1.875m-6-6h.008v.008H12v-.008z" />
+                        </svg>
+                    </div>
+                    <div class="stream-details ml-4">
+                        <h4 class="stream-title font-semibold text-blue-600">Transporter Revenue</h4>
+                        <div class="mt-2 text-gray-700 space-y-2 text-sm">
+                            <p class="stream-item"><strong>SaaS Subscription:</strong> ₹5-10K/month for our super app.</p>
+                            <p class="stream-item"><strong>Network Commission:</strong> 5-10% fee on network-fulfilled orders.</p>
+                        </div>
                     </div>
                 </div>
-                <div class="revenue-stream">
-                    <h4 class="stream-title font-semibold text-blue-600">Shipper Revenue</h4>
-                    <p class="stream-item mt-2 text-gray-700 text-sm"><strong>The Intelligent Margin:</strong> 15-40% context-based margins on every shipment.</p>
+
+                <!-- Revenue Stream 2: Shipper -->
+                <div class="revenue-stream flex items-start">
+                    <div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center z-10">
+                        <!-- Icon 2: Chart Bar -->
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
+                        </svg>
+                    </div>
+                    <div class="stream-details ml-4">
+                        <h4 class="stream-title font-semibold text-blue-600">Shipper Revenue</h4>
+                        <p class="stream-item mt-2 text-gray-700 text-sm"><strong>The Intelligent Margin:</strong> 15-40% context-based margins on every shipment.</p>
+                    </div>
                 </div>
-                <div class="revenue-stream">
-                    <h4 class="stream-title font-semibold text-blue-600">Ecosystem Revenue (Future)</h4>
-                    <p class="stream-item mt-2 text-gray-700 text-sm">Embedded Insurance & Fintech; Cross-selling essential products.</p>
+
+                <!-- Revenue Stream 3: Ecosystem -->
+                <div class="revenue-stream flex items-start">
+                    <div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center z-10">
+                        <!-- Icon 3: Puzzle Piece -->
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75a4.5 4.5 0 01-4.884 4.484c-1.076-.091-2.2-1.038-2.2-2.284 0-1.246 1.124-2.193 2.2-2.284a4.5 4.5 0 014.884 4.484z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 12.75a4.5 4.5 0 014.5 4.5v2.25a2.25 2.25 0 01-2.25 2.25H4.5A2.25 2.25 0 012.25 19.5v-2.25a4.5 4.5 0 014.5-4.5h4.5z" />
+                        </svg>
+                    </div>
+                    <div class="stream-details ml-4">
+                        <h4 class="stream-title font-semibold text-blue-600">Ecosystem Revenue (Future)</h4>
+                        <p class="stream-item mt-2 text-gray-700 text-sm">Embedded Insurance & Fintech; Cross-selling essential products.</p>
+                    </div>
                 </div>
+
             </div>
         </div>
+
+        <!-- Right Column: Market Attack (Original Code) -->
         <div class="market-attack-column bg-gray-50/70 p-6 rounded-lg border border-gray-200 flex flex-col">
             <h2 class="column-title text-xl font-bold text-gray-800 mb-6 text-center">Our 3-Phase Market Attack</h2>
             <div class="relative flex-grow">
@@ -61,6 +100,8 @@
             </div>
         </div>
     </div>
+
+    <!-- Footer -->
     <footer class="absolute bottom-4 left-16 text-left text-xs text-gray-400 font-medium">
         © 2025 Railse, Inc. | Confidential & Proprietary
     </footer>
