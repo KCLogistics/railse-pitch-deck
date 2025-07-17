@@ -17,8 +17,10 @@
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
 
         <!-- Column 1: The Market Size -->
-        <div class="market-size-column bg-gray-50/70 p-6 rounded-lg border border-gray-200 flex flex-col">
-            <h2 class="text-xl font-bold text-gray-800 mb-6 text-center">The Market</h2>
+        <div class="market-size-column relative bg-gray-50/70 p-6 pt-10 rounded-lg border border-gray-200 flex flex-col">
+            <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-4 py-1 rounded-full border border-gray-200">
+                <h2 class="text-base font-medium text-blue-800 whitespace-nowrap">The Market</h2>
+            </div>
             <div class="space-y-4 text-center flex-grow flex flex-col justify-center">
                 <div>
                     <p class="text-5xl font-extrabold text-blue-900">$350B</p>
@@ -32,12 +34,14 @@
         </div>
 
         <!-- Column 2: The Catalyst -->
-        <div class="catalyst-column bg-gray-50/70 p-6 rounded-lg border border-gray-200 flex flex-col">
-            <h2 class="text-xl font-bold text-gray-800 mb-6 text-center">
-                <span class="inline-block bg-green-100 text-green-800 text-xs font-semibold px-2.5 py-1 rounded-full align-middle mr-2">Why Now?</span><!--
-             --><span class="align-middle">The AI Inflection Point</span>
-            </h2>
-            <div class="text-center flex-grow flex flex-col justify-center">
+        <div class="catalyst-column relative bg-gray-50/70 p-6 pt-10 rounded-lg border border-gray-200 flex flex-col">
+            <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-4 py-1 rounded-full border border-gray-200">
+                <h2 class="text-base font-medium text-blue-800 whitespace-nowrap">The AI Inflection Point</h2>
+            </div>
+            <div class="text-center flex-grow flex flex-col justify-around">
+                <div class="mb-4">
+                    <span class="inline-block bg-green-100 text-green-800 text-xs font-semibold px-2.5 py-1 rounded-full">Why Now?</span>
+                </div>
                 <p class="text-gray-600">This century-old market is finally vulnerable. For the first time, AI gives us the power to automate the millions of complex decisions that create logistics chaos, unlocking immense value.</p>
             </div>
         </div>
