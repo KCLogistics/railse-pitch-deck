@@ -322,21 +322,21 @@ This slide details the funding ask. It has a header, a three-column layout for t
         *   AI/ML Development
         *   Data Infrastructure
         *   Platform Automation
-    *   **30% - Go-to-Market & Fulfillment:**
+    *   **30% - Go-to-Market:**
         *   Customer Acquisition
         *   Network Expansion
         *   Sales & Fulfillment
         *   Brand Building
-    *   **20% - Scaling & Runway:**
-        *   Working Capital
+    *   **20% - Operations & G&A:**
         *   Business Operations
-        *   G&A / Admin
-        *   Extended Runway
+        *   Working Capital
+        *   Administrative
+        *   Contingency Buffer
 
 *   **Manifesto Section:**
-    *   **Headline:** "LLM IS CHANGING THE WORLD SUPER FAST"
-    *   **Statement 1:** "With this capital, We scale 100x."
-    *   **Statement 2:** "Together, we build the dominant AI logistics distribution platform — from India, for the world."
+    *   **Headline:** "A New Era Demands A New Leader"
+    *   **Statement 1:** "THIS IS THE FUEL TO 10X OUR NETWORK AND 100X OUR REVENUE."
+    *   **Statement 2:** "TOGETHER, WE BUILD THE AI DISTRIBUTION PLATFORM THAT WILL DEFINE A DECADE OF LOGISTICS IN INDIA."
 
 *   **Footer:**
     *   A professional footer is located at the bottom-left of the slide with the text: "© 2025 Railse, Inc. | Confidential & Proprietary".
