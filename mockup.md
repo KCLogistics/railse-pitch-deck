@@ -280,15 +280,15 @@ This slide presents the company's vision. It has a header, a two-column layout f
 
 *   **Header:**
     *   **Title Tag:** "THE VISION"
-    *   **Main Headline:** "Channelizing the Real India."
+    *   **Main Headline:** "Unlocking the Power of a Million Transporter."
     *   **Intro Paragraph:** "95% of India's logistics is run by an army of local transporters. We are building the digital playbook that was never before possible: a single, intelligent network that unifies this fragmented power."
 
 *   **Dual Promises:**
-    *   **For Transporters:** "Every top transporter should love running their business on our app."
-    *   **For Shippers:** "Every shipper looking for reliable and super fast delivery should rely on our network."
+    *   **For Transporters:** "From local expert to national player. Giving you the power to serve any customer, anywhere."
+    *   **For Shippers:** "The speed and trust of a national carrier, powered by local experts. Putting an end to the nightmare of delays and endless coordination."
 
 *   **Concluding Section:**
-    *   **Unifying Mission:** "The New Standard for Indian Logistics."
+    *   **Unifying Mission:** "The New Standard for Indian Logistics"
     *   **Call to Action:** "Join Us."
     *   **Final Statement:** "A future where growth for our partners and reliability for their customers are one and the same."
 
@@ -380,5 +380,3 @@ This slide presents the company's traction and growth metrics. It has a header a
 *   **Charts:** The charts are clean and easy to read, with clear labels and a professional color scheme.
 *   **Table and Insights:** The table and the strategic insights are presented in cards with a light gray background and a border.
 *   **Colors:** The slide uses a professional color palette with blue, gray, and green tones.
-
-
