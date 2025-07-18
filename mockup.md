@@ -220,7 +220,7 @@ This slide is divided into a header and a two-column layout. The header introduc
 *   **Right Column: Our 3-Phase Market Attack**
     *   **Phase 1: Experience Seekers:** Establish a profitable foundation with premium, experience-first MSMEs.
     *   **Phase 2: Value Seekers:** Expand to the mid-market by profitably serving value-seeking MSMEs.
-    *   **Phase 3: Price-Conscious:** Capture the mass market with high-margin embedded insurance & fintech.
+    *   **Phase 3: Price-Conscious:** Become the essential choice for the mass market when reliability becomes non-negotiable.
 
 *   **Footer:**
     *   A professional footer is located at the bottom-left of the slide with the text: "© 2025 Railse, Inc. | Confidential & Proprietary".
