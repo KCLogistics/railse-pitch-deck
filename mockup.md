@@ -280,7 +280,7 @@ This slide presents the company's vision. It has a header, a two-column layout f
 
 *   **Header:**
     *   **Title Tag:** "THE VISION"
-    *   **Main Headline:** "Unlocking the Power of a Million Transporter."
+    *   **Main Headline:** "Unlocking the Power of a Million Transporters."
     *   **Intro Paragraph:** "95% of India's logistics is run by an army of local transporters. We are building the digital playbook that was never before possible: a single, intelligent network that unifies this fragmented power."
 
 *   **Dual Promises:**
@@ -290,7 +290,7 @@ This slide presents the company's vision. It has a header, a two-column layout f
 *   **Concluding Section:**
     *   **Unifying Mission:** "The New Standard for Indian Logistics"
     *   **Call to Action:** "Join Us."
-    *   **Final Statement:** "A future where growth for our partners and reliability for their customers are one and the same."
+    *   **Final Statement:** "When we empower a single transporter, an entire supply chain feels the strength."
 
 *   **Footer:**
     *   A professional footer is located at the bottom-left of the slide with the text: "© 2025 Railse, Inc. | Confidential & Proprietary".
