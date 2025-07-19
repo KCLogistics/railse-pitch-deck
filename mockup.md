@@ -39,7 +39,7 @@ This slide is divided into a header and a two-column layout. The header contains
     *   **Key Statistic:** "75% of transport providers are small operators with fewer than 5 vehicles."
 
 *   **Left Column: For India's 60 Million MSMEs**
-    *   **Sub-headline:** "The search for a reliable transporter is a 3-month, 10-enquiry nightmare."
+    *   **Sub-headline:** "The search for a reliable transporter is a 3-month nightmare."
     *   **Pain Points:**
         *   Opaque Pricing
         *   Frequent Delays
@@ -62,7 +62,7 @@ This slide is divided into a header and a two-column layout. The header contains
 
 *   **Icons:** Each pain point is accompanied by a relevant icon.
 *   **Colors:** The slide uses a professional color palette with blue and gray tones. The key statistic is highlighted in blue.
-*   **Layout:** The two columns are presented as cards with a light gray background and a border.
+*   **Layout:** The two columns are presented as cards with a light gray background and a border. The title of each card is displayed in a floating bubble above it.
 
 ---
 
