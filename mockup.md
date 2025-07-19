@@ -208,12 +208,12 @@ This slide is divided into a header, a two-column layout for the playbooks, and 
     *   **Title Tag:** "Business Model & Go-to-Market"
     *   **Main Headline:** "Our Playbook to Capture the $65B Market."
 
-*   **Left Column: Our Network-Building Playbook**
-    *   **Phase 1: Seed the Network with the Super App:** Giving transporters a free super app to run their own business, building deep loyalty before the first network order.
-    *   **Phase 2: Ignite the Flywheel with Network Orders:** Empowering transporters to turn a customer's 'no' into a 'yes' by passing jobs to the network, igniting the first commissionable orders.
-    *   **Phase 3: Dominate with Density:** This network density becomes a competitive weapon, offering shippers unbeatable reliability and creating a flywheel that locks in the market.
+*   **Left Column: Building Our Supply Network**
+    *   **Phase 1: Distribute Super App to Transporters:** It replaces their manual work, building deep loyalty with immediate, day-one value.
+    *   **Phase 2: Ignite Network Effect:** Turn previously lost orders into new revenue by fulfilling any request via our network.
+    *   **Phase 3: Achieve Nationwide Dominance:** This density unifying the best transporters to deliver unbeatable reliability for shippers.
 
-*   **Right Column: Our 3-Phase Market Attack**
+*   **Right Column: Building Our Demand Network**
     *   **Phase 1: Experience Seekers:** Establish a profitable foundation with premium, experience-first MSMEs.
     *   **Phase 2: Value Seekers:** Expand to the mid-market by profitably serving value-seeking MSMEs.
     *   **Phase 3: Price-Conscious:** Target only essential orders when customer's requirements outweigh their price sensitivity.
