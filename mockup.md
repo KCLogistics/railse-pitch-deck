@@ -200,7 +200,7 @@ This slide is divided into a header, a two-column layout, and a concluding banne
 # Slide 7: Business Model & Go-to-Market
 
 **Layout:**
-This slide is divided into a header and a two-column layout. The header introduces the business model and go-to-market strategy. The two columns below describe the revenue engines and the market attack plan.
+This slide is divided into a header, a two-column layout for the playbooks, and a concluding banner for the revenue engines.
 
 **Content:**
 
@@ -208,19 +208,24 @@ This slide is divided into a header and a two-column layout. The header introduc
     *   **Title Tag:** "Business Model & Go-to-Market"
     *   **Main Headline:** "Our Playbook to Capture the $65B Market."
 
-*   **Left Column: Our Revenue Engines**
-    *   **Transporter Revenue:**
-        *   SaaS Subscription: ₹5-10K/month for our super app.
-        *   Network Commission: 5-10% fee on network-fulfilled orders.
-    *   **Shipper Revenue:**
-        *   The Intelligent Margin: 15-40% context-based margins on every shipment.
-    *   **Ecosystem Revenue (Future):**
-        *   Embedded Insurance & Fintech; Cross-selling essential products.
+*   **Left Column: Our Network-Building Playbook**
+    *   **Phase 1: Seed the Network with the Super App:** Giving transporters a free super app to run their own business, building deep loyalty before the first network order.
+    *   **Phase 2: Ignite the Flywheel with Network Orders:** Empowering transporters to turn a customer's 'no' into a 'yes' by passing jobs to the network, igniting the first commissionable orders.
+    *   **Phase 3: Dominate with Density:** This network density becomes a competitive weapon, offering shippers unbeatable reliability and creating a flywheel that locks in the market.
 
 *   **Right Column: Our 3-Phase Market Attack**
     *   **Phase 1: Experience Seekers:** Establish a profitable foundation with premium, experience-first MSMEs.
     *   **Phase 2: Value Seekers:** Expand to the mid-market by profitably serving value-seeking MSMEs.
-    *   **Phase 3: Price-Conscious:** Become the essential choice for the mass market when reliability becomes non-negotiable.
+    *   **Phase 3: Price-Conscious:** Target only essential orders when customer's requirements outweigh their price sensitivity.
+
+*   **Concluding Banner: Our Revenue Engines**
+    *   **Transporter Revenue:**
+        *   SaaS Subscription: ₹5-10K/month for our super app.
+        *   Network Commission: 10% fee on network-fulfilled new orders.
+    *   **Shipper Revenue:**
+        *   The Intelligent Margin: 15-40% context-based margins on every shipment.
+    *   **Ecosystem Revenue (Future):**
+        *   Embedded Insurance & Fintech; Cross-selling essential products.
 
 *   **Footer:**
     *   A professional footer is located at the bottom-left of the slide with the text: "© 2025 Railse, Inc. | Confidential & Proprietary".
@@ -228,8 +233,8 @@ This slide is divided into a header and a two-column layout. The header introduc
 **Styling:**
 
 *   **Cards:** The two columns are presented as cards with a light gray background and a border. The title of each card is displayed in a floating bubble above it.
-*   **Timeline:** The "Market Attack" section features a vertical timeline with numbered phases.
-*   **Icons:** The "Revenue Engines" section uses icons to represent each revenue stream.
+*   **Timeline:** Both columns feature a vertical timeline with numbered phases.
+*   **Banner:** The concluding banner has a light gray background and a border, with the title in a floating bubble.
 *   **Colors:** The slide uses a professional color palette with blue and gray tones.
 
 
