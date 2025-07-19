@@ -78,25 +78,25 @@ This slide has a similar structure to the "Problem" slide, with a header and a t
     *   **Main Headline:** "The AI Engine for Autonomous Logistics."
     *   **Intro Paragraph:** "We automate complex shipping decisions to create a frictionless market, delivering unparalleled reliability for shippers and exponential growth for transporters."
 
-*   **Left Column: For the MSME: From Chaos to Control**
+*   **Left Column: For the Shipper (MSME): From Chaos to Control**
     *   **Benefits:**
-        *   Delivery Speed: 7-10 days → 1-2 Days PAN-India
+        *   Delivery Speed: 7-10 days → 1-2 Days
         *   Finding a Partner: 3-Month Nightmare → Instant AI Match
-        *   Pricing: Opaque Quotes → Dynamic & Personalized
-        *   Coordination: Heavy Burden → Autonomous Orchestration
+        *   Pricing: Opaque Quotes → Dynamic Pricing
+        *   External Coordination: Heavy Burden → Autonomous
 
 *   **Right Column: For the Transporter: From Stagnation to Growth**
     *   **Benefits:**
-        *   New Business: Turning Away Customers → Serve Every Request
-        *   Operations: Manual & Paper Based → 1/10th the Time via App
-        *   Business Management: Disconnected Tools → A Super App for Everything
+        *   New Business: Losing Customers → Serve Every Request
+        *   Daily Operations: Manual & Paper → 1/10th the Time
+        *   Business Management: Disconnected Tools → A Super App
 
 *   **Footer:**
     *   A professional footer is located at the bottom-left of the slide with the text: "© 2025 Railse, Inc. | Confidential & Proprietary".
 
 **Styling:**
 
-*   **Benefit Cards:** Each benefit is presented in a card with a light gray background and a border. The benefit label is displayed above the card.
+*   **Benefit Cards:** Each benefit is presented in a card with a light gray background and a border. The benefit label is displayed in a floating bubble above the card.
 *   **Transformation:** The "old way" and "new way" for each benefit are displayed on either side of an arrow, visually representing the transformation.
 *   **Colors:** The slide uses a professional color palette with blue, gray, and indigo tones.
 
@@ -116,7 +116,7 @@ This slide is divided into a header and a three-column layout. The header introd
 
 *   **Three Pillars:**
     *   **Customer Intelligence Engine:** Analyzes every interaction to power our Customer Ranking and Quotation Generation algorithms, delivering perfectly personalized quotes and focusing sales on high-potential clients.
-    *   **Supply Orchestration Engine:** Continuously ranks every transporter on performance. Our Vendor Ranking and Order Matching algorithms instantly select the optimal partner for any job.
+    *   **Supply Orchestration Engine:** Continuously ranks every transporter on performance. Our Transporter Ranking and Order Matching algorithms instantly select the optimal partner for any job.
     *   **Autonomous Operations Engine:** Proactively automates all post-booking communication. Our Order Coordination algorithm is the key to scaling operations effortlessly, without scaling headcount.
 
 *   **Animated Diagram:**
