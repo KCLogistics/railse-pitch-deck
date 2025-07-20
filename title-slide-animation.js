@@ -57,6 +57,9 @@ function animateLoop() {
     renderer.render(scene, camera);
 }
 
+/**
+ * Starts the animation loop.
+ */
 function startAnimation() {
     if (!animationFrameId) {
         animateLoop();
@@ -70,6 +73,10 @@ function stopAnimation() {
     }
 }
 
+/**
+ * Initializes the Three.js scene, camera, and renderer.
+ * Creates the particle system and lines and adds them to the scene.
+ */
 function initThreeJS() {
     const bgCanvas = document.getElementById('bg-canvas');
     if (!bgCanvas) return;
