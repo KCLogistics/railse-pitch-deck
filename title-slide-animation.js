@@ -71,6 +71,7 @@ function stopAnimation() {
         cancelAnimationFrame(animationFrameId);
         animationFrameId = null;
     }
+    scene = null;
 }
 
 /**

@@ -275,8 +275,6 @@
 
 
         async function showSlide(index) {
-            stopAnimation(); // Always stop animation when changing slides
-
             const response = await fetch(`slides/slide-${index + 1}.html`);
             const slideHTML = await response.text();
             slideContainer.innerHTML = slideHTML;
@@ -289,12 +287,13 @@
             nextButton.disabled = index === totalSlides - 1;
 
             if (index === 0) {
-                initThreeJS();
+                if (!threeJsInitialized) {
+                    initThreeJS();
+                }
                 startAnimation();
             } else {
                 stopAnimation();
                 threeJsInitialized = false;
-                scene = null;
             }
             
             if (index === 3) {
