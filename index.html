@@ -17,7 +17,7 @@
     <!-- Chart.js for the graph -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        /* Custom styles to apply the Inter font */
+        /* --- GLOBAL STYLES --- */
         body {
             font-family: 'Inter', sans-serif;
             background-color: #e9ecef; /* Light grey background to frame the slide */
@@ -41,7 +41,7 @@
             z-index: 0;
         }
 
-        /* SLIDE CONTAINER */
+        /* --- SLIDE CONTAINER --- */
         .slide-container {
             width: 100%;
             max-width: 1200px;
@@ -113,7 +113,7 @@
             color: #495057;
         }
 
-        /* NAVIGATION */
+        /* --- NAVIGATION --- */
         .navigation {
             width: 1024px;
             display: flex;
@@ -150,7 +150,7 @@
             color: #495057;
         }
 
-        /* --- New Title Slide Styles --- */
+        /* --- TITLE SLIDE --- */
         .title-slide {
              background-color: #F8F9FA;
         }
@@ -172,9 +172,9 @@
         .delay-1 { animation-delay: 0.4s; }
         .delay-2 { animation-delay: 0.6s; }
         
-        /* Team Slide */
+        /* --- TEAM SLIDE --- */
 
-        /* Ask Slide */
+        /* --- ASK SLIDE --- */
         .ask-container {
             display: flex;
             align-items: center;
@@ -217,7 +217,7 @@
             width: 45px;
         }
 
-        /* Vision Slide */
+        /* --- VISION SLIDE --- */
         .vision-slide .slide-content {
             text-align: center;
             justify-content: center;
@@ -244,7 +244,7 @@
             color: #6c757d;
         }
 
-        /* New slide specific styles */
+        /* --- PILLAR STYLES --- */
         .pillar-icon-wrapper {
             background-color: #eef2ff; /* A light blue/indigo background */
         }
@@ -258,7 +258,7 @@
             z-index: 0;
         }
 
-        /* --- STYLES FOR ECOSYSTEM DIAGRAM --- */
+        /* --- ECOSYSTEM DIAGRAM --- */
         .ecosystem-container {
             position: relative;
             width: 100%; 
@@ -309,16 +309,8 @@
                 stroke-dashoffset: -10;
             }
         }
-    </style>
-    <script src="proof-slide-charts.js"></script>
-    <script type="importmap">
-        {
-            "imports": {
-                "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"
-            }
-        }
-    </script>
-    <style>
+
+        /* --- MOAT ANIMATION --- */
         #slide-container {
             background-color: #050a1a;
             overflow: hidden; /* This is critical */
@@ -330,6 +322,14 @@
             display: block;
         }
     </style>
+    <script src="proof-slide-charts.js"></script>
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"
+            }
+        }
+    </script>
 </head>
 <body>
     <div class="slide-container">
