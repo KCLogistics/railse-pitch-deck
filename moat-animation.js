@@ -9,6 +9,7 @@ let animationId; // To control the animation loop
 let aiCore, transporterOrbit, customerOrbit, energyWave1, energyWave2;
 
 // --- 3D ANCHORS AND 2D DOTS ---
+// MODIFIED: Define the structure, but leave elements null initially
 const anchorPoints = [
     { anchor: new THREE.Object3D(), element: null },
     { anchor: new THREE.Object3D(), element: null },
@@ -231,3 +232,11 @@ window.stopMoatAnimation = function() {
         cancelAnimationFrame(animationId);
     }
 }
+
+// Simplified trigger for preview environment
+setTimeout(() => {
+    if (window.initMoatAnimation) {
+        window.initMoatAnimation();
+    }
+}, 50);
+
