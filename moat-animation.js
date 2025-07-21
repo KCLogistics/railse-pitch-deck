@@ -10,9 +10,9 @@ let aiCore, transporterOrbit, customerOrbit, energyWave1, energyWave2;
 
 // --- 3D ANCHORS AND 2D DOTS ---
 const anchorPoints = [
-    { anchor: new THREE.Object3D(), element: document.getElementById('dot-core') },
-    { anchor: new THREE.Object3D(), element: document.getElementById('dot-transporter') },
-    { anchor: new THREE.Object3D(), element: document.getElementById('dot-shipper') }
+    { anchor: new THREE.Object3D(), element: null },
+    { anchor: new THREE.Object3D(), element: null },
+    { anchor: new THREE.Object3D(), element: null }
 ];
 
 // --- WAVE STATES ---
@@ -25,6 +25,11 @@ function init(container) {
 
     scene = new THREE.Scene();
     clock = new THREE.Clock();
+
+    // --- FIX: Find HTML elements here, inside init, when they are guaranteed to exist ---
+    anchorPoints[0].element = document.getElementById('dot-core');
+    anchorPoints[1].element = document.getElementById('dot-transporter');
+    anchorPoints[2].element = document.getElementById('dot-shipper');
 
     const width = animationContainer.clientWidth;
     const height = animationContainer.clientHeight;
