@@ -250,9 +250,6 @@
 <body>
     <div class="slide-container">
         <!-- Slides will be loaded here -->
-        <div class="slide" id="slide-container">
-            <!-- The Three.js canvas will be injected here -->
-        </div>
     </div>
 
     <div class="navigation">
@@ -300,6 +297,10 @@
                 setTimeout(() => {
                     createEcosystem('ecosystem', ecosystemData);
                 }, 50);
+            }
+
+            if (index === 5) {
+                initMoatAnimation();
             }
 
             if (index === 11) {

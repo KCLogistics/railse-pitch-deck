@@ -2,7 +2,6 @@ import * as THREE from 'three';
 
 // --- SCENE SETUP ---
 let scene, camera, renderer, clock;
-let slideContainer = document.getElementById('slide-container');
 
 // --- CORE OBJECTS ---
 let aiCore, transporterOrbit, customerOrbit, energyWave1, energyWave2;
@@ -11,12 +10,12 @@ let aiCore, transporterOrbit, customerOrbit, energyWave1, energyWave2;
 let waveState1 = { active: false, startTime: 0, duration: 1.5 };
 let waveState2 = { active: false, startTime: 0, duration: 1.2 };
 
-function init() {
+function init(container) {
     scene = new THREE.Scene();
     clock = new THREE.Clock();
 
-    const width = slideContainer.clientWidth;
-    const height = slideContainer.clientHeight;
+    const width = container.clientWidth;
+    const height = container.clientHeight;
 
     camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
     camera.position.set(0, 5, 25);
@@ -25,7 +24,7 @@ function init() {
     renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(width, height);
     renderer.setPixelRatio(window.devicePixelRatio);
-    slideContainer.appendChild(renderer.domElement);
+    container.appendChild(renderer.domElement);
 
     // --- CREATE THE VISUAL ELEMENTS ---
     const coreRadius = 2.5;
@@ -163,5 +162,8 @@ function animate() {
     renderer.render(scene, camera);
 }
 
-init();
-animate();
+function initMoatAnimation() {
+    let slideContainer = document.getElementById('slide-container');
+    init(slideContainer);
+    animate();
+}
