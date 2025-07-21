@@ -71,14 +71,21 @@ function init(container) {
     scene.add(energyWave2);
 
     // --- Position and add 3D anchors to the scene ---
-    aiCore.add(anchorPoints[0].anchor);
-    anchorPoints[0].anchor.position.set(0, -coreRadius, 0); // Bottom of core
+    // This new logic places the anchors in the scene independently of the rotating objects
 
-    transporterOrbit.add(anchorPoints[1].anchor);
-    anchorPoints[1].anchor.position.set(-transporterRadius, 0, 0); // Left of transporter orbit
+    const orbitTilt = new THREE.Euler(Math.PI / 6, 0, 0); // The tilt of the orbits
 
-    customerOrbit.add(anchorPoints[2].anchor);
-    anchorPoints[2].anchor.position.set(customerRadius, 0, 0); // Right of shipper orbit
+    // Position the core's anchor (no tilt needed)
+    anchorPoints[0].anchor.position.set(0, -coreRadius, 0);
+    scene.add(anchorPoints[0].anchor);
+
+    // Position the transporter's anchor, applying the tilt manually
+    anchorPoints[1].anchor.position.set(-transporterRadius, 0, 0).applyEuler(orbitTilt);
+    scene.add(anchorPoints[1].anchor);
+
+    // Position the shipper's anchor, applying the tilt manually
+    anchorPoints[2].anchor.position.set(customerRadius, 0, 0).applyEuler(orbitTilt);
+    scene.add(anchorPoints[2].anchor);
 
     window.addEventListener('resize', onWindowResize, false);
     updateDotPositions(); // Calculate initial positions
