@@ -29,7 +29,7 @@
             <!-- This grid helps position the labels relative to the center -->
             <div class="grid grid-cols-3">
                 <!-- Left-aligned Labels Column -->
-                <!-- MODIFIED: Adjusted vertical spacing to match visual hierarchy -->
+                <!-- MODIFIED: Reverted vertical spacing to original correct value -->
                 <div class="flex flex-col justify-between space-y-28 text-right">
                     
                     <!-- AI Core Label -->
@@ -37,28 +37,32 @@
                         <div class="text-right mr-4">
                             <h3 class="font-bold text-sm uppercase tracking-wider text-gray-200 whitespace-nowrap">AI Core</h3>
                         </div>
-                        <!-- MODIFIED: Increased leader line width -->
-                        <div class="w-24 h-px bg-gray-400/50"></div>
+                        <!-- MODIFIED: Replaced div with SVG line -->
+                        <svg class="w-32 h-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+                            <line x1="0" y1="50%" x2="100%" y2="50%" stroke="rgba(209, 213, 219, 0.5)" stroke-width="1"/>
+                        </svg>
                     </div>
 
                     <!-- Transporter Layer Label -->
                     <div class="flex justify-end items-center">
                          <div class="text-right mr-4">
-                            <!-- MODIFIED: Added whitespace-nowrap -->
-                            <h3 class="font-bold text-sm uppercase tracking-wider text-gray-200 whitespace-nowrap">Transporter Layer</h3>
+                            <h3 class="font-bold text-sm uppercase tracking-wider text-gray-200 whitespace-nowrap">Transporter Layer1</h3>
                         </div>
-                        <!-- MODIFIED: Increased leader line width -->
-                        <div class="w-48 h-px bg-gray-400/50"></div>
+                        <!-- MODIFIED: Replaced div with SVG line -->
+                        <svg class="w-48 h-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+                            <line x1="0" y1="50%" x2="100%" y2="50%" stroke="rgba(209, 213, 219, 0.5)" stroke-width="1"/>
+                        </svg>
                     </div>
 
                     <!-- Shipper Layer Label -->
                     <div class="flex justify-end items-center">
                          <div class="text-right mr-4">
-                            <!-- MODIFIED: Added whitespace-nowrap -->
                             <h3 class="font-bold text-sm uppercase tracking-wider text-gray-200 whitespace-nowrap">Shipper (MSME) Layer</h3>
                         </div>
-                        <!-- MODIFIED: Increased leader line width -->
-                        <div class="w-64 h-px bg-gray-400/50"></div>
+                        <!-- MODIFIED: Replaced div with SVG line -->
+                        <svg class="w-64 h-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+                            <line x1="0" y1="50%" x2="100%" y2="50%" stroke="rgba(209, 213, 219, 0.5)" stroke-width="1"/>
+                        </svg>
                     </div>
                 </div>
             </div>
