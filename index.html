@@ -226,11 +226,14 @@
             }
         }
 
-        /* --- MOAT ANIMATION --- */
         #moat-animation-container {
-            background-color: #050a1a;
+            /* Replaced solid color with a subtle radial gradient */
+            /* background-image: radial-gradient(circle, #1a2a6c 0%, #050a1a 75%); */
+
+            /* Reversed the gradient: dark in the center, lighter at the edges */
+            background-image: radial-gradient(circle, #050a1a 0%, #1a2a6c 75%);
             overflow: hidden;
-            position: relative; /* CRITICAL: Makes this a positioning context for its children */
+            position: relative;
         }
 
         /* This targets the canvas that the JS script creates inside the container */
