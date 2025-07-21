@@ -24,18 +24,21 @@
     <!-- NEW: Annotation Labels Layout -->
     <!-- This container uses absolute positioning to overlay the canvas -->
     <div class="absolute top-0 left-0 w-full h-full flex items-center z-10 pointer-events-none">
-        <div class="w-full max-w-6xl mx-auto px-8 md:px-12">
+        <!-- MODIFIED: Increased max-width to give labels more space -->
+        <div class="w-full max-w-7xl mx-auto px-8 md:px-12">
             <!-- This grid helps position the labels relative to the center -->
             <div class="grid grid-cols-3">
                 <!-- Left-aligned Labels Column -->
-                <div class="flex flex-col justify-between space-y-24 text-right">
+                <!-- MODIFIED: Adjusted vertical spacing to match visual hierarchy -->
+                <div class="flex flex-col justify-between space-y-28 text-right">
                     
                     <!-- AI Core Label -->
                     <div class="flex justify-end items-center">
                         <div class="text-right mr-4">
                             <h3 class="font-bold text-sm uppercase tracking-wider text-gray-200">AI Core</h3>
                         </div>
-                        <div class="w-16 h-px bg-gray-400/50"></div>
+                        <!-- MODIFIED: Increased leader line width -->
+                        <div class="w-24 h-px bg-gray-400/50"></div>
                     </div>
 
                     <!-- Transporter Layer Label -->
@@ -43,7 +46,8 @@
                          <div class="text-right mr-4">
                             <h3 class="font-bold text-sm uppercase tracking-wider text-gray-200">Transporter Layer</h3>
                         </div>
-                        <div class="w-16 h-px bg-gray-400/50"></div>
+                        <!-- MODIFIED: Increased leader line width -->
+                        <div class="w-48 h-px bg-gray-400/50"></div>
                     </div>
 
                     <!-- Shipper Layer Label -->
@@ -51,7 +55,8 @@
                          <div class="text-right mr-4">
                             <h3 class="font-bold text-sm uppercase tracking-wider text-gray-200">Shipper (MSME) Layer</h3>
                         </div>
-                        <div class="w-16 h-px bg-gray-400/50"></div>
+                        <!-- MODIFIED: Increased leader line width -->
+                        <div class="w-64 h-px bg-gray-400/50"></div>
                     </div>
                 </div>
             </div>
