@@ -2,6 +2,8 @@ import * as THREE from 'three';
 
 // --- SCENE SETUP ---
 let scene, camera, renderer, clock;
+let animationContainer; // Use a dedicated variable for the container
+let animationId; // To control the animation loop
 
 // --- CORE OBJECTS ---
 let aiCore, transporterOrbit, customerOrbit, energyWave1, energyWave2;
@@ -11,11 +13,14 @@ let waveState1 = { active: false, startTime: 0, duration: 1.5 };
 let waveState2 = { active: false, startTime: 0, duration: 1.2 };
 
 function init(container) {
+    // Set the container for other functions to use
+    animationContainer = container;
+
     scene = new THREE.Scene();
     clock = new THREE.Clock();
 
-    const width = container.clientWidth;
-    const height = container.clientHeight;
+    const width = animationContainer.clientWidth;
+    const height = animationContainer.clientHeight;
 
     camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
     camera.position.set(0, 5, 25);
@@ -24,7 +29,9 @@ function init(container) {
     renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(width, height);
     renderer.setPixelRatio(window.devicePixelRatio);
-    container.appendChild(renderer.domElement);
+    // Make sure renderer background is transparent to see the slide's dark background
+    renderer.setClearColor(0x000000, 0); 
+    animationContainer.appendChild(renderer.domElement);
 
     // --- CREATE THE VISUAL ELEMENTS ---
     const coreRadius = 2.5;
@@ -95,15 +102,17 @@ function createWaveRing(radius, particleCount, color, size) {
 }
 
 function onWindowResize() {
-    const width = slideContainer.clientWidth;
-    const height = slideContainer.clientHeight;
+    // Use the stored container variable
+    if (!animationContainer) return;
+    const width = animationContainer.clientWidth;
+    const height = animationContainer.clientHeight;
     camera.aspect = width / height;
     camera.updateProjectionMatrix();
     renderer.setSize(width, height);
 }
 
 function animate() {
-    requestAnimationFrame(animate);
+    animationId = requestAnimationFrame(animate);
     const elapsedTime = clock.getElapsedTime();
 
     if (aiCore) {
@@ -162,8 +171,19 @@ function animate() {
     renderer.render(scene, camera);
 }
 
-function initMoatAnimation() {
-    let slideContainer = document.getElementById('slide-container');
-    init(slideContainer);
-    animate();
+// Make this function globally available for index.html to call
+window.initMoatAnimation = function() {
+    // Find the correct container using the new ID
+    const container = document.getElementById('moat-animation-container');
+    if (container && container.childElementCount === 0) { // Only init if it's empty
+        init(container);
+        animate();
+    }
+}
+
+// Add a function to stop the animation to prevent memory leaks
+window.stopMoatAnimation = function() {
+    if (animationId) {
+        cancelAnimationFrame(animationId);
+    }
 }
