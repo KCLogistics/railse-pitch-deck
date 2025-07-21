@@ -173,8 +173,10 @@ function animate() {
 
 // Make this function globally available for index.html to call
 window.initMoatAnimation = function() {
-    // Find the correct container using the new ID
-    const container = document.getElementById('moat-animation-container');
+    // Find the new, dedicated container for the canvas
+    const container = document.getElementById('moat-canvas-wrapper'); 
+    
+    // Only initialize the animation if the container exists and is empty
     if (container && container.childElementCount === 0) { // Only init if it's empty
         init(container);
         animate();

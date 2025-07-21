@@ -229,13 +229,18 @@
         /* --- MOAT ANIMATION --- */
         #moat-animation-container {
             background-color: #050a1a;
-            overflow: hidden; /* This is critical */
+            overflow: hidden;
+            position: relative; /* CRITICAL: Makes this a positioning context for its children */
         }
 
+        /* This targets the canvas that the JS script creates inside the container */
         #moat-animation-container canvas {
+            position: absolute; /* Lifts the canvas out of the normal flow */
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            display: block;
+            z-index: 0; /* CRITICAL: Places the canvas at the very back layer */
         }
     </style>
     <script src="proof-slide-charts.js"></script>
@@ -300,7 +305,10 @@
             }
 
             if (index === 5) {
-                initMoatAnimation();
+                // Add a small delay to ensure the slide container is rendered before starting the animation
+                setTimeout(() => {
+                    initMoatAnimation();
+                }, 50); // 50 milliseconds is usually enough time
             }
 
             if (index === 11) {
