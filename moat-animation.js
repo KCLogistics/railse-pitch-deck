@@ -8,6 +8,13 @@ let animationId; // To control the animation loop
 // --- CORE OBJECTS ---
 let aiCore, transporterOrbit, customerOrbit, energyWave1, energyWave2;
 
+// --- 3D ANCHORS AND 2D DOTS ---
+const anchorPoints = [
+    { anchor: new THREE.Object3D(), element: document.getElementById('dot-core') },
+    { anchor: new THREE.Object3D(), element: document.getElementById('dot-transporter') },
+    { anchor: new THREE.Object3D(), element: document.getElementById('dot-shipper') }
+];
+
 // --- WAVE STATES ---
 let waveState1 = { active: false, startTime: 0, duration: 1.5 };
 let waveState2 = { active: false, startTime: 0, duration: 1.2 };
@@ -57,7 +64,36 @@ function init(container) {
     energyWave2.visible = false;
     scene.add(energyWave2);
 
+    // --- Position and add 3D anchors to the scene ---
+    aiCore.add(anchorPoints[0].anchor);
+    anchorPoints[0].anchor.position.set(0, -coreRadius, 0); // Bottom of core
+
+    transporterOrbit.add(anchorPoints[1].anchor);
+    anchorPoints[1].anchor.position.set(-transporterRadius, 0, 0); // Left of transporter orbit
+
+    customerOrbit.add(anchorPoints[2].anchor);
+    anchorPoints[2].anchor.position.set(customerRadius, 0, 0); // Right of shipper orbit
+
     window.addEventListener('resize', onWindowResize, false);
+    updateDotPositions(); // Calculate initial positions
+}
+
+// --- Function to calculate and apply dot positions ---
+function updateDotPositions() {
+    if (!animationContainer) return;
+    for (const point of anchorPoints) {
+        if (!point.element) continue; // Safeguard if element not found
+        const tempVector = new THREE.Vector3();
+        point.anchor.getWorldPosition(tempVector); // Get live 3D position
+        tempVector.project(camera); // Project to 2D screen space
+
+        const x = (tempVector.x * 0.5 + 0.5) * animationContainer.clientWidth;
+        const y = (tempVector.y * -0.5 + 0.5) * animationContainer.clientHeight;
+
+        point.element.style.left = `${x}px`;
+        point.element.style.top = `${y}px`;
+        point.element.style.opacity = '1'; // Make dot visible
+    }
 }
 
 function createParticleSphere(radius, particleCount, color, size) {
@@ -109,6 +145,7 @@ function onWindowResize() {
     camera.aspect = width / height;
     camera.updateProjectionMatrix();
     renderer.setSize(width, height);
+    updateDotPositions(); // Recalculate on resize
 }
 
 function animate() {
