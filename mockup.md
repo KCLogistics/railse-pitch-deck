@@ -14,6 +14,7 @@ This is the title slide of the presentation. It has a clean, modern design with 
 
 *   **Secondary Tagline:**
     *   A secondary, more descriptive tagline is placed below the main tagline: "We're not just moving goods; we're connecting an entire economy."
+    *   A third tagline is also present: "By arming a million transporters with the power of AI."
 
 *   **Footer:**
     *   A professional footer is located at the bottom-left of the slide with the text: "© 2025 Railse, Inc. | Confidential & Proprietary".
@@ -162,8 +163,32 @@ This slide is divided into a header and a three-column layout. The header introd
 
 ---
 
+# Slide 6: The Moat Animation
 
-# Slide 6: The Market Opportunity
+**Layout:**
+This slide is a full-screen animation that visually represents the company's moat.
+
+**Content:**
+
+*   **Title Tag:** "Temp_Name"
+*   **Animation:** The slide features a Three.js animation of a particle network with three layers:
+    *   **AI Core:** A central sphere of particles.
+    *   **Transporter Layer:** An orbit of particles around the AI Core.
+    *   **Shipper Layer:** A larger orbit of particles around the Transporter Layer.
+*   **Labels:** The animation includes labels for the "AI Core," "The Transporter Layer," and "The Shipper Layer."
+
+*   **Footer:**
+    *   A professional footer is located at the bottom-left of the slide with the text: "© 2025 Railse, Inc. | Confidential & Proprietary".
+
+**Styling:**
+
+*   **Background:** The slide has a dark blue background.
+*   **Colors:** The animation uses a color palette of blue, white, and light blue.
+
+
+---
+
+# Slide 7: The Market Opportunity
 
 **Layout:**
 This slide is divided into a header, a two-column layout, and a concluding banner at the bottom. The header introduces the market opportunity, the two columns detail the market size and the catalyst, and the banner highlights the initial target market.
@@ -197,7 +222,7 @@ This slide is divided into a header, a two-column layout, and a concluding banne
 
 ---
 
-# Slide 7: Business Model & Go-to-Market
+# Slide 8: Business Model & Go-to-Market
 
 **Layout:**
 This slide is divided into a header, a two-column layout for the playbooks, and a concluding banner for the revenue engines.
@@ -240,8 +265,7 @@ This slide is divided into a header, a two-column layout for the playbooks, and 
 
 ---
 
-
-# Slide 8: The Team
+# Slide 9: The Team
 
 **Layout:**
 This slide introduces the founding team. It has a header and a two-column layout, with each column dedicated to one of the founders.
@@ -271,12 +295,12 @@ This slide introduces the founding team. It has a header and a two-column layout
 
 *   **Profile Pictures:** Each founder has a circular profile picture with a blue border.
 *   **Cards:** The information for each founder is displayed in a card with a light gray background and a border. The profile picture overlaps the top of the card.
-*   **Skill Tags:** The skills for each founder are displayed as small, green, pill-shaped tags.
+*   **Skill Tags:** The skills for each founder are displayed as small, white, pill-shaped tags with a gray border.
 *   **Colors:** The slide uses a professional color palette with blue, gray, and green tones.
 
 ---
 
-# Slide 9: The Vision
+# Slide 10: The Vision
 
 **Layout:**
 This slide presents the company's vision. It has a header, a two-column layout for the "Dual Promises," and a concluding section with a unifying mission and a call to action.
@@ -309,7 +333,7 @@ This slide presents the company's vision. It has a header, a two-column layout f
 
 ---
 
-# Slide 10: The Ask
+# Slide 11: The Ask
 
 **Layout:**
 This slide details the funding ask. It has a header, a three-column layout for the use of funds, and a concluding manifesto section.
@@ -352,9 +376,9 @@ This slide details the funding ask. It has a header, a three-column layout for t
 *   **Manifesto Section:** The concluding manifesto has a blue background with white text.
 *   **Colors:** The slide uses a professional color palette with blue, gray, and yellow tones.
 
-
 ---
-# Slide 11: The Proof
+
+# Slide 12: The Proof
 
 **Layout:**
 This slide presents the company's traction and growth metrics. It has a header and a two-row, two-column layout. The top row contains a revenue growth chart and a table with key metrics. The bottom row contains an order growth chart and a section with strategic insights.
