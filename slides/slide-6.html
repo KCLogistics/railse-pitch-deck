@@ -1,31 +1,60 @@
 <!-- This is the complete updated code for your slide-6.html file -->
-<div class="slide p-8 md:p-12 h-full" id="moat-animation-container">
+<!-- MODIFIED: Added dark background color and font-sans for styling -->
+<div class="slide p-8 md:p-12 h-full bg-[#0d1a3a] font-sans relative flex flex-col" id="moat-animation-container">
 
     <!-- NEW: A dedicated container for the canvas, positioned at the back -->
-    <div id="moat-canvas-wrapper" class="absolute top-0 left-0 w-full h-full z-0"></div>
+    <div id="moat-canvas-wrapper" class="absolute top-0 left-0 w-full h-full z-0">
+        <!-- Your three.js canvas will be injected here -->
+    </div>
     
     <!-- Header Text Overlay, positioned on top with a higher z-index -->
-    <div class="mb-8">
-        <span class="inline-block bg-blue-100 text-blue-800 text-xs font-semibold px-3 py-1.5 rounded-full uppercase tracking-wider">
-            AI Core
-        </span>
+    <div class="relative z-10 text-center">
+        <div class="mb-8 inline-block">
+            <span class="inline-block bg-blue-100/10 text-blue-300 text-xs font-semibold px-3 py-1.5 rounded-full uppercase tracking-wider">
+                AI Core
+            </span>
+        </div>
+        <header class="mb-8 md:mb-12">
+            <h1 class="main-headline text-3xl md:text-4xl lg:text-5xl font-extrabold text-gray-100 tracking-tight leading-tight">
+                The Intelligence Engine
+            </h1>
+        </header>
     </div>
-    <header class="text-center mb-8 md:mb-12">
-        <h1 class="main-headline text-3xl md:text-4xl lg:text-5xl font-extrabold text-gray-100 tracking-tight leading-tight">
-            The Intelligence Engine
-        </h1>
-    </header>
 
-     <!-- NEW: Left-aligned Labels Column -->
-    <div class="text-center flex-grow flex flex-col justify-around mt-40">
-        <div>
-            <h3 class="font-bold text-sm uppercase tracking-wider text-gray-200">AI Core</h3>
-        </div>
-        <div>
-            <h3 class="font-bold text-sm uppercase tracking-wider text-gray-200">Transporter Layer</h3>
-        </div>
-        <div>
-            <h3 class="font-bold text-sm uppercase tracking-wider text-gray-200">Shipper (MSME) Layer</h3>
+    <!-- NEW: Annotation Labels Layout -->
+    <!-- This container uses absolute positioning to overlay the canvas -->
+    <div class="absolute top-0 left-0 w-full h-full flex items-center z-10 pointer-events-none">
+        <div class="w-full max-w-6xl mx-auto px-8 md:px-12">
+            <!-- This grid helps position the labels relative to the center -->
+            <div class="grid grid-cols-3">
+                <!-- Left-aligned Labels Column -->
+                <div class="flex flex-col justify-between space-y-24 text-right">
+                    
+                    <!-- AI Core Label -->
+                    <div class="flex justify-end items-center">
+                        <div class="text-right mr-4">
+                            <h3 class="font-bold text-sm uppercase tracking-wider text-gray-200">AI Core</h3>
+                        </div>
+                        <div class="w-16 h-px bg-gray-400/50"></div>
+                    </div>
+
+                    <!-- Transporter Layer Label -->
+                    <div class="flex justify-end items-center">
+                         <div class="text-right mr-4">
+                            <h3 class="font-bold text-sm uppercase tracking-wider text-gray-200">Transporter Layer</h3>
+                        </div>
+                        <div class="w-16 h-px bg-gray-400/50"></div>
+                    </div>
+
+                    <!-- Shipper Layer Label -->
+                    <div class="flex justify-end items-center">
+                         <div class="text-right mr-4">
+                            <h3 class="font-bold text-sm uppercase tracking-wider text-gray-200">Shipper (MSME) Layer</h3>
+                        </div>
+                        <div class="w-16 h-px bg-gray-400/50"></div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
