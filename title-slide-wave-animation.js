@@ -141,10 +141,12 @@ const TitleSlideAnimation = (function() {
                 const ripple = Math.sin(distance / waveLength - time * waveSpeed);
                 const dampening = 1 / (1 + distance / 200);
                 
-                const newY = particleData.originalY + ripple * waveAmplitude * dampening;
-                const newZ = particleData.originalZ + ripple * waveAmplitude * dampening;
-
-                positions.setXYZ(i, particleData.originalX, newY, newZ);
+                // --- MODIFIED: Displacement is now only applied to the Y-axis ---
+                const displacement = ripple * waveAmplitude * dampening;
+                const newY = particleData.originalY + displacement;
+                
+                // The Z position remains constant for a smoother look
+                positions.setXYZ(i, particleData.originalX, newY, particleData.originalZ);
 
                 const colorFactor = (ripple + 1) / 2;
                 const mixedColor = baseColor.clone().lerp(waveCrestColor, colorFactor);

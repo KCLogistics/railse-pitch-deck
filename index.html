@@ -169,9 +169,9 @@
             animation: fadeIn 0.8s ease-out forwards;
             opacity: 0;
         }
-        .delay-1 { animation-delay: 0.4s; }
-        .delay-2 { animation-delay: 0.6s; }
-        .delay-3 { animation-delay: 0.8s; }
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
         
     
         /* --- ECOSYSTEM DIAGRAM --- */
@@ -297,6 +297,7 @@
             const response = await fetch(`slides/slide-${index + 1}.html`);
             const slideHTML = await response.text();
             slideContainer.innerHTML = slideHTML;
+            
 
             const newSlide = slideContainer.querySelector('.slide');
             newSlide.classList.add('active');
@@ -306,13 +307,9 @@
             nextButton.disabled = index === totalSlides - 1;
 
             if (index === 0) {
-                if (!threeJsInitialized) {
-                    initThreeJS();
-                }
-                startAnimation();
+                TitleSlideAnimation.start();
             } else {
-                stopAnimation();
-                threeJsInitialized = false;
+                TitleSlideAnimation.stop();
             }
             
             if (index === 3) {
@@ -320,6 +317,7 @@
                     createEcosystem('ecosystem', ecosystemData);
                 }, 50);
             }
+            
 
             if (index === 5) {
                 // Add a small delay to ensure the slide container is rendered before starting the animation
@@ -362,7 +360,7 @@
         showSlide(currentSlide);
     </script>
     <script src="intelligence-engine-animation.js"></script>
-    <script src="title-slide-animation.js"></script>
+    <script src="title-slide-wave-animation.js"></script>
     <script type="module" src="moat-animation.js"></script>
 </body>
 </html>
