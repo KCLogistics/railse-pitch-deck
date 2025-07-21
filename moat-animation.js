@@ -212,6 +212,7 @@ function animate() {
     }
 
     renderer.render(scene, camera);
+    updateDotPositions(); // Update dot positions every frame
 }
 
 // Make this function globally available for index.html to call
@@ -239,4 +240,3 @@ setTimeout(() => {
         window.initMoatAnimation();
     }
 }, 50);
-

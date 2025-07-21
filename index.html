@@ -225,7 +225,7 @@
                 stroke-dashoffset: -10;
             }
         }
-
+        /* --- MOAT ANIMATION SLIDE --- */
         #moat-animation-container {
             /* Replaced solid color with a subtle radial gradient */
             /* background-image: radial-gradient(circle, #1a2a6c 0%, #050a1a 75%); */
@@ -245,6 +245,20 @@
             height: 100%;
             z-index: 0; /* CRITICAL: Places the canvas at the very back layer */
         }
+
+        /* Style for the verification dots */
+        .verification-dot {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #ff3b30; /* <-- This line sets the color to bright red */
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 20;
+            opacity: 0; 
+            transition: opacity 0.3s;
+        }
+
     </style>
     <script src="proof-slide-charts.js"></script>
     <script type="importmap">
