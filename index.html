@@ -266,6 +266,17 @@
             font-size: 12px;
             white-space: nowrap;
         }
+        
+        /*collage image styles*/
+        .collage-img {
+            object-fit: cover;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+        .collage-img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            z-index: 10;
+        }
 
     </style>
     <script src="proof-slide-charts.js"></script>
@@ -295,7 +306,7 @@
         const slideCounter = document.getElementById('slide-counter');
         
         let currentSlide = 0;
-        const totalSlides = 12;
+        const totalSlides = 13;
         let chartRendered = false; 
         let ecosystemRendered = false;
         
