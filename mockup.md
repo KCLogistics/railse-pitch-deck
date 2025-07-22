@@ -163,27 +163,29 @@ This slide is divided into a header and a three-column layout. The header introd
 
 ---
 
-# Slide 6: The Moat Animation
+# Slide 6: Our Operating System
 
 **Layout:**
 This slide is a full-screen animation that visually represents the company's moat.
 
 **Content:**
 
-*   **Title Tag:** "Temp_Name"
+*   **Title Tag:** "OUR OPERATING SYSTEM"
+*   **Main Headline:** "A Network That Thinks."
+*   **Sub-headline:** "AI Powering 1 million transporters to provide nationwide reliability for 10 million shippers."
 *   **Animation:** The slide features a Three.js animation of a particle network with three layers:
     *   **AI Core:** A central sphere of particles.
     *   **Transporter Layer:** An orbit of particles around the AI Core.
     *   **Shipper Layer:** A larger orbit of particles around the Transporter Layer.
-*   **Labels:** The animation includes labels for the "AI Core," "The Transporter Layer," and "The Shipper Layer."
+*   **Labels:** The animation includes labels for the "AI Core," "Transporter Layer," and "Shipper (MSME) Layer."
 
 *   **Footer:**
     *   A professional footer is located at the bottom-left of the slide with the text: "© 2025 Railse, Inc. | Confidential & Proprietary".
 
 **Styling:**
 
-*   **Background:** The slide has a dark blue background.
-*   **Colors:** The animation uses a color palette of blue, white, and light blue.
+*   **Background:** The slide has a dark blue radial gradient background.
+*   **Colors:** The animation uses a color palette of blue, white, and light blue. The text is white and light gray.
 
 
 ---
@@ -409,3 +411,31 @@ This slide presents the company's traction and growth metrics. It has a header a
 *   **Charts:** The charts are clean and easy to read, with clear labels and a professional color scheme.
 *   **Table and Insights:** The table and the strategic insights are presented in cards with a light gray background and a border.
 *   **Colors:** The slide uses a professional color palette with blue, gray, and green tones.
+
+---
+
+# Slide 13: Our DNA
+
+**Layout:**
+This slide features a full-bleed image collage with a header and a concluding statement.
+
+**Content:**
+
+*   **Header:**
+    *   **Title Tag:** "Our DNA"
+    *   **Main Headline:** "We Haven't Just Studied This Problem; We've Lived It."
+
+*   **Image Collage:**
+    *   A collage of five images showing the team in various work environments, such as in a vehicle, handling packages, working together, late-night work sessions, and on the move at night.
+
+*   **Concluding Statement:**
+    *   "Because the best solutions aren't built in boardrooms. They're built on the road."
+
+*   **Footer:**
+    *   A professional footer is located at the bottom-left of the slide with the text: "© 2025 Railse, Inc. | Confidential & Proprietary".
+
+**Styling:**
+
+*   **Images:** The images are arranged in a dynamic grid layout.
+*   **Text:** The text is overlaid on the images.
+*   **Colors:** The slide uses a professional color palette with blue and gray tones.
