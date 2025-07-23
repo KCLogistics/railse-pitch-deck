@@ -276,7 +276,7 @@ This slide introduces the founding team. It has a header and a two-column layout
 
 *   **Header:**
     *   **Title Tag:** "The Team"
-    *   **Main Headline:** "The Team Built for This Mission."
+    *   **Main Headline:** "The Insiders with the Playbook to Fix This."
     *   **Intro Paragraph:** "We are founders from IIT Roorkee with deep, first-hand experience building and scaling technology and logistics at India's most iconic companies."
 
 *   **Team Members:**
