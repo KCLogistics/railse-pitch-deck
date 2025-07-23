@@ -143,13 +143,18 @@ This slide is divided into a header and a three-column layout. The header introd
 
 *   **Header:**
     *   **Title Tag:** "The Moat"
-    *   **Main Headline:** "Our Moat: A Symbiotic Ecosystem."
+    *   **Main Headline:** "A Symbiotic Ecosystem."
     *   **Intro Paragraph:** "Our defensibility is built on three layers that reinforce each other, creating a system that is incredibly difficult to replicate."
 
 *   **Three Pillars:**
     *   **The Empowered Network:** We empower the top 10% of transporters with our technology. This creates deep loyalty and high switching costs, locking in the market's best supply network exclusively for us.
     *   **The Execution Playbook:** Our unique model blends the trust of traditional relationships with modern tech efficiency—a hybrid DNA that pure-tech or legacy players cannot match.
     *   **The Intelligence Engine:** Our AI gets smarter with every shipment. This compounding data advantage makes our pricing and matching superior, creating a barrier impossible for new entrants to overcome.
+
+*   **Pillar Sub-Headings:**
+    *   Our Distribution Channel
+    *   Our Unique Method
+    *   Our Proprietary Product
 
 *   **Footer:**
     *   A professional footer is located at the bottom-left of the slide with the text: "© 2025 Railse, Inc. | Confidential & Proprietary".
