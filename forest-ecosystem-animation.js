@@ -8,6 +8,7 @@ import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
 // Global variables to manage the animation state
 let animationFrameId;
 let renderer, composer, controls;
+let scene; // <-- FIX: Moved scene to the global scope so it can be accessed by the stop function
 
 function initForestAnimation() {
     // Stop any previous instance to prevent duplicates
@@ -22,7 +23,7 @@ function initForestAnimation() {
     }
 
     // --- Core Scene Setup ---
-    const scene = new THREE.Scene();
+    scene = new THREE.Scene(); // Initialize the global scene variable
     const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 2000);
     renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(container.clientWidth, container.clientHeight);
@@ -202,8 +203,7 @@ function initForestAnimation() {
     const clock = new THREE.Clock();
     function animate() {
         animationFrameId = requestAnimationFrame(animate);
-        const delta = clock.getDelta();
-        const elapsedTime = clock.getElapsedTime();
+        const delta = clock.getDelta(), elapsedTime = clock.getElapsedTime();
         const lightOffset = new THREE.Vector3(30, 50, 30);
         lightOffset.applyQuaternion(camera.quaternion);
         directionalLight.position.copy(camera.position).add(lightOffset);
@@ -246,7 +246,7 @@ function initForestAnimation() {
         controls.update();
         composer.render();
     }
-
+    
     window.addEventListener('resize', () => {
         camera.aspect = container.clientWidth / container.clientHeight;
         camera.updateProjectionMatrix();
@@ -256,7 +256,7 @@ function initForestAnimation() {
 
     camera.position.set(0, 20, 180);
     controls.target.set(0, -15, 0);
-
+    
     resetAnimation();
     animate();
 }
@@ -268,16 +268,18 @@ function stopForestAnimation() {
     }
     if (renderer) {
         // Clean up scene resources
-        scene.traverse(object => {
-            if (object.geometry) object.geometry.dispose();
-            if (object.material) {
-                if (object.material.length) {
-                    for (const material of object.material) material.dispose();
-                } else {
-                    object.material.dispose();
+        if (scene) { // FIX: Check if scene exists before traversing
+            scene.traverse(object => {
+                if (object.geometry) object.geometry.dispose();
+                if (object.material) {
+                    if (Array.isArray(object.material)) {
+                        object.material.forEach(material => material.dispose());
+                    } else {
+                        object.material.dispose();
+                    }
                 }
-            }
-        });
+            });
+        }
         renderer.dispose();
         const canvas = renderer.domElement;
         if (canvas && canvas.parentElement) {
@@ -286,6 +288,7 @@ function stopForestAnimation() {
         renderer = null;
         composer = null;
         controls = null;
+        scene = null; // Clear the scene reference
     }
 }
 
