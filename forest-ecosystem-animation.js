@@ -157,7 +157,6 @@ function initForestAnimation() {
                 }
             }
         }
-
     }
         
     createMajesticTree(-60, -40);
@@ -267,24 +266,32 @@ function stopForestAnimation() {
         animationFrameId = null;
     }
     if (renderer) {
-        // Clean up scene resources
-        if (scene) { // FIX: Check if scene exists before traversing
-            scene.traverse(object => {
-                if (object.geometry) object.geometry.dispose();
-                if (object.material) {
-                    if (Array.isArray(object.material)) {
-                        object.material.forEach(material => material.dispose());
+        // --- UPDATED & MORE THOROUGH CLEANUP ---
+        if (scene) {
+            // Remove all objects from the scene
+            while(scene.children.length > 0){ 
+                const object = scene.children[0];
+                if(object.geometry) object.geometry.dispose();
+                if(object.material) {
+                    if(Array.isArray(object.material)){
+                       object.material.forEach(material => material.dispose());
                     } else {
                         object.material.dispose();
                     }
                 }
-            });
+                scene.remove(object);
+            }
         }
+        // Dispose of the renderer and controls
         renderer.dispose();
+        if (controls) controls.dispose();
+        
         const canvas = renderer.domElement;
         if (canvas && canvas.parentElement) {
             canvas.parentElement.removeChild(canvas);
         }
+
+        // Clear all global references
         renderer = null;
         composer = null;
         controls = null;
