@@ -8,7 +8,7 @@ import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
 // Global variables to manage the animation state
 let animationFrameId;
 let renderer, composer, controls;
-let scene; // <-- FIX: Moved scene to the global scope so it can be accessed by the stop function
+let scene; 
 
 function initForestAnimation() {
     // Stop any previous instance to prevent duplicates
@@ -23,7 +23,7 @@ function initForestAnimation() {
     }
 
     // --- Core Scene Setup ---
-    scene = new THREE.Scene(); // Initialize the global scene variable
+    scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 2000);
     renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(container.clientWidth, container.clientHeight);
@@ -247,6 +247,7 @@ function initForestAnimation() {
     }
     
     window.addEventListener('resize', () => {
+        if (!renderer) return; // Prevent errors if resize happens after cleanup
         camera.aspect = container.clientWidth / container.clientHeight;
         camera.updateProjectionMatrix();
         renderer.setSize(container.clientWidth, container.clientHeight);
@@ -268,20 +269,26 @@ function stopForestAnimation() {
     if (renderer) {
         // --- UPDATED & MORE THOROUGH CLEANUP ---
         if (scene) {
-            // Remove all objects from the scene
-            while(scene.children.length > 0){ 
-                const object = scene.children[0];
-                if(object.geometry) object.geometry.dispose();
-                if(object.material) {
-                    if(Array.isArray(object.material)){
-                       object.material.forEach(material => material.dispose());
+            // Traverse the entire scene graph to dispose of everything
+            scene.traverse(object => {
+                if (object.geometry) {
+                    object.geometry.dispose();
+                }
+                if (object.material) {
+                    // It's important to check if the material is an array
+                    if (Array.isArray(object.material)) {
+                        object.material.forEach(material => material.dispose());
                     } else {
                         object.material.dispose();
                     }
                 }
-                scene.remove(object);
+            });
+            // Remove all children from the scene
+            while(scene.children.length > 0){ 
+                scene.remove(scene.children[0]); 
             }
         }
+        
         // Dispose of the renderer and controls
         renderer.dispose();
         if (controls) controls.dispose();
@@ -291,11 +298,11 @@ function stopForestAnimation() {
             canvas.parentElement.removeChild(canvas);
         }
 
-        // Clear all global references
+        // Clear all global references to allow for garbage collection
         renderer = null;
         composer = null;
         controls = null;
-        scene = null; // Clear the scene reference
+        scene = null;
     }
 }
 
