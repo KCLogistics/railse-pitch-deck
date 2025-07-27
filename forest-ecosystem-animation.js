@@ -9,6 +9,7 @@ import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
 let animationFrameId;
 let renderer, composer, controls;
 let scene; 
+let onWindowResize; // <-- ADD THIS LINE
 
 function initForestAnimation() {
     // Stop any previous instance to prevent duplicates
@@ -190,7 +191,7 @@ function initForestAnimation() {
     function resetAnimation() {
         blueRootIndices = [];
         rootNetwork.children.forEach((child, index) => {
-            child.material = networkMaterial.clone();
+            child.material = networkMaterial; // <-- REUSE material, DON'T CLONE
             child.userData.isLearned = false;
             blueRootIndices.push(index);
         });
@@ -230,7 +231,7 @@ function initForestAnimation() {
                     const randomIndex = Math.floor(Math.random() * blueRootIndices.length);
                     const rootIndexToConvert = blueRootIndices.splice(randomIndex, 1)[0];
                     const segment = rootNetwork.children[rootIndexToConvert];
-                    segment.material = learnedMaterial.clone();
+                    segment.material = learnedMaterial; // <-- REUSE material, DON'T CLONE
                     segment.userData.isLearned = true;
                     triggerSparkle(segment.position);
                     learnedCount++;
@@ -246,13 +247,14 @@ function initForestAnimation() {
         composer.render();
     }
     
-    window.addEventListener('resize', () => {
+    onWindowResize = () => { // <-- Assign the function to our variable
         if (!renderer) return; // Prevent errors if resize happens after cleanup
         camera.aspect = container.clientWidth / container.clientHeight;
         camera.updateProjectionMatrix();
         renderer.setSize(container.clientWidth, container.clientHeight);
         composer.setSize(container.clientWidth, container.clientHeight);
-    });
+    };
+    window.addEventListener('resize', onWindowResize); // <-- Add the listener
 
     camera.position.set(0, 20, 180);
     controls.target.set(0, -15, 0);
@@ -262,6 +264,12 @@ function initForestAnimation() {
 }
 
 function stopForestAnimation() {
+    // --- 1. REMOVE THE EVENT LISTENER --- ✅
+    if (onWindowResize) {
+        window.removeEventListener('resize', onWindowResize);
+        onWindowResize = null; // Clear the reference
+    }
+
     if (animationFrameId) {
         cancelAnimationFrame(animationFrameId);
         animationFrameId = null;
@@ -271,16 +279,20 @@ function stopForestAnimation() {
         if (scene) {
             // Traverse the entire scene graph to dispose of everything
             scene.traverse(object => {
+                // Also dispose of any textures on materials
+                if (object.material) {
+                    const materials = Array.isArray(object.material) ? object.material : [object.material];
+                    materials.forEach(material => {
+                        Object.values(material).forEach(value => {
+                            if (value && typeof value.dispose === 'function') {
+                                value.dispose();
+                            }
+                        });
+                        material.dispose();
+                    });
+                }
                 if (object.geometry) {
                     object.geometry.dispose();
-                }
-                if (object.material) {
-                    // It's important to check if the material is an array
-                    if (Array.isArray(object.material)) {
-                        object.material.forEach(material => material.dispose());
-                    } else {
-                        object.material.dispose();
-                    }
                 }
             });
             // Remove all children from the scene
