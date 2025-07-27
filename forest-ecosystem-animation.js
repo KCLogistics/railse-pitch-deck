@@ -10,6 +10,7 @@ let animationFrameId;
 let renderer, composer, controls;
 let scene; 
 let onWindowResize; // <-- ADD THIS LINE
+let rootNetwork; // <-- ADD THIS LINE
 
 function initForestAnimation() {
     // Stop any previous instance to prevent duplicates
@@ -78,7 +79,7 @@ function initForestAnimation() {
     });
 
     // --- Majestic Tree Generation ---
-    const rootNetwork = new THREE.Group();
+    rootNetwork = new THREE.Group(); // <-- MODIFY THIS LINE
     scene.add(rootNetwork);
 
     function createMajesticTree(x, z) {
@@ -263,59 +264,75 @@ function initForestAnimation() {
     animate();
 }
 
+/**
+ * A complete and robust cleanup function for the forest animation.
+ * This function uses a comprehensive scene traversal to ensure all
+ * Three.js objects are disposed of, preventing memory leaks.
+ */
 function stopForestAnimation() {
-    // --- 1. REMOVE THE EVENT LISTENER --- ✅
+    // 2. Remove the global event listener to prevent a common leak
     if (onWindowResize) {
         window.removeEventListener('resize', onWindowResize);
-        onWindowResize = null; // Clear the reference
+        onWindowResize = null;
     }
-
+    // 1. Cancel the animation loop to stop all future execution
     if (animationFrameId) {
         cancelAnimationFrame(animationFrameId);
         animationFrameId = null;
     }
+    // 3. Proceed only if the renderer exists to avoid errors on multiple calls
     if (renderer) {
-        // --- UPDATED & MORE THOROUGH CLEANUP ---
+        // This generic traversal is the key. It will inspect every object
+        // in the scene, regardless of how it was nested.
         if (scene) {
-            // Traverse the entire scene graph to dispose of everything
             scene.traverse(object => {
-                // Also dispose of any textures on materials
-                if (object.material) {
-                    const materials = Array.isArray(object.material) ? object.material : [object.material];
-                    materials.forEach(material => {
-                        Object.values(material).forEach(value => {
-                            if (value && typeof value.dispose === 'function') {
-                                value.dispose();
-                            }
-                        });
-                        material.dispose();
-                    });
-                }
+                // Dispose of geometries
                 if (object.geometry) {
                     object.geometry.dispose();
                 }
+
+                // Dispose of materials and any textures they use
+                if (object.material) {
+                    const materials = Array.isArray(object.material) ? object.material : [object.material];
+                    materials.forEach(material => {
+                        // Dispose of all textures in the material
+                        for (const key of Object.keys(material)) {
+                            const value = material[key];
+                            if (value && typeof value.dispose === 'function') {
+                                value.dispose();
+                            }
+                        }
+                        // Dispose the material itself
+                        material.dispose();
+                    });
+                }
             });
-            // Remove all children from the scene
-            while(scene.children.length > 0){ 
-                scene.remove(scene.children[0]); 
+
+            // Empty the scene of all children
+            while (scene.children.length > 0) {
+                scene.remove(scene.children[0]);
             }
         }
-        
-        // Dispose of the renderer and controls
+
+        // 4. Dispose of the renderer and controls
         renderer.dispose();
-        if (controls) controls.dispose();
-        
+        if (controls) {
+            controls.dispose();
+        }
+
+        // 5. Remove the canvas element from the document
         const canvas = renderer.domElement;
         if (canvas && canvas.parentElement) {
             canvas.parentElement.removeChild(canvas);
         }
-
-        // Clear all global references to allow for garbage collection
-        renderer = null;
-        composer = null;
-        controls = null;
-        scene = null;
     }
+
+    // 6. Finally, nullify all global variables to release their memory
+    renderer = null;
+    composer = null;
+    controls = null;
+    scene = null;
+    rootNetwork = null;
 }
 
 // Make functions globally available
