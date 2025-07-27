@@ -280,10 +280,12 @@
 
     </style>
     <script src="proof-slide-charts.js"></script>
+    <!-- ADDED: Import map for three.js modules -->
     <script type="importmap">
         {
             "imports": {
-                "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"
+                "three": "https://cdn.jsdelivr.net/npm/three@0.161.0/build/three.module.js",
+                "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.161.0/examples/jsm/"
             }
         }
     </script>
@@ -295,7 +297,7 @@
 
     <div class="navigation">
         <button id="prev" class="nav-button">Previous</button>
-        <div id="slide-counter">1 / 11</div>
+        <div id="slide-counter">1 / 14</div> <!-- UPDATED: Total slide count -->
         <button id="next" class="nav-button">Next</button>
     </div>
 
@@ -306,11 +308,12 @@
         const slideCounter = document.getElementById('slide-counter');
         
         let currentSlide = 0;
+        // UPDATED: Added new slide to the order
         const slideOrder = [
             "slide-title.html",
             "slide-the-problem.html",
             "slide-the-solution.html",
-            "slide-our-platform.html",
+            "slide-forest-ecosystem.html",
             "slide-the-intelligence-engine.html",
             "slide-the-moat.html",
             "slide-our-operating-system.html",
@@ -327,6 +330,12 @@
         let ecosystemRendered = false;
 
         async function showSlide(index) {
+            // ADDED: Stop the forest animation when changing slides
+            if (typeof stopForestAnimation === 'function') {
+                stopForestAnimation();
+            }
+            // (You might have other stop functions here for other animations, leave them as is)
+
             const slideName = slideOrder[index];
             const response = await fetch(`slides/${slideName}`);
             const slideHTML = await response.text();
@@ -357,6 +366,16 @@
                     initMoatAnimation();
                 }, 50); // 50 milliseconds is usually enough time
             }
+            // ADDED: Trigger for the new forest animation
+            if (slideName === "slide-forest-ecosystem.html") {
+                setTimeout(() => {
+                    if (typeof initForestAnimation === 'function') {
+                        initForestAnimation();
+                    }
+                }, 50);
+            }
+            
+            
 
             if (slideName === "slide-the-proof.html") {
                 renderProofCharts();
@@ -383,7 +402,7 @@
         });
 
         window.addEventListener('resize', () => {
-            if (currentSlide === 3) {
+            if (slideOrder[currentSlide] === "slide-the-intelligence-engine.html") {
                  createEcosystem('ecosystem', ecosystemData);
             }
         });
@@ -394,5 +413,6 @@
     <script src="intelligence-engine-animation.js"></script>
     <script src="title-slide-wave-animation.js"></script>
     <script type="module" src="os-animation.js"></script>
+    <script type="module" src="forest-ecosystem-animation.js"></script>
 </body>
 </html>

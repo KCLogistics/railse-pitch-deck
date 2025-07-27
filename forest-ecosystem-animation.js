@@ -1,42 +1,57 @@
-
+// forest-ecosystem-animation.js
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
 
+// Global variables to manage the animation state
+let animationFrameId;
+let renderer, composer, controls;
+
+function initForestAnimation() {
+// Stop any previous instance to prevent duplicates
+if (animationFrameId) {
+    stopForestAnimation();
+}
+
+const container = document.getElementById('forest-animation-container');
+if (!container) {
+    console.error('Forest animation container not found!');
+    return;
+}
+
 // --- Core Scene Setup ---
 const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 2000);
-const renderer = new THREE.WebGLRenderer({ antialias: true });
-renderer.setSize(window.innerWidth, window.innerHeight);
+const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 2000);
+renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setSize(container.clientWidth, container.clientHeight);
 renderer.setPixelRatio(window.devicePixelRatio);
-document.body.appendChild(renderer.domElement);
+container.appendChild(renderer.domElement);
 
 // --- Post-processing (Bloom) ---
 const renderScene = new RenderPass(scene, camera);
-const bloomPass = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 1.5, 0.4, 0.85);
+const bloomPass = new UnrealBloomPass(new THREE.Vector2(container.clientWidth, container.clientHeight), 1.5, 0.4, 0.85);
 bloomPass.threshold = 0;
 bloomPass.strength = 0.6;
 bloomPass.radius = 0.5;
-const composer = new EffectComposer(renderer);
+composer = new EffectComposer(renderer);
 composer.addPass(renderScene);
 composer.addPass(bloomPass);
 
-
 // --- Controls ---
-const controls = new OrbitControls(camera, renderer.domElement);
+controls = new OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true;
 controls.dampingFactor = 0.05;
 controls.minDistance = 20;
 controls.maxDistance = 200;
-controls.maxPolarAngle = Math.PI * 2; 
+controls.maxPolarAngle = Math.PI * 2;
 controls.autoRotate = true;
 controls.autoRotateSpeed = 4.0;
 
 // --- Lighting ---
 const directionalLight = new THREE.DirectionalLight(0xffe8b5, 3.0);
-directionalLight.position.set(0, 50, 0); 
+directionalLight.position.set(0, 50, 0);
 scene.add(directionalLight);
 const ambientLight = new THREE.AmbientLight(0x404040, 1.5);
 scene.add(ambientLight);
@@ -45,8 +60,7 @@ scene.add(hemisphereLight);
 
 // --- Materials ---
 const trunkMaterial = new THREE.MeshStandardMaterial({ color: 0x5a4a3a, roughness: 0.8, side: THREE.DoubleSide });
-
-const networkMaterial = new THREE.MeshBasicMaterial({ 
+const networkMaterial = new THREE.MeshBasicMaterial({
     color: 0x87cefa,
     transparent: true,
     opacity: 0.3,
@@ -54,7 +68,6 @@ const networkMaterial = new THREE.MeshBasicMaterial({
     depthWrite: false
 });
 networkMaterial.userData.baseOpacity = 0.3;
-
 const learnedMaterial = new THREE.MeshStandardMaterial({
     color: 0xffd700,
     emissive: 0xffd700,
@@ -63,7 +76,6 @@ const learnedMaterial = new THREE.MeshStandardMaterial({
 });
 
 // --- Majestic Tree Generation ---
-const heroTrees = [];
 const rootNetwork = new THREE.Group();
 scene.add(rootNetwork);
 
@@ -71,101 +83,51 @@ function createMajesticTree(x, z) {
     const treeGroup = new THREE.Group();
     treeGroup.position.set(x, 0, z);
     scene.add(treeGroup);
-    heroTrees.push(treeGroup);
-
     const branchPoints = [];
     const leafPoints = [];
-    
     function generateBranches(startPoint, direction, depth, thickness) {
         if (depth <= 0) {
             leafPoints.push(startPoint.clone());
             return;
         }
-
         const length = Math.random() * 4 + (12 - depth);
         const endPoint = startPoint.clone().add(direction.clone().multiplyScalar(length));
-        
         const curve = new THREE.CatmullRomCurve3([startPoint, endPoint]);
         branchPoints.push({ curve, thickness });
-
         if (depth < 6) {
             const pointsOnBranch = Math.floor(length / 2.5);
             for (let i = 1; i <= pointsOnBranch; i++) {
-                const t = i / (pointsOnBranch + 1);
-                leafPoints.push(curve.getPoint(t));
+                leafPoints.push(curve.getPoint(i / (pointsOnBranch + 1)));
             }
         }
-
         const sway = new THREE.Euler(0, Math.sin(performance.now() * 0.0001 + x) * 0.02, 0);
         const numBranches = (depth > 3) ? (Math.floor(Math.random() * 2) + 1) : (Math.floor(Math.random() * 4) + 3);
-
         for (let i = 0; i < numBranches; i++) {
             const turnFactor = depth > 5 ? 0.8 : 1.8;
-            let newDirection = direction.clone()
-                .applyEuler(new THREE.Euler(
-                    (Math.random() - 0.5) * turnFactor,
-                    (Math.random() - 0.5) * turnFactor,
-                    (Math.random() - 0.5) * turnFactor
-                ))
-                .applyEuler(sway);
-            
-            const upVector = new THREE.Vector3(0, 1, 0);
-            newDirection.lerp(upVector, 0.15).normalize();
-            
+            let newDirection = direction.clone().applyEuler(new THREE.Euler((Math.random() - 0.5) * turnFactor, (Math.random() - 0.5) * turnFactor, (Math.random() - 0.5) * turnFactor)).applyEuler(sway);
+            newDirection.lerp(new THREE.Vector3(0, 1, 0), 0.15).normalize();
             generateBranches(endPoint, newDirection, depth - 1, thickness * 0.65);
         }
     }
-
-    const initialDirection = new THREE.Vector3(0.1, 1, 0).normalize();
-    generateBranches(new THREE.Vector3(0, 0, 0), initialDirection, 7, 2.5);
-
-    branchPoints.forEach(branch => {
-        const geometry = new THREE.TubeGeometry(branch.curve, 1, branch.thickness, 5, false);
-        const mesh = new THREE.Mesh(geometry, trunkMaterial);
-        treeGroup.add(mesh);
-    });
-
-    // --- REVERTED: Leaf material is now constant ---
-    const leafMaterial = new THREE.MeshStandardMaterial({
-        color: 0x3CB371,
-        side: THREE.DoubleSide,
-        roughness: 0.7, 
-        metalness: 0.0
-    });
-
+    generateBranches(new THREE.Vector3(0, 0, 0), new THREE.Vector3(0.1, 1, 0).normalize(), 7, 2.5);
+    branchPoints.forEach(branch => treeGroup.add(new THREE.Mesh(new THREE.TubeGeometry(branch.curve, 1, branch.thickness, 5, false), trunkMaterial)));
     const leafGeometry = new THREE.PlaneGeometry(2.5, 2.5);
-    const leavesPerPoint = 3; 
-    const totalLeaves = leafPoints.length * leavesPerPoint;
-    
+    const leafMaterial = new THREE.MeshStandardMaterial({ color: 0x3CB371, side: THREE.DoubleSide, roughness: 0.7, metalness: 0.0 });
+    const totalLeaves = leafPoints.length * 3;
     if (totalLeaves > 0) {
         const instancedLeaves = new THREE.InstancedMesh(leafGeometry, leafMaterial, totalLeaves);
         const dummy = new THREE.Object3D();
         let leafIndex = 0;
-
         for (let i = 0; i < leafPoints.length; i++) {
-            for (let j = 0; j < leavesPerPoint; j++) {
-                dummy.position.copy(leafPoints[i]);
-                dummy.position.add(
-                    new THREE.Vector3(
-                        (Math.random() - 0.5) * 1.5,
-                        (Math.random() - 0.5) * 1.5,
-                        (Math.random() - 0.5) * 1.5
-                    )
-                );
-                dummy.rotation.set(
-                    Math.random() * Math.PI * 2,
-                    Math.random() * Math.PI * 2,
-                    Math.random() * Math.PI * 2
-                );
-                
+            for (let j = 0; j < 3; j++) {
+                dummy.position.copy(leafPoints[i]).add(new THREE.Vector3((Math.random() - 0.5) * 1.5, (Math.random() - 0.5) * 1.5, (Math.random() - 0.5) * 1.5));
+                dummy.rotation.set(Math.random() * Math.PI * 2, Math.random() * Math.PI * 2, Math.random() * Math.PI * 2);
                 dummy.updateMatrix();
-                instancedLeaves.setMatrixAt(leafIndex, dummy.matrix);
-                leafIndex++;
+                instancedLeaves.setMatrixAt(leafIndex++, dummy.matrix);
             }
         }
         treeGroup.add(instancedLeaves);
     }
-
     createRootSystem(new THREE.Vector3(x, 0, z), 12, 16, 0.4);
 }
 
@@ -194,43 +156,28 @@ function createRootSystem(startPoint, initialBranches, depth, initialRadius) {
             }
         }
     }
-}
 
+}
+    
 createMajesticTree(-60, -40);
 createMajesticTree(50, -60);
 createMajesticTree(0, 0);
 createMajesticTree(80, 20);
 createMajesticTree(-30, 50);
-
+    
 // --- Firefly Cascade Animation ---
-let blueRootIndices = [];
-let learnedCount = 0;
-let totalRoots = rootNetwork.children.length;
-let animationState = 'IDLE';
-let stateTimer = 0;
+let blueRootIndices = [], learnedCount = 0, totalRoots = rootNetwork.children.length;
+let animationState = 'IDLE', stateTimer = 0;
 const CONVERSION_RATE = Math.ceil(totalRoots / 10 / 60);
-const GOAL_PERCENTAGE = 0.1;
-const PAUSE_DURATION = 3;
-
-// --- Sparkle Effect ---
-const sparklePool = [];
-const SPARKLE_COUNT = 50;
+const GOAL_PERCENTAGE = 0.1, PAUSE_DURATION = 3;
+const sparklePool = [], SPARKLE_COUNT = 50;
 for(let i = 0; i < SPARKLE_COUNT; i++) {
-    const sparkle = new THREE.Mesh(
-        new THREE.SphereGeometry(0.4, 6, 6),
-        new THREE.MeshBasicMaterial({
-            color: 0xffffff,
-            transparent: true,
-            opacity: 0,
-            blending: THREE.AdditiveBlending
-        })
-    );
+    const sparkle = new THREE.Mesh(new THREE.SphereGeometry(0.4, 6, 6), new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0, blending: THREE.AdditiveBlending }));
     sparkle.visible = false;
     sparkle.userData.life = 0;
     scene.add(sparkle);
     sparklePool.push(sparkle);
 }
-
 function triggerSparkle(position) {
     const sparkle = sparklePool.find(s => !s.visible);
     if (sparkle) {
@@ -240,8 +187,6 @@ function triggerSparkle(position) {
         sparkle.userData.life = 1.0; 
     }
 }
-
-
 function resetAnimation() {
     blueRootIndices = [];
     rootNetwork.children.forEach((child, index) => {
@@ -256,18 +201,14 @@ function resetAnimation() {
 
 const clock = new THREE.Clock();
 function animate() {
-    requestAnimationFrame(animate);
+    animationFrameId = requestAnimationFrame(animate);
     const delta = clock.getDelta();
     const elapsedTime = clock.getElapsedTime();
-
     const lightOffset = new THREE.Vector3(30, 50, 30);
     lightOffset.applyQuaternion(camera.quaternion);
     directionalLight.position.copy(camera.position).add(lightOffset);
-
     const polarAngle = controls.getPolarAngle();
-    const intensityFactor = Math.sin(polarAngle); 
-    directionalLight.intensity = 1.0 + intensityFactor * 2.0;
-
+    directionalLight.intensity = 1.0 + Math.sin(polarAngle) * 2.0;
     rootNetwork.children.forEach(segment => {
         if(!segment.userData.isLearned) {
             const material = segment.material;
@@ -275,37 +216,24 @@ function animate() {
             material.opacity = baseOpacity + Math.sin(elapsedTime * 0.5 + segment.position.x * 0.1) * (baseOpacity * 0.5);
         }
     });
-
     sparklePool.forEach(sparkle => {
         if (sparkle.visible) {
             sparkle.userData.life -= delta * 2;
-            if (sparkle.userData.life <= 0) {
-                sparkle.visible = false;
-            } else {
-                sparkle.material.opacity = sparkle.userData.life;
-            }
+            if (sparkle.userData.life <= 0) sparkle.visible = false;
+            else sparkle.material.opacity = sparkle.userData.life;
         }
     });
-
     stateTimer += delta;
-
-    if (animationState === 'IDLE') {
-        resetAnimation();
-    }
-    
+    if (animationState === 'IDLE') resetAnimation();
     if (animationState === 'RUNNING') {
         for (let i = 0; i < CONVERSION_RATE; i++) {
             if (blueRootIndices.length > 0 && (learnedCount / totalRoots) < GOAL_PERCENTAGE) {
                 const randomIndex = Math.floor(Math.random() * blueRootIndices.length);
-                const rootIndexToConvert = blueRootIndices[randomIndex];
-                
+                const rootIndexToConvert = blueRootIndices.splice(randomIndex, 1)[0];
                 const segment = rootNetwork.children[rootIndexToConvert];
                 segment.material = learnedMaterial.clone();
                 segment.userData.isLearned = true;
-                
                 triggerSparkle(segment.position);
-
-                blueRootIndices.splice(randomIndex, 1);
                 learnedCount++;
             } else {
                 animationState = 'PAUSED';
@@ -314,28 +242,53 @@ function animate() {
             }
         }
     }
-
-    if (animationState === 'PAUSED') {
-        // REVERTED: No longer animating leaf glow
-        if (stateTimer > PAUSE_DURATION) {
-            animationState = 'IDLE';
-        }
-    }
-
+    if (animationState === 'PAUSED' && stateTimer > PAUSE_DURATION) animationState = 'IDLE';
     controls.update();
-    composer.render(); // Use composer to render with bloom effect
+    composer.render();
 }
 
 window.addEventListener('resize', () => {
-    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.aspect = container.clientWidth / container.clientHeight;
     camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    composer.setSize(window.innerWidth, window.innerHeight); // Update composer size
+    renderer.setSize(container.clientWidth, container.clientHeight);
+    composer.setSize(container.clientWidth, container.clientHeight);
 });
 
 camera.position.set(0, 20, 180);
 controls.target.set(0, -15, 0);
 
-// Start the animation
 resetAnimation();
 animate();
+}
+
+function stopForestAnimation() {
+    if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+        animationFrameId = null;
+    }
+    if (renderer) {
+        // Clean up scene resources
+        scene.traverse(object => {
+            if (object.geometry) object.geometry.dispose();
+            if (object.material) {
+                if (object.material.length) {
+                    for (const material of object.material) material.dispose();
+                } else {
+                    object.material.dispose();
+                }
+            }
+        });
+        renderer.dispose();
+        const canvas = renderer.domElement;
+        if (canvas && canvas.parentElement) {
+            canvas.parentElement.removeChild(canvas);
+        }
+        renderer = null;
+        composer = null;
+        controls = null;
+    }
+}
+
+// Make functions globally available
+window.initForestAnimation = initForestAnimation;
+window.stopForestAnimation = stopForestAnimation;
