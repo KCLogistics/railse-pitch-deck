@@ -165,6 +165,13 @@ function animate() {
     animationId = requestAnimationFrame(animate);
     const elapsedTime = clock.getElapsedTime();
 
+    // --- ADD THIS BLOCK to trigger the first wave ---
+    if (elapsedTime < 0.1 && !waveState1.active) {
+        waveState1.active = true;
+        waveState1.startTime = elapsedTime;
+        energyWave1.visible = true;
+    }
+
     if (aiCore) {
         aiCore.rotation.y = elapsedTime * 0.2;
         aiCore.rotation.x = elapsedTime * 0.15;
@@ -232,9 +239,6 @@ window.initMoatAnimation = function() {
         init(container);
         animate();
     }
-    waveState1.active = true;
-    waveState1.startTime = clock.getElapsedTime();
-    energyWave1.visible = true;
 }
 
 // Add a function to stop the animation to prevent memory leaks
