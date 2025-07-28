@@ -171,8 +171,9 @@ function animate() {
             }
         }
     }
-    if (animationState === 'PAUSED' && stateTimer > PAUSE_DURATION) animationState = 'IDLE';
-
+    if (animationState === 'PAUSED' && stateTimer > PAUSE_DURATION) {
+        resetAnimationState();
+    }
     controls.update();
     composer.render();
 }
@@ -203,6 +204,10 @@ function initForestAnimation() {
 
     controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
+
+    // --- Add these two lines back ---
+    controls.autoRotate = true;
+    controls.autoRotateSpeed = 4; // You can adjust this speed
 
     directionalLight = new THREE.DirectionalLight(0xffe8b5, 3.0);
     scene.add(directionalLight);
