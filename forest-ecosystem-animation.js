@@ -213,6 +213,23 @@ function initForestAnimation() {
     renderer.setPixelRatio(window.devicePixelRatio);
     container.appendChild(renderer.domElement);
 
+    // --- Add this block to handle context loss ---
+    renderer.domElement.addEventListener('webglcontextlost', (event) => {
+        event.preventDefault(); // Important!
+        console.log("WebGL Context Lost! Stopping animation.");
+        // Cancel the animation loop immediately
+        if (animationFrameId) {
+            cancelAnimationFrame(animationFrameId);
+            animationFrameId = null;
+        }
+    }, false);
+
+    // --- Add this block right after the previous one ---
+    renderer.domElement.addEventListener('webglcontextrestored', () => {
+        console.log("WebGL Context Restored! Re-initializing animation.");
+        initForestAnimation(); // Rebuild the entire scene
+    }, false);
+
     const renderScene = new RenderPass(scene, camera);
     const bloomPass = new UnrealBloomPass(new THREE.Vector2(container.clientWidth, container.clientHeight), 1.5, 0.4, 0.85);
     composer = new EffectComposer(renderer);
