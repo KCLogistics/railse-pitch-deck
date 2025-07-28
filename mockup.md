@@ -39,7 +39,7 @@ This slide is divided into a header and a two-column layout. The header contains
     *   **Main Headline:** "A Broken Market for Both Sides of the Shipment."
     *   **Key Statistic:** "75% of transport providers are small operators with fewer than 5 vehicles."
 
-*   **Left Column: For India's 60 Million MSMEs**
+*   **Left Column: For India's 60 Million Shippers (MSMEs)**
     *   **Sub-headline:** "The search for a reliable transporter is a 3-month nightmare."
     *   **Pain Points:**
         *   Opaque Pricing
@@ -48,12 +48,13 @@ This slide is divided into a header and a two-column layout. The header contains
         *   Endless Coordination
     *   **Impact Statement:** "They are forced to stick with mediocrity, losing time and money daily."
 
-*   **Right Column: For India's Local Transport Providers**
+*   **Right Column: For India's 3.5 Million Transport Providers**
     *   **Sub-headline:** "These expert operators are geographically trapped."
     *   **Pain Points:**
         *   Deep expertise on only 1-2 routes
         *   Inability to serve customers PAN-India
         *   Limited Access to Technology
+        *   Unprofitable Return Trips
     *   **Impact Statement:** "Forced to say 'no' to growth, losing countless business opportunities."
 
 *   **Footer:**
@@ -106,23 +107,24 @@ This slide has a similar structure to the "Problem" slide, with a header and a t
 # Slide 4: Forest Ecosystem (`slide-forest-ecosystem.html`)
 
 **Layout:**
-This slide is a full-screen animation that visually represents the company's ecosystem.
+This slide is a full-screen, immersive 3D animation. The layout is designed to be cinematic, with text content overlaid on the left side of the animation.
 
 **Content:**
 
-*   **Title Tag:** "OUR ECOSYSTEM"
-*   **Main Headline:** "A Forest of Opportunity."
-*   **Sub-headline:** "Our network grows like a forest, with each new member strengthening the entire ecosystem."
-*   **Animation:** The slide features a Three.js animation of a forest with glowing roots.
-*   **Labels:** The animation includes labels for the "Trees," "Roots," and "Learned Roots."
-
+*   **Title Tag:** "The Real Product"
+*   **Main Headline:** "The Gateway to Intelligence."
+*   **Left Column Content:**
+    *   **Most See:** A Super App, built on features. Which creates linear improvements.
+    *   **We See:** An Intelligence Engine, built on data. Which creates an exponential growth.
+*   **Animation:** The slide features a Three.js animation of a forest with glowing roots, symbolizing the interconnectedness and growth of the network.
 *   **Footer:**
     *   A professional footer is located at the bottom-left of the slide with the text: "© 2025 Railse, Inc. | Confidential & Proprietary".
 
 **Styling:**
 
-*   **Background:** The slide has a dark green radial gradient background.
-*   **Colors:** The animation uses a color palette of green, brown, and gold. The text is white and light gray.
+*   **Background:** The slide has a dark, immersive background, with the 3D animation taking up the entire space.
+*   **Text:** The text is overlaid on the animation with a high contrast color (white) for readability.
+*   **Colors:** The animation uses a palette of blues, greens, and golds to create a magical and organic feel.
 
 ---
 
