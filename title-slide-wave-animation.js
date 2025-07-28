@@ -1,3 +1,4 @@
+import * as THREE from 'three';
 /**
  * title-slide-wave-animation.js
  * * This module encapsulates the Three.js ripple animation for the title slide.
@@ -5,7 +6,7 @@
  * - start(): Initializes and starts the animation.
  * - stop(): Stops the animation and cleans up resources to save memory.
  */
-const TitleSlideAnimation = (function() {
+
 
     // --- Private variables ---
     let scene, camera, renderer, particles;
@@ -51,8 +52,8 @@ const TitleSlideAnimation = (function() {
         // Calculate the precise offset for the logo
         const logoElement = document.getElementById('logo-img');
         if (!logoElement) {
-             console.error("Logo element #logo-img not found.");
-             return;
+            console.error("Logo element #logo-img not found.");
+            return;
         }
         const logoRect = logoElement.getBoundingClientRect();
         
@@ -162,8 +163,8 @@ const TitleSlideAnimation = (function() {
         renderer.render(scene, camera);
     }
 
-    // --- Public methods ---
-    return {
+    // --- Public methods exported for global use ---
+    export const TitleSlideAnimation = {
         /**
          * Starts the animation. Should be called when the slide becomes visible.
          */
@@ -197,7 +198,7 @@ const TitleSlideAnimation = (function() {
                     if (object.isMesh || object.isPoints) {
                         if (object.geometry) object.geometry.dispose();
                         if (object.material) {
-                             if (Array.isArray(object.material)) {
+                            if (Array.isArray(object.material)) {
                                 object.material.forEach(material => material.dispose());
                             } else {
                                 object.material.dispose();
@@ -215,4 +216,5 @@ const TitleSlideAnimation = (function() {
         }
     };
 
-})();
+// To make it available on the window object like before
+window.TitleSlideAnimation = TitleSlideAnimation;
