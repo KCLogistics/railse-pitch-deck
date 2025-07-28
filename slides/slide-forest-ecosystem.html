@@ -1,23 +1,22 @@
 <!-- slides/slide-forest-ecosystem.html -->
 <div class="slide" style="padding: 0; background-color: #02040a;">
-    <!-- The animation will be injected here by the script -->
+    <!-- The animation will be injected here by the script. It's the parent for positioning. -->
     <div id="forest-animation-container" style="width: 100%; height: 100%; position: relative;">
         
         <!-- Text Overlay Container -->
-        <!-- The "pointer-events-none" class is the key fix. It makes this entire overlay transparent to mouse clicks. -->
         <div class="absolute top-0 left-0 w-full h-full p-8 md:p-12 flex flex-col pointer-events-none z-10">
             
             <!-- Top Header Section -->
-            <div class="mb-8">
+            <div class="mb-4">
                 <span class="inline-block bg-blue-100 text-blue-800 text-xs font-semibold px-3 py-1.5 rounded-full uppercase tracking-wider" style="color: #1e40af; background-color: #dbeafe;">
                     The Real Product
                 </span>
             </div>
 
-            <!-- Main Header (Now inside the overlay) -->
-            <header class="text-center mb-8 md:mb-12">
+            <!-- Main Header -->
+            <header class="text-center w-full max-w-4xl mx-auto">
                 <h1 class="text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight" style="color: #ffffff;">
-                   Our network is Gateway to Intelligence.
+                   Gateway to Intelligence.
                 </h1>
             </header>
 
@@ -29,5 +28,25 @@
                 © 2025 Railse, Inc. | Confidential & Proprietary
             </footer>
         </div>
+
+        <!-- NEW LAYOUT: Single Absolutely Positioned Column on the Left -->
+        <div class="absolute left-0 top-1/2 transform -translate-y-1/2 w-1/4 pl-8 md:pl-12 pointer-events-none z-10">
+            
+            <!-- Section 1: The Common Perception -->
+            <div class="text-white/70 text-left">
+                <h3 class="font-semibold text-white text-base mb-2">Most See</h3>
+                <p class="text-sm leading-relaxed">A Super App, built on features.</p>
+                <p class="mt-4 text-sm leading-relaxed font-light">Which creates linear improvements.</p>
+            </div>
+
+            <!-- Section 2: The Deeper Reality -->
+            <div class="text-white text-left mt-8">
+                 <h3 class="font-semibold text-white text-base mb-2">We Built</h3>
+                <p class="text-sm leading-relaxed">An Intelligence Engine, built on data.</p>
+                <p class="mt-4 text-sm leading-relaxed font-light">Which creates an exponential moat.</p>
+            </div>
+
+        </div>
+
     </div>
 </div>
