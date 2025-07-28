@@ -128,7 +128,7 @@ function animate() {
     const CONVERSION_RATE = Math.ceil(totalRoots / 10 / 60) || 1;
     const GOAL_PERCENTAGE = 0.1, PAUSE_DURATION = 3;
 
-    // --- Update world objects (this happens in any state) ---
+    // --- Update world objects ---
     const lightOffset = new THREE.Vector3(30, 50, 30);
     lightOffset.applyQuaternion(camera.quaternion);
     if (directionalLight) {
@@ -153,17 +153,18 @@ function animate() {
         }
     });
 
-    // --- State Machine Logic ---
+    // --- State Machine Logic with Debugging ---
     stateTimer += delta;
 
     if (animationState === 'RUNNING') {
-        const goalReached = (learnedCount / totalRoots) >= GOAL_PERCENTAGE;
-        if (blueRootIndices.length === 0 || goalReached) {
-            // If we run out of roots or hit our goal, pause.
+        const goalReached = learnedCount >= (totalRoots * GOAL_PERCENTAGE);
+        // console.log(`${learnedCount} ===> ${totalRoots} ===> ${goalReached}`); // DEBUG
+        if (totalRoots > 0 && (blueRootIndices.length === 0 || goalReached)) {
+            // console.log("Goal reached or roots empty. Changing to PAUSED."); // DEBUG
             animationState = 'PAUSED';
             stateTimer = 0;
         } else {
-            // Otherwise, keep converting roots.
+            // Keep converting roots...
             for (let i = 0; i < CONVERSION_RATE; i++) {
                 if (blueRootIndices.length > 0) {
                     const randomIndex = Math.floor(Math.random() * blueRootIndices.length);
@@ -179,14 +180,16 @@ function animate() {
             }
         }
     } else if (animationState === 'PAUSED') {
+        // console.log(`PAUSED: Timer is ${stateTimer.toFixed(2)}s`); // DEBUG
         if (stateTimer > PAUSE_DURATION) {
-            // After the pause, reset everything.
+            // console.log("Pause finished. Triggering reset."); // DEBUG
             resetAnimationState();
         }
     } else if (animationState === 'IDLE') {
-        // This state will now correctly kick off the first reset.
+        // console.log("State is IDLE. Triggering initial reset."); // DEBUG
         resetAnimationState();
     }
+    // console.log(`stateTimer: ${stateTimer.toFixed(2)}s, Current State: ${animationState}, Learned Count: ${learnedCount}, Total Roots: ${totalRoots}`); // DEBUG
     
     controls.update();
     composer.render();
@@ -311,7 +314,7 @@ function stopForestAnimation() {
     // Clear all global state
     renderer = scene = camera = controls = composer = directionalLight = rootNetwork = onWindowResize = null;
     sparklePool = [];
-    clock.stop();
+    // clock.stop();
 }
 
 window.initForestAnimation = initForestAnimation;
