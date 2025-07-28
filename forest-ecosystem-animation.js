@@ -3,10 +3,11 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+import { WebGLManager } from './WebGLManager.js'; // CHANGED: Import the manager
 
-// --- Global State Variables ---
+// --- Global State Variables for this specific animation ---
 // These will hold the core components of our animation
-let renderer, composer, controls, scene, camera, onWindowResize;
+let composer, controls, scene, camera, onWindowResize;
 let animationFrameId;
 
 // Animation-specific state
@@ -203,32 +204,19 @@ function initForestAnimation() {
         stopForestAnimation();
     }
 
-    const container = document.getElementById('forest-animation-container');
+    // CHANGED: Get the single, shared renderer instead of creating a new one
+    const renderer = WebGLManager.getRenderer();
+    const container = document.getElementById('forest-animation-container');// We still need the slide's dimensions
     if (!container) return;
+
+    // Tell the manager to attach the canvas to your container
+    WebGLManager.attach(container);
 
     scene = new THREE.Scene();
     camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 2000);
-    renderer = new THREE.WebGLRenderer({ antialias: true });
-    renderer.setSize(container.clientWidth, container.clientHeight);
-    renderer.setPixelRatio(window.devicePixelRatio);
-    container.appendChild(renderer.domElement);
-
-    // --- Add this block to handle context loss ---
-    renderer.domElement.addEventListener('webglcontextlost', (event) => {
-        event.preventDefault(); // Important!
-        console.log("WebGL Context Lost! Stopping animation.");
-        // Cancel the animation loop immediately
-        if (animationFrameId) {
-            cancelAnimationFrame(animationFrameId);
-            animationFrameId = null;
-        }
-    }, false);
-
-    // --- Add this block right after the previous one ---
-    renderer.domElement.addEventListener('webglcontextrestored', () => {
-        console.log("WebGL Context Restored! Re-initializing animation.");
-        initForestAnimation(); // Rebuild the entire scene
-    }, false);
+    
+    // REMOVED: The logic for creating a renderer and appending it to the DOM is gone.
+    // REMOVED: The context loss/restoration listeners are no longer needed here.
 
     const renderScene = new RenderPass(scene, camera);
     const bloomPass = new UnrealBloomPass(new THREE.Vector2(container.clientWidth, container.clientHeight), 1.5, 0.4, 0.85);
@@ -236,6 +224,7 @@ function initForestAnimation() {
     composer.addPass(renderScene);
     composer.addPass(bloomPass);
 
+    // Pass the shared renderer's canvas to the controls
     controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
 
@@ -243,6 +232,7 @@ function initForestAnimation() {
     controls.autoRotate = true;
     controls.autoRotateSpeed = 4; // You can adjust this speed
 
+    // --- The rest of the init function remains the same ---
     directionalLight = new THREE.DirectionalLight(0xffe8b5, 3.0);
     scene.add(directionalLight);
     scene.add(new THREE.AmbientLight(0x404040, 1.5));
@@ -273,10 +263,10 @@ function initForestAnimation() {
     resetAnimationState();
 
     onWindowResize = () => {
-        if (!renderer) return;
+        if (!scene) return; // Check if scene exists
         camera.aspect = container.clientWidth / container.clientHeight;
         camera.updateProjectionMatrix();
-        renderer.setSize(container.clientWidth, container.clientHeight);
+        // The manager handles the main renderer size, but composer needs updating
         composer.setSize(container.clientWidth, container.clientHeight);
     };
     window.addEventListener('resize', onWindowResize);
@@ -298,38 +288,38 @@ function stopForestAnimation() {
         onWindowResize = null;
     }
 
-    if (renderer) {
-        if (scene) {
-            scene.traverse(object => {
-                if (object.geometry) object.geometry.dispose();
-                if (object.material) {
-                    const materials = Array.isArray(object.material) ? object.material : [object.material];
-                    materials.forEach(material => {
-                        Object.values(material).forEach(value => {
-                            if (value && typeof value.dispose === 'function') {
-                                value.dispose();
-                            }
-                        });
-                        material.dispose();
+    // CHANGED: This function now only cleans up this animation's specific objects.
+    // It does NOT destroy the shared renderer.
+    if (scene) {
+        // Step 1: Dispose of GPU-heavy assets like geometry and materials
+        scene.traverse(object => {
+            if (object.geometry) object.geometry.dispose();
+            if (object.material) {
+                const materials = Array.isArray(object.material) ? object.material : [object.material];
+                materials.forEach(material => {
+                    Object.values(material).forEach(value => {
+                        if (value && typeof value.dispose === 'function') {
+                            value.dispose();
+                        }
                     });
-                }
-            });
-            while (scene.children.length > 0) {
-                scene.remove(scene.children[0]);
+                    material.dispose();
+                });
             }
-        }
-
-        renderer.dispose();
-        if (controls) controls.dispose();
-
-        const canvas = renderer.domElement;
-        if (canvas && canvas.parentElement) {
-            canvas.parentElement.removeChild(canvas);
+        });
+        // Step 2: Empty the scene of all object references (This is the loop in question)
+        while (scene.children.length > 0) {
+            scene.remove(scene.children[0]);
         }
     }
 
-    // Clear all global state
-    renderer = scene = camera = controls = composer = directionalLight = rootNetwork = onWindowResize = null;
+    // REMOVED: renderer.dispose() and canvas removal are gone.
+    if (controls) controls.dispose();
+    
+    // Detach the canvas from the container
+    WebGLManager.detach();
+
+    // Clear all global state variables for this animation
+    scene = camera = controls = composer = directionalLight = rootNetwork = onWindowResize = null;
     sparklePool = [];
     // clock.stop();
 }
