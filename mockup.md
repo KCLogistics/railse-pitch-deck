@@ -1,4 +1,4 @@
-# Slide 1: Title Slide
+# Slide 1: Title Slide (`slide-title.html`)
 
 **Layout:**
 This is the title slide of the presentation. It has a clean, modern design with a centered layout. The background features a subtle, animated network of connected nodes, suggesting technology and connectivity.
@@ -27,7 +27,7 @@ This is the title slide of the presentation. It has a clean, modern design with 
 
 ---
 
-# Slide 2: The Problem
+# Slide 2: The Problem (`slide-the-problem.html`)
 
 **Layout:**
 This slide is divided into a header and a two-column layout. The header contains the main headline and a key statistic. The two columns below describe the problems faced by MSMEs and transport providers, respectively.
@@ -67,7 +67,7 @@ This slide is divided into a header and a two-column layout. The header contains
 
 ---
 
-# Slide 3: The Solution
+# Slide 3: The Solution (`slide-the-solution.html`)
 
 **Layout:**
 This slide has a similar structure to the "Problem" slide, with a header and a two-column layout. The header introduces the solution, and the two columns detail the benefits for MSMEs and transporters.
@@ -103,7 +103,30 @@ This slide has a similar structure to the "Problem" slide, with a header and a t
 
 ---
 
-# Slide 4: The Intelligence Engine
+# Slide 4: Forest Ecosystem (`slide-forest-ecosystem.html`)
+
+**Layout:**
+This slide is a full-screen animation that visually represents the company's ecosystem.
+
+**Content:**
+
+*   **Title Tag:** "OUR ECOSYSTEM"
+*   **Main Headline:** "A Forest of Opportunity."
+*   **Sub-headline:** "Our network grows like a forest, with each new member strengthening the entire ecosystem."
+*   **Animation:** The slide features a Three.js animation of a forest with glowing roots.
+*   **Labels:** The animation includes labels for the "Trees," "Roots," and "Learned Roots."
+
+*   **Footer:**
+    *   A professional footer is located at the bottom-left of the slide with the text: "© 2025 Railse, Inc. | Confidential & Proprietary".
+
+**Styling:**
+
+*   **Background:** The slide has a dark green radial gradient background.
+*   **Colors:** The animation uses a color palette of green, brown, and gold. The text is white and light gray.
+
+---
+
+# Slide 5: The Intelligence Engine (`slide-the-intelligence-engine.html`)
 
 **Layout:**
 This slide is divided into a header and a three-column layout. The header introduces the concept of the intelligence engine, and the three columns below describe the three pillars of this engine.
@@ -134,7 +157,7 @@ This slide is divided into a header and a three-column layout. The header introd
 
 ---
 
-# Slide 5: The Moat
+# Slide 6: The Moat (`slide-the-moat.html`)
 
 **Layout:**
 This slide is divided into a header and a three-column layout. The header introduces the concept of the company's moat, and the three columns below describe the three layers of their defensibility.
@@ -168,7 +191,7 @@ This slide is divided into a header and a three-column layout. The header introd
 
 ---
 
-# Slide 6: Our Operating System
+# Slide 7: Our Operating System (`slide-our-operating-system.html`)
 
 **Layout:**
 This slide is a full-screen animation that visually represents the company's moat.
@@ -195,7 +218,7 @@ This slide is a full-screen animation that visually represents the company's moa
 
 ---
 
-# Slide 7: The Market Opportunity
+# Slide 8: The Market Opportunity (`slide-the-market-opportunity.html`)
 
 **Layout:**
 This slide is divided into a header, a two-column layout, and a concluding banner at the bottom. The header introduces the market opportunity, the two columns detail the market size and the catalyst, and the banner highlights the initial target market.
@@ -229,7 +252,7 @@ This slide is divided into a header, a two-column layout, and a concluding banne
 
 ---
 
-# Slide 8: Business Model & Go-to-Market
+# Slide 9: Business Model & Go-to-Market (`slide-business-model.html`)
 
 **Layout:**
 This slide is divided into a header, a two-column layout for the playbooks, and a concluding banner for the revenue engines.
@@ -272,7 +295,7 @@ This slide is divided into a header, a two-column layout for the playbooks, and 
 
 ---
 
-# Slide 9: The Team
+# Slide 10: The Team (`slide-the-team.html`)
 
 **Layout:**
 This slide introduces the founding team. It has a header and a two-column layout, with each column dedicated to one of the founders.
@@ -307,7 +330,7 @@ This slide introduces the founding team. It has a header and a two-column layout
 
 ---
 
-# Slide 10: The Vision
+# Slide 11: The Vision (`slide-the-vision.html`)
 
 **Layout:**
 This slide presents the company's vision. It has a header, a two-column layout for the "Dual Promises," and a concluding section with a unifying mission and a call to action.
@@ -340,7 +363,7 @@ This slide presents the company's vision. It has a header, a two-column layout f
 
 ---
 
-# Slide 11: The Ask
+# Slide 12: The Ask (`slide-the-ask.html`)
 
 **Layout:**
 This slide details the funding ask. It has a header, a three-column layout for the use of funds, and a concluding manifesto section.
@@ -385,7 +408,7 @@ This slide details the funding ask. It has a header, a three-column layout for t
 
 ---
 
-# Slide 12: The Proof
+# Slide 13: The Proof (`slide-the-proof.html`)
 
 **Layout:**
 This slide presents the company's traction and growth metrics. It has a header and a two-row, two-column layout. The top row contains a revenue growth chart and a table with key metrics. The bottom row contains an order growth chart and a section with strategic insights.
@@ -419,7 +442,7 @@ This slide presents the company's traction and growth metrics. It has a header a
 
 ---
 
-# Slide 13: Our DNA
+# Slide 14: Our DNA (`slide-our-dna.html`)
 
 **Layout:**
 This slide features a full-bleed image collage with a header and a concluding statement.
