@@ -128,11 +128,14 @@ function animate() {
     const CONVERSION_RATE = Math.ceil(totalRoots / 10 / 60) || 1;
     const GOAL_PERCENTAGE = 0.1, PAUSE_DURATION = 3;
 
+    // --- Update world objects (this happens in any state) ---
     const lightOffset = new THREE.Vector3(30, 50, 30);
     lightOffset.applyQuaternion(camera.quaternion);
-    directionalLight.position.copy(camera.position).add(lightOffset);
-    const polarAngle = controls.getPolarAngle();
-    directionalLight.intensity = 1.0 + Math.sin(polarAngle) * 2.0;
+    if (directionalLight) {
+        directionalLight.position.copy(camera.position).add(lightOffset);
+        const polarAngle = controls.getPolarAngle();
+        directionalLight.intensity = 1.0 + Math.sin(polarAngle) * 2.0;
+    }
 
     rootNetwork.children.forEach(segment => {
         if (!segment.userData.isLearned) {
@@ -150,30 +153,41 @@ function animate() {
         }
     });
 
+    // --- State Machine Logic ---
     stateTimer += delta;
-    if (animationState === 'IDLE') resetAnimationState();
+
     if (animationState === 'RUNNING') {
-        for (let i = 0; i < CONVERSION_RATE; i++) {
-            if (blueRootIndices.length > 0 && (learnedCount / totalRoots) < GOAL_PERCENTAGE) {
-                const randomIndex = Math.floor(Math.random() * blueRootIndices.length);
-                const rootIndexToConvert = blueRootIndices.splice(randomIndex, 1)[0];
-                const segment = rootNetwork.children[rootIndexToConvert];
-                if (segment) {
-                    segment.material = learnedMaterial;
-                    segment.userData.isLearned = true;
-                    triggerSparkle(segment.position);
-                    learnedCount++;
+        const goalReached = (learnedCount / totalRoots) >= GOAL_PERCENTAGE;
+        if (blueRootIndices.length === 0 || goalReached) {
+            // If we run out of roots or hit our goal, pause.
+            animationState = 'PAUSED';
+            stateTimer = 0;
+        } else {
+            // Otherwise, keep converting roots.
+            for (let i = 0; i < CONVERSION_RATE; i++) {
+                if (blueRootIndices.length > 0) {
+                    const randomIndex = Math.floor(Math.random() * blueRootIndices.length);
+                    const rootIndexToConvert = blueRootIndices.splice(randomIndex, 1)[0];
+                    const segment = rootNetwork.children[rootIndexToConvert];
+                    if (segment) {
+                        segment.material = learnedMaterial;
+                        segment.userData.isLearned = true;
+                        triggerSparkle(segment.position);
+                        learnedCount++;
+                    }
                 }
-            } else {
-                animationState = 'PAUSED';
-                stateTimer = 0;
-                break;
             }
         }
-    }
-    if (animationState === 'PAUSED' && stateTimer > PAUSE_DURATION) {
+    } else if (animationState === 'PAUSED') {
+        if (stateTimer > PAUSE_DURATION) {
+            // After the pause, reset everything.
+            resetAnimationState();
+        }
+    } else if (animationState === 'IDLE') {
+        // This state will now correctly kick off the first reset.
         resetAnimationState();
     }
+    
     controls.update();
     composer.render();
 }
