@@ -16,6 +16,7 @@ const slideOrder = [
     "slide-the-intelligence-engine.html",
     "slide-the-moat.html",
     "slide-our-operating-system.html",
+    "slide-competition.html",
     "slide-the-market-opportunity.html",
     "slide-business-model.html",
     "slide-the-team.html",
