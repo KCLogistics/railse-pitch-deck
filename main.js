@@ -78,7 +78,12 @@ async function showSlide(index) {
         }, 50);
     }
     
-    
+    // Inside showSlide function
+    if (slideName === "slide-competition.html") {
+        ChartAnimation.start();
+    } else {
+        ChartAnimation.stop();
+    }
 
     if (slideName === "slide-the-proof.html") {
         renderProofCharts();
