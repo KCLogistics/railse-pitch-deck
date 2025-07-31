@@ -4,17 +4,17 @@ let labelInfos = []; // Array to store label positions and velocities
 
 // --- Data and Styling ---
 const competitorsData = [
-    { name: 'Railse', descriptor: 'AI Operating System', tags: ['Asset-Light', 'Open Market'], x: 8, y: 9, isHero: true },
-    { name: 'Rivigo', descriptor: 'Tech-Led Carrier', tags: ['Asset-Heavy', 'Closed Market'], x: 6, y: 9, pivot: 'top-right' },
-    { name: 'Vahak', descriptor: 'Discovery Platform', tags: ['Asset-Light', 'Open Market'], x: 7, y: -8, labelOffset: { x: 10, y: 10 }, pivot: 'bottom-right' },
-    { name: 'Delhivery', descriptor: 'E-commerce Logistics', tags: ['Asset-Heavy', 'Closed Market'], x: -7, y: 8 },
-    { name: 'LetsTransport', descriptor: 'Enterprise Logistics', tags: ['Asset-Light', 'Open Market'], x: -8, y: 6, pivot: 'top-right' },
-    { name: 'BlackBuck', descriptor: 'Trucking Marketplace', tags: ['Asset-Light', 'Open Market'], x: -2, y: 3, pivot: 'top-right' },
-    { name: 'Porter', descriptor: 'City Logistics', tags: ['Asset-Light', 'Open Market'], x: -8, y: -7, pivot: 'bottom-left' },
-    { name: 'Shiprocket', descriptor: 'Shipping Aggregator', tags: ['Asset-Light', 'Open Market'], x: -9, y: -6, pivot: 'bottom-right' },
-    { name: 'Blue Dart', descriptor: 'Premium Courier', tags: ['Asset-Heavy', 'Closed Market'], x: -9, y: -8.5, labelOffset: { y: 0 }, pivot: 'bottom-right' },
-    { name: 'Gati', descriptor: 'Legacy Distribution', tags: ['Asset-Heavy', 'Closed Market'], x: -7, y: -10, labelOffset: { y: 60 }, pivot: 'middle-left' },
-    { name: 'VRL', descriptor: 'Legacy Distribution', tags: ['Asset-Heavy', 'Closed Market'], x: -7, y: -10, labelOffset: { y: 120 }, pivot: 'middle-right' }
+    { name: 'Railse', descriptor: 'AI Operating System', tags: ['Asset-Light', 'Open Market'], x: 8, y: 9, isHero: true, marketShare: null },
+    { name: 'Rivigo', descriptor: 'Tech-Led Carrier', tags: ['Asset-Heavy', 'Closed Market'], x: 6, y: 9, pivot: 'top-right', marketShare: 'N/A' },
+    { name: 'Vahak', descriptor: 'Discovery Platform', tags: ['Asset-Light', 'Open Market'], x: 7, y: -8, labelOffset: { x: 10, y: 10 }, pivot: 'bottom-right', marketShare: '0.001%' },
+    { name: 'Delhivery', descriptor: 'E-commerce Logistics', tags: ['Asset-Heavy', 'Closed Market'], x: -7, y: 8, marketShare: '0.3%' },
+    { name: 'LetsTransport', descriptor: 'Enterprise Logistics', tags: ['Asset-Light', 'Open Market'], x: -8, y: 6, pivot: 'top-right', marketShare: '0.03%' },
+    { name: 'BlackBuck', descriptor: 'Trucking Marketplace', tags: ['Asset-Light', 'Open Market'], x: -2, y: 3, pivot: 'top-right', marketShare: '0.02%' },
+    { name: 'Porter', descriptor: 'City Logistics', tags: ['Asset-Light', 'Open Market'], x: -8, y: -7, pivot: 'bottom-left', marketShare: '0.1%' },
+    { name: 'Shiprocket', descriptor: 'Shipping Aggregator', tags: ['Asset-Light', 'Open Market'], x: -9, y: -6, pivot: 'bottom-right', marketShare: '0.05%' },
+    { name: 'Blue Dart', descriptor: 'Premium Courier', tags: ['Asset-Heavy', 'Closed Market'], x: -9, y: -8.5, labelOffset: { y: 0 }, pivot: 'bottom-right', marketShare: '0.2%' },
+    { name: 'Gati', descriptor: 'Legacy Distribution', tags: ['Asset-Heavy', 'Closed Market'], x: -7, y: -10, labelOffset: { y: 60 }, pivot: 'middle-left', marketShare: '0.05%' },
+    { name: 'VRL', descriptor: 'Legacy Distribution', tags: ['Asset-Heavy', 'Closed Market'], x: -7, y: -10, labelOffset: { y: 120 }, pivot: 'middle-right', marketShare: '0.1%' }
 ];
 
 const tagColors = {
@@ -57,10 +57,31 @@ function setupCompetitors() {
             `<div class="w-1.5 h-1.5 rounded-full border border-white" style="background-color: ${tagColors[tag] || '#000'}"></div>`
         ).join('');
 
-        labelCard.innerHTML = comp.isHero
-            ? `<div class="flex items-center gap-1.5"><h3 class="font-extrabold text-blue-700 text-base">${comp.name}</h3>${dotsHTML}</div><p class="text-[10px] text-blue-600 font-semibold mt-0.5">${comp.descriptor}</p>`
-            : `<div class="flex items-center gap-1.5"><h3 class="font-bold text-gray-900 text-sm">${comp.name}</h3>${dotsHTML}</div><p class="text-[10px] text-gray-600 mt-0.5">${comp.descriptor}</p>`;
-        
+        // NEW: Create a market share span if the data exists
+        const marketShareHTML = comp.marketShare 
+            ? `<span class="font-semibold text-gray-400 ml-1.5 text-[10px]">${comp.marketShare}</span>` 
+            : '';
+
+        // UPDATED: Add the marketShareHTML to the label's innerHTML
+        if (comp.isHero) {
+            labelCard.innerHTML = `
+                <div class="flex items-center gap-1.5">
+                    <h3 class="font-extrabold text-blue-700 text-base">${comp.name}</h3>
+                    ${dotsHTML}
+                </div>
+                <p class="text-[10px] text-blue-600 font-semibold mt-0.5">${comp.descriptor}</p>
+            `;
+        } else {
+            labelCard.innerHTML = `
+                <div class="flex items-center gap-1.5">
+                    <h3 class="font-bold text-gray-900 text-sm">${comp.name}</h3>
+                    ${dotsHTML}
+                    ${marketShareHTML}
+                </div>
+                <p class="text-[10px] text-gray-600 mt-0.5">${comp.descriptor}</p>
+            `;
+        }
+            
         competitorsContainer.appendChild(dot);
         competitorsContainer.appendChild(labelCard);
 
@@ -148,7 +169,7 @@ export const ChartAnimation = {
         // Delay setup and animation to ensure the browser has calculated layout
         setTimeout(() => {
             setupCompetitors();
-            runStaticLayout(); // Replaced animateChart with this
+            runStaticLayout();
         }, 50);
 
         window.addEventListener('resize', () => {
