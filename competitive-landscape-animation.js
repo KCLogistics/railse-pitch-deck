@@ -5,16 +5,16 @@ let labelInfos = []; // Array to store label positions and velocities
 // --- Data and Styling ---
 const competitorsData = [
     { name: 'Railse', descriptor: 'AI Operating System', tags: ['Asset-Light', 'Open Market'], x: 8, y: 9, isHero: true },
-    { name: 'Rivigo', descriptor: 'Tech-Led Carrier', tags: ['Asset-Heavy', 'Closed Market'], x: 6, y: 9 },
-    { name: 'Vahak', descriptor: 'Discovery Platform', tags: ['Asset-Light', 'Open Market'], x: 7, y: -8, labelOffset: { x: 10, y: 10 } },
+    { name: 'Rivigo', descriptor: 'Tech-Led Carrier', tags: ['Asset-Heavy', 'Closed Market'], x: 6, y: 9, pivot: 'top-right' },
+    { name: 'Vahak', descriptor: 'Discovery Platform', tags: ['Asset-Light', 'Open Market'], x: 7, y: -8, labelOffset: { x: 10, y: 10 }, pivot: 'bottom-right' },
     { name: 'Delhivery', descriptor: 'E-commerce Logistics', tags: ['Asset-Heavy', 'Closed Market'], x: -7, y: 8 },
-    { name: 'LetsTransport', descriptor: 'Enterprise Logistics', tags: ['Asset-Light', 'Open Market'], x: -8, y: 6 },
-    { name: 'BlackBuck', descriptor: 'Trucking Marketplace', tags: ['Asset-Light', 'Open Market'], x: -2, y: 3 },
-    { name: 'Porter', descriptor: 'City Logistics', tags: ['Asset-Light', 'Open Market'], x: -8, y: -7 },
-    { name: 'Shiprocket', descriptor: 'Shipping Aggregator', tags: ['Asset-Light', 'Open Market'], x: -9, y: -6 },
-    { name: 'Blue Dart', descriptor: 'Premium Courier', tags: ['Asset-Heavy', 'Closed Market'], x: -9, y: -10, labelOffset: { y: 0 } },
+    { name: 'LetsTransport', descriptor: 'Enterprise Logistics', tags: ['Asset-Light', 'Open Market'], x: -8, y: 6, pivot: 'top-right' },
+    { name: 'BlackBuck', descriptor: 'Trucking Marketplace', tags: ['Asset-Light', 'Open Market'], x: -2, y: 3, pivot: 'top-right' },
+    { name: 'Porter', descriptor: 'City Logistics', tags: ['Asset-Light', 'Open Market'], x: -8, y: -7, pivot: 'bottom-left' },
+    { name: 'Shiprocket', descriptor: 'Shipping Aggregator', tags: ['Asset-Light', 'Open Market'], x: -9, y: -6, pivot: 'bottom-right' },
+    { name: 'Blue Dart', descriptor: 'Premium Courier', tags: ['Asset-Heavy', 'Closed Market'], x: -9, y: -9, labelOffset: { y: 0 }, pivot: 'bottom-right' },
     { name: 'Gati', descriptor: 'Legacy Distribution', tags: ['Asset-Heavy', 'Closed Market'], x: -9, y: -10, labelOffset: { y: 60 } },
-    { name: 'VRL Logistics', descriptor: 'Legacy Distribution', tags: ['Asset-Heavy', 'Closed Market'], x: -9, y: -10, labelOffset: { y: 120 } }
+    { name: 'VRL Logistics', descriptor: 'Legacy Distribution', tags: ['Asset-Heavy', 'Closed Market'], x: -9, y: -10, labelOffset: { y: 120 }, pivot: 'middle-right' }
 ];
 
 const tagColors = {
@@ -110,13 +110,27 @@ function animateChart() {
     });
 
     // 2. Apply new positions to the DOM
-    labelInfos.forEach(info => {
+    labelInfos.forEach((info, index) => {
+        const compData = competitorsData[index]; // Get corresponding data
+
         // Set the base position of the label to match its dot
         info.element.style.left = info.dotElement.style.left;
         info.element.style.top = info.dotElement.style.top;
         
-        // CHANGED: Removed the centering transform so the top-left corner aligns with the dot
-        info.element.style.transform = `translate(${info.x}px, ${info.y}px)`;
+        let transformStyle = `translate(${info.x}px, ${info.y}px)`;
+
+        // Check for the custom pivot property
+        if (compData.pivot === 'top-right') {
+            transformStyle = `translateX(-100%) ` + transformStyle;
+        } else if (compData.pivot === 'bottom-right') {
+            transformStyle = `translateX(-100%) translateY(-100%) ` + transformStyle;
+        } else if (compData.pivot === 'bottom-left') {
+            transformStyle = `translateY(-100%) ` + transformStyle;
+        } else if (compData.pivot === 'middle-right') {
+            transformStyle = `translateX(-100%) translateY(-50%) ` + transformStyle;
+        }
+
+        info.element.style.transform = transformStyle;
     });
 
     animationFrameId = requestAnimationFrame(animateChart);
