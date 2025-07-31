@@ -1,5 +1,5 @@
- <div class="slide p-8 md:p-12 h-full">
-        <!-- Header -->
+<div class="slide p-8 md:p-12 h-full">
+          <!-- Header -->
         <div class="mb-4">
             <span class="inline-block bg-blue-100 text-blue-800 text-xs font-semibold px-3 py-1.5 rounded-full uppercase tracking-wider">
                 Competition
@@ -14,75 +14,28 @@
             </p>
         </header>
 
-        <!-- 2x2 Quadrant -->
-        <div class="flex-grow relative flex items-center justify-center">
-            <div class="w-full h-full max-w-4xl max-h-[400px] relative">
-                
-                <!-- SVG Container for Axes and Arrow -->
-                <svg class="absolute inset-0 w-full h-full overflow-visible">
-                    <defs>
-                        <marker id="axis-arrowhead" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
-                            <polygon points="0 0, 7 2.5, 0 5" fill="#9ca3af" />
-                        </marker>
-                        <marker id="axis-arrowhead-rev" markerWidth="7" markerHeight="5" refX="0" refY="2.5" orient="auto">
-                            <polygon points="7 0, 0 2.5, 7 5" fill="#9ca3af" />
-                        </marker>
-                    </defs>
-                    <!-- Y-Axis -->
-                    <line x1="50%" y1="95%" x2="50%" y2="5%" stroke="#d1d5db" stroke-width="2" marker-end="url(#axis-arrowhead)" marker-start="url(#axis-arrowhead-rev)" />
-                    <!-- X-Axis -->
-                    <line x1="5%" y1="50%" x2="95%" y2="50%" stroke="#d1d5db" stroke-width="2" marker-end="url(#axis-arrowhead)" marker-start="url(#axis-arrowhead-rev)" />
-                    
-                    <!-- Evolution Arrow -->
-                    <defs>
-                        <marker id="evo-arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
-                            <polygon points="0 0, 10 3.5, 0 7" fill="#0284c7" />
-                        </marker>
-                    </defs>
-                    <path d="M 52% 75% C 55% 50%, 75% 25%, 90% 15%" stroke="#0284c7" stroke-width="2.5" fill="none" stroke-linecap="round" marker-end="url(#evo-arrowhead)" />
-                </svg>
+    <!-- Main Chart Area -->
+    <div class="flex-grow relative" id="chart-area">
+        <!-- Background and Axes -->
+        <div class="absolute inset-0 chart-grid-bg border border-gray-200 rounded-lg">
+            <div class="absolute top-1/2 left-0 w-full h-px bg-gray-300"></div>
+            <div class="absolute left-1/2 top-0 h-full w-px bg-gray-300"></div>
+        </div>
 
-                <!-- Axis Labels -->
-                <div class="absolute w-full h-full">
-                    <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-full py-2 text-sm text-gray-700 font-semibold text-center">Asset-Light</div>
-                    <div class="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-full py-2 text-sm text-gray-700 font-semibold text-center">Asset-Heavy</div>
-                    
-                    <!-- MODIFIED: Vertical X-Axis Labels, centered on the axis line -->
-                    <div class="absolute left-2 top-1/2 -translate-y-1/2 text-sm text-gray-700 font-semibold vertical-text">Digitized Workflow</div>
-                    <div class="absolute right-2 top-1/2 -translate-y-1/2 text-sm text-gray-700 font-semibold vertical-text">Autonomous Decisioning</div>
-                </div>
+        <!-- Axis Labels -->
+        <div class="absolute inset-0 pointer-events-none">
+            <div class="absolute top-2 left-1/2 -translate-x-1/2 text-sm text-gray-600 font-semibold">Embedded Operating System</div>
+            <div class="absolute bottom-2 left-1/2 -translate-x-1/2 text-sm text-gray-600 font-semibold">Transactional Tool</div>
+            <div class="absolute left-4 top-1/2 -translate-y-1/2 text-sm text-gray-600 font-semibold text-right">Shipper-Centric</div>
+            <div class="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-gray-600 font-semibold text-left">Transporter-Centric</div>
+        </div>
 
-                <!-- Quadrant Grid -->
-                <div class="absolute inset-0 grid grid-cols-2 grid-rows-2">
-                    <!-- Top-Left -->
-                    <div class="p-4 flex items-center justify-center">
-                        <div class="text-center">
-                            <h3 class="font-bold text-gray-500">BlackBuck, Porter</h3>
-                            <p class="text-xs text-gray-500 mt-1 max-w-xs">Asset-light and digital, but lack the "brains" for true automation and ecosystem lock-in.</p>
-                        </div>
-                    </div>
-                    <!-- Top-Right (Railse) -->
-                    <div class="p-4 flex items-center justify-center">
-                         <div class="text-center bg-blue-50 border-2 border-blue-500 rounded-lg p-4 shadow-lg">
-                            <h3 class="font-extrabold text-lg text-blue-700">Railse</h3>
-                            <p class="text-xs text-blue-600 font-semibold mt-1 max-w-xs">The new model: intelligent, agile, and scalable.</p>
-                        </div>
-                    </div>
-                    <!-- Bottom-Left -->
-                    <div class="p-4 flex items-center justify-center">
-                        <div class="text-center">
-                            <h3 class="font-bold text-gray-500">Delhivery, Blue Dart</h3>
-                            <p class="text-xs text-gray-500 mt-1 max-w-xs">Reliable but rigid and capital-intensive. Their tech is for internal control, not open orchestration.</p>
-                        </div>
-                    </div>
-                    <!-- Bottom-Right -->
-                    <div class="p-4 flex items-start justify-end">
-                         <div class="text-center pt-4 pr-4">
-                            <h3 class="font-bold text-gray-500">Traditional Brokers</h3>
-                            <p class="text-xs text-gray-500 mt-1">The manual past:<br>disconnected and inefficient.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <!-- Container for competitor dots and labels -->
+        <div id="competitors-container" class="relative w-full h-full">
+            <!-- Competitors will be dynamically generated here -->
         </div>
     </div>
+    <footer class="absolute bottom-4 left-16 text-left text-xs text-gray-400 font-medium">
+        © 2025 Railse, Inc. | Confidential & Proprietary
+    </footer>
+</div>

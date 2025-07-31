@@ -277,6 +277,22 @@
             z-index: 10;
         }
 
+        /* --- COMPETITIVE LANDSCAPE SLIDE --- */
+        
+        /* Subtle dot grid background for the chart area */
+        .chart-grid-bg {
+            background-image: radial-gradient(circle at 1px 1px, #e5e7eb 1px, transparent 0);
+            background-size: 20px 20px;
+        }
+        /* Pulsing animation for the Railse plot point */
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7); }
+            50% { transform: scale(1.1); box-shadow: 0 0 0 10px rgba(59, 130, 246, 0); }
+        }
+        .hero-dot-pulse {
+            animation: pulse 2s infinite;
+        }
+
     </style>
     <script src="proof-slide-charts.js"></script>
     <!-- ADDED: Import map for three.js modules -->
