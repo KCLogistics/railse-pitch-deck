@@ -13,8 +13,8 @@ const competitorsData = [
     { name: 'Porter', descriptor: 'City Logistics', tags: ['Asset-Light', 'Open Market'], x: -8, y: -7, pivot: 'bottom-left' },
     { name: 'Shiprocket', descriptor: 'Shipping Aggregator', tags: ['Asset-Light', 'Open Market'], x: -9, y: -6, pivot: 'bottom-right' },
     { name: 'Blue Dart', descriptor: 'Premium Courier', tags: ['Asset-Heavy', 'Closed Market'], x: -9, y: -9, labelOffset: { y: 0 }, pivot: 'bottom-right' },
-    { name: 'Gati', descriptor: 'Legacy Distribution', tags: ['Asset-Heavy', 'Closed Market'], x: -9, y: -10, labelOffset: { y: 60 } },
-    { name: 'VRL Logistics', descriptor: 'Legacy Distribution', tags: ['Asset-Heavy', 'Closed Market'], x: -9, y: -10, labelOffset: { y: 120 }, pivot: 'middle-right' }
+    { name: 'Gati', descriptor: 'Legacy Distribution', tags: ['Asset-Heavy', 'Closed Market'], x: -7, y: -10, labelOffset: { y: 60 }, pivot: 'middle-left' },
+    { name: 'VRL Logistics', descriptor: 'Legacy Distribution', tags: ['Asset-Heavy', 'Closed Market'], x: -7, y: -10, labelOffset: { y: 120 }, pivot: 'middle-right' }
 ];
 
 const tagColors = {
@@ -128,6 +128,8 @@ function animateChart() {
             transformStyle = `translateY(-100%) ` + transformStyle;
         } else if (compData.pivot === 'middle-right') {
             transformStyle = `translateX(-100%) translateY(-50%) ` + transformStyle;
+        } else if (compData.pivot === 'middle-left') {
+            transformStyle = `translateY(-50%) ` + transformStyle;
         }
 
         info.element.style.transform = transformStyle;
