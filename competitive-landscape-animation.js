@@ -78,41 +78,42 @@ function setupCompetitors() {
 }
 
 // The main animation loop that runs on every frame
-function animateChart() {
+// Calculates the final, stable positions for labels and then stops.
+function runStaticLayout() {
     const repulsionStrength = 0.5;
     const springStrength = 0.01;
     const damping = 0.9;
 
-    // 1. Calculate physics forces (this part is correct)
-    labelInfos.forEach(info => {
-        let forceX = 0, forceY = 0;
-        labelInfos.forEach(otherInfo => {
-            if (info === otherInfo) return;
-            const rectA = info.element.getBoundingClientRect();
-            const rectB = otherInfo.element.getBoundingClientRect();
-            const overlapX = Math.max(0, Math.min(rectA.right, rectB.right) - Math.max(rectA.left, rectB.left));
-            const overlapY = Math.max(0, Math.min(rectA.bottom, rectB.bottom) - Math.max(rectA.top, rectB.top));
-            if (overlapX > 0 && overlapY > 0) {
-                const dx = rectB.left - rectA.left;
-                const dy = rectB.top - rectA.top;
-                const distance = Math.sqrt(dx * dx + dy * dy) || 1;
-                forceX -= (dx / distance) * repulsionStrength;
-                forceY -= (dy / distance) * repulsionStrength;
-            }
+    // Run the physics simulation for a fixed number of steps
+    for (let i = 0; i < 150; i++) {
+        labelInfos.forEach(info => {
+            let forceX = 0, forceY = 0;
+            labelInfos.forEach(otherInfo => {
+                if (info === otherInfo) return;
+                const rectA = info.element.getBoundingClientRect();
+                const rectB = otherInfo.element.getBoundingClientRect();
+                const overlapX = Math.max(0, Math.min(rectA.right, rectB.right) - Math.max(rectA.left, rectB.left));
+                const overlapY = Math.max(0, Math.min(rectA.bottom, rectB.bottom) - Math.max(rectA.top, rectB.top));
+                if (overlapX > 0 && overlapY > 0) {
+                    const dx = rectB.left - rectA.left;
+                    const dy = rectB.top - rectA.top;
+                    const distance = Math.sqrt(dx * dx + dy * dy) || 1;
+                    forceX -= (dx / distance) * repulsionStrength;
+                    forceY -= (dy / distance) * repulsionStrength;
+                }
+            });
+            forceX += -info.x * springStrength;
+            forceY += -info.y * springStrength;
+            info.vx = (info.vx + forceX) * damping;
+            info.vy = (info.vy + forceY) * damping;
+            info.x += info.vx;
+            info.y += info.vy;
         });
-        forceX += -info.x * springStrength;
-        forceY += -info.y * springStrength;
-        info.vx = (info.vx + forceX) * damping;
-        info.vy = (info.vy + forceY) * damping;
-        info.x += info.vx;
-        info.y += info.vy;
-    });
+    }
 
-    // 2. Apply new positions to the DOM
-    labelInfos.forEach((info, index) => {
-        const compData = competitorsData[index]; // Get corresponding data
-
-        // Set the base position of the label to match its dot
+    // Apply the final calculated positions
+    labelInfos.forEach(info => {
+        const compData = competitorsData[labelInfos.indexOf(info)];
         info.element.style.left = info.dotElement.style.left;
         info.element.style.top = info.dotElement.style.top;
         
@@ -133,15 +134,11 @@ function animateChart() {
 
         info.element.style.transform = transformStyle;
     });
-
-    animationFrameId = requestAnimationFrame(animateChart);
 }
 
-// --- Public Control Functions ---
+// --- Public Control Functions ---\
 export const ChartAnimation = {
     start: () => {
-        if (animationFrameId) return;
-        
         const competitorsContainer = document.getElementById('competitors-container');
         if (!competitorsContainer) {
             console.error('Chart container not found!');
@@ -151,23 +148,22 @@ export const ChartAnimation = {
         // Delay setup and animation to ensure the browser has calculated layout
         setTimeout(() => {
             setupCompetitors();
-            animateChart();
-        }, 50); 
+            runStaticLayout(); // Replaced animateChart with this
+        }, 50);
 
-        window.addEventListener('resize', setupCompetitors);
+        window.addEventListener('resize', () => {
+            setupCompetitors();
+            runStaticLayout();
+        });
     },
     stop: () => {
-        if (animationFrameId) {
-            cancelAnimationFrame(animationFrameId);
-            animationFrameId = null;
-        }
-        window.removeEventListener('resize', setupCompetitors);
-
-        // Clear the containers when the slide is hidden
+        window.removeEventListener('resize', () => {
+            setupCompetitors();
+            runStaticLayout();
+        });
         const competitorsContainer = document.getElementById('competitors-container');
         if (competitorsContainer) competitorsContainer.innerHTML = '';
-        
-        labelInfos = []; // Clear the animation state
+        labelInfos = [];
     }
 };
 
