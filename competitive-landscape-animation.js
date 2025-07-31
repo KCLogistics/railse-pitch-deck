@@ -44,15 +44,14 @@ function setupCompetitors() {
         // Create the dot element
         const dot = document.createElement('div');
         dot.id = `dot-${index}`;
-        dot.className = `absolute rounded-full transition-transform duration-300 z-20 ${comp.isHero ? 'w-5 h-5 bg-blue-500 hero-dot-pulse' : 'w-3 h-3 bg-gray-700'}`;
-        dot.style.left = left;
+        dot.className = `absolute rounded-full transition-transform duration-300 z-20 ${comp.isHero ? 'w-2.5 h-2.5 bg-blue-500 hero-dot-pulse' : 'w-1.5 h-1.5 bg-gray-700'}`;dot.style.left = left;
         dot.style.top = top;
         dot.style.transform = 'translate(-50%, -50%)';
 
         // Create the label card element
         const labelCard = document.createElement('div');
         labelCard.id = `label-${index}`;
-        labelCard.className = `absolute p-2 rounded-md shadow-md bg-white/90 backdrop-blur-sm border border-gray-200 z-10 ${comp.isHero ? 'border-2 border-blue-500' : ''}`;
+        labelCard.className = `absolute p-1 rounded-md shadow-md bg-white/90 backdrop-blur-sm border border-gray-200 z-10 ${comp.isHero ? 'border-2 border-blue-500' : ''}`;
         
         const dotsHTML = comp.tags.map(tag => 
             `<div class="w-1.5 h-1.5 rounded-full border border-white" style="background-color: ${tagColors[tag] || '#000'}"></div>`
