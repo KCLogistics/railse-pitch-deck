@@ -12,9 +12,9 @@ const competitorsData = [
     { name: 'BlackBuck', descriptor: 'Trucking Marketplace', tags: ['Asset-Light', 'Open Market'], x: -2, y: 3, pivot: 'top-right' },
     { name: 'Porter', descriptor: 'City Logistics', tags: ['Asset-Light', 'Open Market'], x: -8, y: -7, pivot: 'bottom-left' },
     { name: 'Shiprocket', descriptor: 'Shipping Aggregator', tags: ['Asset-Light', 'Open Market'], x: -9, y: -6, pivot: 'bottom-right' },
-    { name: 'Blue Dart', descriptor: 'Premium Courier', tags: ['Asset-Heavy', 'Closed Market'], x: -9, y: -9, labelOffset: { y: 0 }, pivot: 'bottom-right' },
+    { name: 'Blue Dart', descriptor: 'Premium Courier', tags: ['Asset-Heavy', 'Closed Market'], x: -9, y: -8.5, labelOffset: { y: 0 }, pivot: 'bottom-right' },
     { name: 'Gati', descriptor: 'Legacy Distribution', tags: ['Asset-Heavy', 'Closed Market'], x: -7, y: -10, labelOffset: { y: 60 }, pivot: 'middle-left' },
-    { name: 'VRL Logistics', descriptor: 'Legacy Distribution', tags: ['Asset-Heavy', 'Closed Market'], x: -7, y: -10, labelOffset: { y: 120 }, pivot: 'middle-right' }
+    { name: 'VRL', descriptor: 'Legacy Distribution', tags: ['Asset-Heavy', 'Closed Market'], x: -7, y: -10, labelOffset: { y: 120 }, pivot: 'middle-right' }
 ];
 
 const tagColors = {
@@ -52,7 +52,7 @@ function setupCompetitors() {
         const labelCard = document.createElement('div');
         labelCard.id = `label-${index}`;
         labelCard.className = `absolute p-1 rounded-md shadow-md bg-white/90 backdrop-blur-sm border border-gray-200 z-10 ${comp.isHero ? 'border-2 border-blue-500' : ''}`;
-        
+
         const dotsHTML = comp.tags.map(tag => 
             `<div class="w-1.5 h-1.5 rounded-full border border-white" style="background-color: ${tagColors[tag] || '#000'}"></div>`
         ).join('');
