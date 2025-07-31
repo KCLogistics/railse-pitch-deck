@@ -16,23 +16,35 @@
 
     <!-- Main Chart Area -->
     <div class="flex-grow relative" id="chart-area">
-        <!-- Background and Axes -->
-        <div class="absolute inset-0 chart-grid-bg border border-gray-200 rounded-lg">
-            <div class="absolute top-1/2 left-0 w-full h-px bg-gray-300"></div>
-            <div class="absolute left-1/2 top-0 h-full w-px bg-gray-300"></div>
+
+        <div class="relative w-full h-full">
+            <div class="absolute inset-0 chart-grid-bg border border-gray-200 rounded-lg">
+                <div class="absolute top-1/2 left-0 w-full h-px bg-gray-300"></div>
+                <div class="absolute left-1/2 top-0 h-full w-px bg-gray-300"></div>
+            </div>
+
+            <div class="absolute inset-0 pointer-events-none">
+                <div class="absolute top-2 left-1/2 -translate-x-1/2 text-sm text-gray-600 font-semibold">Embedded Operating System</div>
+                <div class="absolute bottom-2 left-1/2 -translate-x-1/2 text-sm text-gray-600 font-semibold">Transactional Tool</div>
+                <div class="absolute left-4 top-1/2 -translate-y-1/2 text-sm text-gray-600 font-semibold text-right">Shipper-Centric</div>
+                <div class="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-gray-600 font-semibold text-left">Transporter-Centric</div>
+            </div>
+
+            <div id="competitors-container" class="relative w-full h-full">
+                </div>
         </div>
 
-        <!-- Axis Labels -->
-        <div class="absolute inset-0 pointer-events-none">
-            <div class="absolute top-2 left-1/2 -translate-x-1/2 text-sm text-gray-600 font-semibold">Embedded Operating System</div>
-            <div class="absolute bottom-2 left-1/2 -translate-x-1/2 text-sm text-gray-600 font-semibold">Transactional Tool</div>
-            <div class="absolute left-4 top-1/2 -translate-y-1/2 text-sm text-gray-600 font-semibold text-right">Shipper-Centric</div>
-            <div class="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-gray-600 font-semibold text-left">Transporter-Centric</div>
-        </div>
-
-        <!-- Container for competitor dots and labels -->
-        <div id="competitors-container" class="relative w-full h-full">
-            <!-- Competitors will be dynamically generated here -->
+        <div class="absolute top-4 left-4">
+            <div class="flex flex-col gap-y-2">
+                <div class="flex items-center gap-x-2">
+                    <div class="w-4 h-0.5 bg-green-500 rounded-full"></div>
+                    <span class="text-xs text-green-500">Asset Light</span>
+                </div>
+                <div class="flex items-center gap-x-2">
+                    <div class="w-4 h-0.5 bg-orange-500 rounded-full"></div>
+                    <span class="text-xs text-orange-500">Asset Heavy</span>
+                </div>
+            </div>
         </div>
     </div>
     <footer class="absolute bottom-4 left-16 text-left text-xs text-gray-400 font-medium">
