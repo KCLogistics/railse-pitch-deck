@@ -6,7 +6,7 @@ let labelInfos = []; // Array to store label positions and velocities
 const competitorsData = [
     { name: 'Railse', descriptor: 'AI Operating System', tags: ['Asset-Light', 'Open Market'], x: 8, y: 9, isHero: true },
     { name: 'Rivigo', descriptor: 'Tech-Led Carrier', tags: ['Asset-Heavy', 'Closed Market'], x: 6, y: 9 },
-    { name: 'Vahak1', descriptor: 'Discovery Platform', tags: ['Asset-Light', 'Open Market'], x: 7, y: -8, labelOffset: { x: 10, y: 10 } },
+    { name: 'Vahak', descriptor: 'Discovery Platform', tags: ['Asset-Light', 'Open Market'], x: 7, y: -8, labelOffset: { x: 10, y: 10 } },
     { name: 'Delhivery', descriptor: 'E-commerce Logistics', tags: ['Asset-Heavy', 'Closed Market'], x: -7, y: 8 },
     { name: 'LetsTransport', descriptor: 'Enterprise Logistics', tags: ['Asset-Light', 'Open Market'], x: -8, y: 6 },
     { name: 'BlackBuck', descriptor: 'Trucking Marketplace', tags: ['Asset-Light', 'Open Market'], x: -2, y: 3 },
@@ -79,7 +79,6 @@ function setupCompetitors() {
 }
 
 // The main animation loop that runs on every frame
-// The main animation loop that runs on every frame
 function animateChart() {
     const repulsionStrength = 0.5;
     const springStrength = 0.01;
@@ -110,17 +109,15 @@ function animateChart() {
         info.y += info.vy;
     });
 
-    // 2. Apply new positions to the DOM (THIS BLOCK IS CORRECTED)
+    // 2. Apply new positions to the DOM
     labelInfos.forEach(info => {
         // Set the base position of the label to match its dot
         info.element.style.left = info.dotElement.style.left;
         info.element.style.top = info.dotElement.style.top;
         
-        // Apply the physics-based offset from that base position
-        info.element.style.transform = `translate(-50%, -50%) translate(${info.x}px, ${info.y}px)`;
+        // CHANGED: Removed the centering transform so the top-left corner aligns with the dot
+        info.element.style.transform = `translate(${info.x}px, ${info.y}px)`;
     });
-    
-    drawLeaderLines();
 
     animationFrameId = requestAnimationFrame(animateChart);
 }
