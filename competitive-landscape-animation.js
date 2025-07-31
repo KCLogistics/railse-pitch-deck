@@ -44,30 +44,39 @@ function setupCompetitors() {
         // Create the dot element
         const dot = document.createElement('div');
         dot.id = `dot-${index}`;
-        dot.className = `absolute rounded-full transition-transform duration-300 z-20 ${comp.isHero ? 'w-2.5 h-2.5 bg-blue-500 hero-dot-pulse' : 'w-1.5 h-1.5 bg-gray-700'}`;dot.style.left = left;
+        dot.className = `absolute rounded-full transition-transform duration-300 z-20 ${comp.isHero ? 'w-2.5 h-2.5 bg-blue-500 hero-dot-pulse' : 'w-1.5 h-1.5 bg-gray-700'}`;
+        dot.style.left = left;
         dot.style.top = top;
         dot.style.transform = 'translate(-50%, -50%)';
 
         // Create the label card element
         const labelCard = document.createElement('div');
         labelCard.id = `label-${index}`;
-        labelCard.className = `absolute p-1 rounded-md shadow-md bg-white/90 backdrop-blur-sm border border-gray-200 z-10 ${comp.isHero ? 'border-2 border-blue-500' : ''}`;
+        
+        // --- LOGIC CHANGE IS HERE ---
 
-        const dotsHTML = comp.tags.map(tag => 
-            `<div class="w-1.5 h-1.5 rounded-full border border-white" style="background-color: ${tagColors[tag] || '#000'}"></div>`
-        ).join('');
+        // 1. Determine border color based on tags
+        let borderColorClass = 'border-gray-200'; // Default border
+        if (comp.isHero) {
+            borderColorClass = 'border-green-500';
+        } else if (comp.tags.includes('Asset-Heavy')) {
+            borderColorClass = 'border-orange-500';
+        } else if (comp.tags.includes('Asset-Light')) {
+            borderColorClass = 'border-green-500';
+        }
+        
+        // 2. Apply classes, including the new border color and thickness
+        labelCard.className = `absolute p-1 rounded-md shadow-md bg-white/90 backdrop-blur-sm border-2 z-10 ${borderColorClass}`;
 
-        // NEW: Create a market share span if the data exists
         const marketShareHTML = comp.marketShare 
             ? `<span class="font-semibold text-gray-400 ml-1.5 text-[10px]">${comp.marketShare}</span>` 
             : '';
 
-        // UPDATED: Add the marketShareHTML to the label's innerHTML
+        // 3. Update innerHTML to remove the old dots
         if (comp.isHero) {
             labelCard.innerHTML = `
                 <div class="flex items-center gap-1.5">
                     <h3 class="font-extrabold text-blue-700 text-base">${comp.name}</h3>
-                    ${dotsHTML}
                 </div>
                 <p class="text-[10px] text-blue-600 font-semibold mt-0.5">${comp.descriptor}</p>
             `;
@@ -75,17 +84,18 @@ function setupCompetitors() {
             labelCard.innerHTML = `
                 <div class="flex items-center gap-1.5">
                     <h3 class="font-bold text-gray-900 text-sm">${comp.name}</h3>
-                    ${dotsHTML}
                     ${marketShareHTML}
                 </div>
                 <p class="text-[10px] text-gray-600 mt-0.5">${comp.descriptor}</p>
             `;
         }
+        
+        // --- END OF LOGIC CHANGE ---
             
         competitorsContainer.appendChild(dot);
         competitorsContainer.appendChild(labelCard);
 
-        // Store info for the physics animation loop
+        // Store info for the physics animation loop (unchanged)
         labelInfos.push({
             element: labelCard,
             dotElement: dot,
