@@ -146,7 +146,31 @@ This slide is divided into a header and a three-column layout. The header introd
     *   **Autonomous Operations Engine:** Proactively automates all post-booking communication. Our Order Coordination algorithm is the key to scaling operations effortlessly, without scaling headcount.
 
 *   **Animated Diagram:**
-    *   The bottom of the slide features an animated diagram that visually represents the ecosystem.
+    *   The bottom of the slide features an animated diagram that visually represents the ecosystem. The diagram consists of a central "track" and several "wins" that connect to it.
+    *   **Track:**
+        *   Dynamic & Personalized Pricing
+        *   Instant AI Matching
+        *   Autonomous Orchestration
+    *   **Wins (for Transporters - Green):**
+        *   Local Expert. National Reach.
+        *   Good Work, More Business
+        *   Your Enterprise Toolkit
+        *   Reputation is Revenue
+        *   Focus on Your Business
+        *   No More random Follow-ups
+        *   More Time to Grow
+        *   Grow Beyond Your City
+    *   **Wins (for Customers - Blue):**
+        *   Only the Best Partners
+        *   Reliability, Guaranteed
+        *   Stop Searching. Start Shipping.
+        *   A Pre-Vetted Network
+        *   Logistics, Managed for You
+        *   Always on Support
+        *   Pro Pricing for All
+        *   Trusted Partners, Instantly
+        *   Fair Price, Instantly
+        *   No More Bargaining
 
 *   **Footer:**
     *   A professional footer is located at the bottom-left of the slide with the text: "© 2025 Railse, Inc. | Confidential & Proprietary".
