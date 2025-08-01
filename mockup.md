@@ -465,6 +465,23 @@ This slide presents the company's traction and growth metrics. It has a header a
 *   **Top Row:**
     *   **Revenue Growth Chart:** A line chart showing revenue and gross profit growth over the last 12 months.
     *   **Inflection Point Table:** A table comparing the average revenue, gross profit, orders, and profit margin for the first 8 months vs. the last 4 months.
+        *   **Revenue:** ₹1.68L → ₹3.16L (+88%)
+        *   **Gross Profit:** ₹48k → ₹1.16L (+142%)
+        *   **Orders:** 26 → 69 (+165%)
+        *   **Profit Margin:** 29% → 37% (+28%)
+    *   **Raw Monthly Data:**
+        *   **July 2024:** Revenue: ₹13,450, Profit: ₹1,345, Orders: 3
+        *   **August 2024:** Revenue: ₹41,864, Profit: ₹19,610, Orders: 5
+        *   **September 2024:** Revenue: ₹69,819, Profit: ₹10,377, Orders: 20
+        *   **October 2024:** Revenue: ₹466,733, Profit: ₹84,888, Orders: 69
+        *   **November 2024:** Revenue: ₹224,163, Profit: ₹86,283, Orders: 27
+        *   **December 2024:** Revenue: ₹206,735, Profit: ₹74,735, Orders: 26
+        *   **January 2025:** Revenue: ₹158,599, Profit: ₹50,222, Orders: 27
+        *   **February 2025:** Revenue: ₹162,127, Profit: ₹56,712, Orders: 29
+        *   **March 2025:** Revenue: ₹312,758, Profit: ₹94,242, Orders: 45
+        *   **April 2025:** Revenue: ₹273,509, Profit: ₹103,974, Orders: 70
+        *   **May 2025:** Revenue: ₹317,935, Profit: ₹119,929, Orders: 65
+        *   **June 2025:** Revenue: ₹359,021, Profit: ₹146,997, Orders: 94
 
 *   **Bottom Row:**
     *   **Order Growth Chart:** A line chart showing order growth over the last 12 months.
