@@ -220,7 +220,47 @@ This slide is a full-screen animation that visually represents the company's moa
 
 ---
 
-# Slide 8: The Market Opportunity (`slide-the-market-opportunity.html`)
+# Slide 8: The Competition (`slide-competition.html`)
+
+**Layout:**
+This slide features a 2x2 grid that plots competitors based on two axes: "Embedded Operating System" vs. "Transactional Tool" on the y-axis, and "Shipper-Centric" vs. "Transporter-Centric" on the x-axis.
+
+**Content:**
+
+*   **Header:**
+    *   **Title Tag:** "Competition"
+    *   **Main Headline:** "Win the Transporter, Win the Market."
+    *   **Intro Paragraph:** "An overlooked industry that powers 14% of India's GDP."
+
+*   **Chart:**
+    *   **Y-Axis:** "Embedded Operating System" (top) and "Transactional Tool" (bottom).
+    *   **X-Axis:** "Shipper-Centric" (left) and "Transporter-Centric" (right).
+*   **Competitors:** The chart is populated with competitor logos, placed according to their strategic position. The competitors and their attributes are as follows:
+    *   **Railse:** AI Operating System, Asset-Light, Open Market
+    *   **Rivigo:** Tech-Led Carrier, Asset-Heavy, Closed Market
+    *   **Vahak:** Discovery Platform, Asset-Light, Open Market, 0.001% Market Share
+    *   **Delhivery:** E-commerce Logistics, Asset-Heavy, Closed Market, 0.3% Market Share
+    *   **LetsTransport:** Enterprise Logistics, Asset-Light, Open Market, 0.03% Market Share
+    *   **BlackBuck:** Trucking Marketplace, Asset-Light, Open Market, 0.02% Market Share
+    *   **Porter:** City Logistics, Asset-Light, Open Market, 0.1% Market Share
+    *   **Shiprocket:** Shipping Aggregator, Asset-Light, Open Market, 0.05% Market Share
+    *   **Blue Dart:** Premium Courier, Asset-Heavy, Closed Market, 0.2% Market Share
+    *   **Gati:** Legacy Distribution, Asset-Heavy, Closed Market, 0.05% Market Share
+    *   **VRL:** Legacy Distribution, Asset-Heavy, Closed Market, 0.1% Market Share
+*   **Legend:** A legend in the top-left corner distinguishes between "Asset Light" (green) and "Asset Heavy" (orange) competitors.
+
+*   **Footer:**
+    *   A professional footer is located at the bottom-left of the slide with the text: "© 2025 Railse, Inc. | Confidential & Proprietary".
+
+**Styling:**
+
+*   **Grid:** The chart is a simple grid with a light gray border and axes.
+*   **Labels:** The axis labels are positioned outside the grid.
+*   **Colors:** The slide uses a professional color palette with blue, gray, green, and orange tones.
+
+---
+
+# Slide 9: The Market Opportunity (`slide-the-market-opportunity.html`)
 
 **Layout:**
 This slide is divided into a header, a two-column layout, and a concluding banner at the bottom. The header introduces the market opportunity, the two columns detail the market size and the catalyst, and the banner highlights the initial target market.
@@ -254,7 +294,7 @@ This slide is divided into a header, a two-column layout, and a concluding banne
 
 ---
 
-# Slide 9: Business Model & Go-to-Market (`slide-business-model.html`)
+# Slide 10: Business Model & Go-to-Market (`slide-business-model.html`)
 
 **Layout:**
 This slide is divided into a header, a two-column layout for the playbooks, and a concluding banner for the revenue engines.
@@ -297,7 +337,7 @@ This slide is divided into a header, a two-column layout for the playbooks, and 
 
 ---
 
-# Slide 10: The Team (`slide-the-team.html`)
+# Slide 11: The Team (`slide-the-team.html`)
 
 **Layout:**
 This slide introduces the founding team. It has a header and a two-column layout, with each column dedicated to one of the founders.
@@ -332,7 +372,7 @@ This slide introduces the founding team. It has a header and a two-column layout
 
 ---
 
-# Slide 11: The Vision (`slide-the-vision.html`)
+# Slide 12: The Vision (`slide-the-vision.html`)
 
 **Layout:**
 This slide presents the company's vision. It has a header, a two-column layout for the "Dual Promises," and a concluding section with a unifying mission and a call to action.
@@ -365,7 +405,7 @@ This slide presents the company's vision. It has a header, a two-column layout f
 
 ---
 
-# Slide 12: The Ask (`slide-the-ask.html`)
+# Slide 13: The Ask (`slide-the-ask.html`)
 
 **Layout:**
 This slide details the funding ask. It has a header, a three-column layout for the use of funds, and a concluding manifesto section.
@@ -410,7 +450,7 @@ This slide details the funding ask. It has a header, a three-column layout for t
 
 ---
 
-# Slide 13: The Proof (`slide-the-proof.html`)
+# Slide 14: The Proof (`slide-the-proof.html`)
 
 **Layout:**
 This slide presents the company's traction and growth metrics. It has a header and a two-row, two-column layout. The top row contains a revenue growth chart and a table with key metrics. The bottom row contains an order growth chart and a section with strategic insights.
@@ -444,7 +484,7 @@ This slide presents the company's traction and growth metrics. It has a header a
 
 ---
 
-# Slide 14: Our DNA (`slide-our-dna.html`)
+# Slide 15: Our DNA (`slide-our-dna.html`)
 
 **Layout:**
 This slide features a full-bleed image collage with a header and a concluding statement.

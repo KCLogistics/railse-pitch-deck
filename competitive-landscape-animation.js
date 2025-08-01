@@ -4,7 +4,7 @@ let labelInfos = []; // Array to store label positions and velocities
 
 // --- Data and Styling ---
 const competitorsData = [
-    { name: 'Railse', descriptor: 'AI Operating System', tags: ['Asset-Light', 'Open Market'], x: 8, y: 9, isHero: true, marketShare: null },
+    { name: 'Railse', descriptor: 'AI Co-pilot for Transporters', tags: ['Asset-Light', 'Open Market'], x: 8, y: 9, isHero: true, marketShare: null },
     { name: 'Rivigo', descriptor: 'Tech-Led Carrier', tags: ['Asset-Heavy', 'Closed Market'], x: 6, y: 9, pivot: 'top-right', marketShare: 'N/A' },
     { name: 'Vahak', descriptor: 'Discovery Platform', tags: ['Asset-Light', 'Open Market'], x: 7, y: -8, labelOffset: { x: 10, y: 10 }, pivot: 'bottom-right', marketShare: '0.001%' },
     { name: 'Delhivery', descriptor: 'E-commerce Logistics', tags: ['Asset-Heavy', 'Closed Market'], x: -7, y: 8, marketShare: '0.3%' },
@@ -23,6 +23,8 @@ const tagColors = {
     'Open Market': '#6b7280', // Gray
     'Closed Market': '#f97316', // Orange
 };
+
+const MARKET_SHARE_COLOR = '#B58E3A'; // Define the color here
 
 function mapCoordinates(x, y) {
     const left = ((x + 10) / 20) * 90 + 5;
@@ -69,7 +71,7 @@ function setupCompetitors() {
         labelCard.className = `absolute p-1 rounded-md shadow-md bg-white/90 backdrop-blur-sm border-2 z-10 ${borderColorClass}`;
 
         const marketShareHTML = comp.marketShare 
-            ? `<span class="font-semibold text-gray-400 ml-1.5 text-[10px]">${comp.marketShare}</span>` 
+            ? `<span class="font-semibold ml-1.5 text-[10px]" style="color: ${MARKET_SHARE_COLOR};">${comp.marketShare}</span>` 
             : '';
 
         // 3. Update innerHTML to remove the old dots
